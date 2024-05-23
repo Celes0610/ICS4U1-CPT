@@ -8,6 +8,7 @@ public class snakeGame implements ActionListener, KeyListener{
 	//properties
 	JFrame frame = new JFrame("Snake");
 	AnimationPanel panel = new AnimationPanel();
+	SuperSocketMaster ssm;
 	
 	//methods
 	public void actionPerformed(ActionEvent evt){
@@ -30,10 +31,22 @@ public class snakeGame implements ActionListener, KeyListener{
 		panel.setPreferredSize(new Dimension(1280, 720));
 		frame.add(panel);
 		
+		startScreen();
+		
 		frame.pack();
+		frame.setResizable(false);
 		frame.setVisible(true);
 	}
 	
+	public void startScreen(){
+		
+	}
+	
+	public void mainGame(){
+		
+	}
+	
+	//main program
 	public static void main (String[] args){
 		new snakeGame();
 	}
