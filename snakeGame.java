@@ -9,6 +9,16 @@ public class snakeGame implements ActionListener, KeyListener{
 	JFrame frame = new JFrame("Snake");
 	AnimationPanel panel = new AnimationPanel();
 	SuperSocketMaster ssm;
+	
+	/*start screen*/
+	JButton Host = new JButton("Host");
+	JButton Guest = new JButton("Guest");
+	JLabel Title = new JLabel("Snake");
+	
+	/*chat*/
+	JTextField chat = new JTextField();
+	
+	/*network message*/
 	String strLine;
 	String strSplit[];
 	String strMsgType;
@@ -28,6 +38,7 @@ public class snakeGame implements ActionListener, KeyListener{
 
 	//methods
 	public void actionPerformed(ActionEvent evt){
+		//network message
 		if(evt.getSource() == ssm){
 			strLine = ssm.readText();
 			strSplit = strLine.split(",");
@@ -66,7 +77,9 @@ public class snakeGame implements ActionListener, KeyListener{
 	}
 	
 	public void startScreen(){
-		
+		panel.add(Title);
+		panel.add(Host);
+		panel.add(Guest);
 	}
 	
 	public void mainGame(){
