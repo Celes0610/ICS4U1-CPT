@@ -24,7 +24,7 @@ public class snakeGame implements ActionListener, KeyListener{
 	int intSnake2[][] = new int[100][2];
 	int intSnake3[][] = new int[100][2];
 	int intSnake4[][] = new int[100][2];
-
+	
 
 	//methods
 	public void actionPerformed(ActionEvent evt){
@@ -37,7 +37,7 @@ public class snakeGame implements ActionListener, KeyListener{
 				intMsgX = Integer.parseInt(strSplit[2]);
 				intMsgY = Integer.parseInt(strSplit[3]);
 			}else if(strMsgType.equals("Message")){
-
+				strMsgSent = strSplit[2];
 			}
 		}
 	}
