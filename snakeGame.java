@@ -9,10 +9,37 @@ public class snakeGame implements ActionListener, KeyListener{
 	JFrame frame = new JFrame("Snake");
 	AnimationPanel panel = new AnimationPanel();
 	SuperSocketMaster ssm;
-	
+	String strLine;
+	String strSplit[];
+	String strMsgType;
+	String strMsgUser;
+	int intMsgX;
+	int intMsgY;
+	String strMsgSent;
+	String strUsername1;
+	String strUsername2;
+	String strUsername3;
+	String strUsername4;
+	int intSnake1[][] = new int[100][2];
+	int intSnake2[][] = new int[100][2];
+	int intSnake3[][] = new int[100][2];
+	int intSnake4[][] = new int[100][2];
+
+
 	//methods
 	public void actionPerformed(ActionEvent evt){
-		
+		if(evt.getSource() == ssm){
+			strLine = ssm.readText();
+			strSplit = strLine.split(",");
+			strMsgType = strSplit[0];
+			strMsgUser = strSplit[1];
+			if(strMsgType.equals("Game")){
+				intMsgX = Integer.parseInt(strSplit[2]);
+				intMsgY = Integer.parseInt(strSplit[3]);
+			}else if(strMsgType.equals("Message")){
+
+			}
+		}
 	}
 	public void keyReleased(KeyEvent evt){
 
