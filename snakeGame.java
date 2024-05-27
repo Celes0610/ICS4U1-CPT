@@ -137,6 +137,46 @@ public class snakeGame implements ActionListener, KeyListener{
 		
 	}
 	
+	public static String[][] readFile(int intCol, String strFileName) {
+        int intRow = 0;
+        try {
+            BufferedReader file = new BufferedReader(new FileReader(strFileName));
+            String strLine;
+
+            while ((strLine = file.readLine()) != null) {
+                intRow++;
+            }
+            file.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        String[][] strMap = new String[intRow][intCol];
+        try {
+            BufferedReader map = new BufferedReader(new FileReader(strFileName));
+            for (int row = 0; row < intRow; row++) {
+                String strLine = map.readLine();
+                String[] strSplit = strLine.split(",");
+
+                for (int col = 0; col < intCol; col++) {
+                    if (col < strSplit.length) {
+                        strMap[row][col] = strSplit[col];
+                    }
+                }
+            }
+            map.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return strMap;
+    }
+
+	
 	//main program
 	public static void main (String[] args){
 		new snakeGame();
