@@ -137,6 +137,7 @@ public class snakeGame implements ActionListener, KeyListener{
 		
 	}
 	
+	//method to read from csv file and load into array
 	public static String[][] readFile(int intCol, String strFileName) {
         int intRow = 0;
         try {
