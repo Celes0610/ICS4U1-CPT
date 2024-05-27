@@ -51,6 +51,7 @@ public class snakeGame implements ActionListener, KeyListener{
 				strMsgSent = strSplit[2];
 			}
 		}
+		
 	}
 	public void keyReleased(KeyEvent evt){
 
@@ -79,7 +80,9 @@ public class snakeGame implements ActionListener, KeyListener{
 	public void startScreen(){
 		panel.add(Title);
 		panel.add(Host);
+		Host.addActionListener(this);
 		panel.add(Guest);
+		Guest.addActionListener(this);
 	}
 	
 	public void mainGame(){
