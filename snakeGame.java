@@ -12,9 +12,18 @@ public class snakeGame implements ActionListener, KeyListener{
 	SuperSocketMaster ssm;
 	
 	/*start screen*/
-	JButton Host = new JButton("Host");
-	JButton Guest = new JButton("Guest");
-	JLabel Title = new JLabel("Snake");
+	JLabel ipLabel = new JLabel("IP");
+	JTextField ipField = new JTextField();
+	JLabel portLabel = new JLabel("Port");
+	JTextField portField = new JTextField();
+	JButton hostButton = new JButton("Create Server");
+	JButton joinButton = new JButton("Join Server");
+	JButton connectButton = new JButton("Connect");
+	JTextField usernameField = new JTextField();
+	JButton easyButton = new JButton("Easy");
+	JButton normButton = new JButton("Normal");
+	JButton hardButton = new JButton("Hard");
+	JButton playButton = new JButton("Play");
 	
 	/*chat*/
 	JTextField chat = new JTextField();
@@ -31,16 +40,6 @@ public class snakeGame implements ActionListener, KeyListener{
 	String strUsername2;
 	int intSnake1[][] = new int[100][2];
 	int intSnake2[][] = new int[100][2];
-	JTextField ipField = new JTextField();
-	JTextField portField = new JTextField();
-	JButton hostButton = new JButton("Create Server");
-	JButton joinButton = new JButton("Join Server");
-	JButton connectButton = new JButton("Connect");
-	JTextField usernameField = new JTextField();
-	JButton mapButton1 = new JButton("Map1");
-	JButton mapButton2 = new JButton("Map2");
-	JButton mapButton3 = new JButton("Map3");
-	JButton playButton = new JButton("Play");
 
 	//methods
 	public void actionPerformed(ActionEvent evt){
@@ -72,6 +71,8 @@ public class snakeGame implements ActionListener, KeyListener{
 	//constructor
 	public snakeGame(){
 		theframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		panel.setLayout(null);
 
 		panel.setPreferredSize(new Dimension(1280, 720));
 		theframe.add(panel);
@@ -80,57 +81,65 @@ public class snakeGame implements ActionListener, KeyListener{
 
 		startPanel.setPreferredSize(new Dimension(1280, 720));
 		startPanel.setLayout(null);
+		
+		startPanel.add(ipLabel);
+		ipLabel.setSize(new Dimension(350, 50));
+		ipLabel.setLocation(55, 400);
+		
 		startPanel.add(ipField);
-		ipField.setSize(new Dimension(200,50));
-		ipField.setLocation(0, 0);
+		ipField.setSize(new Dimension(350,50));
+		ipField.setLocation(50, 450);
 
+		startPanel.add(portLabel);
+		portLabel.setSize(new Dimension(350, 50));
+		portLabel.setLocation(505, 400);
+		
 		startPanel.add(portField);
-		portField.setSize(new Dimension(200,50));
-		portField.setLocation(200,0);
+		portField.setSize(new Dimension(350,50));
+		portField.setLocation(500,450);
 
 		startPanel.add(hostButton);
-		hostButton.setSize(new Dimension(200,50));
-		hostButton.setLocation(0,200);
+		hostButton.setSize(new Dimension(350,50));
+		hostButton.setLocation(50,550);
 		hostButton.addActionListener(this);
 
 		startPanel.add(joinButton);
-		joinButton.setSize(new Dimension(200,50));
-		joinButton.setLocation(200,200);
+		joinButton.setSize(new Dimension(350,50));
+		joinButton.setLocation(500,550);
 
 		startPanel.add(connectButton);
 		connectButton.addActionListener(this);
-
-
+		connectButton.setSize(new Dimension(350, 50));
+		connectButton.setLocation(275, 625);
+		
 		startPanel.add(usernameField);
-		startPanel.add(mapButton1);
-		mapButton1.addActionListener(this);
-		startPanel.add(mapButton2);
-		mapButton2.addActionListener(this);
-		startPanel.add(mapButton3);
-		mapButton3.addActionListener(this);
+		usernameField.setSize(new Dimension(350, 50));
+		usernameField.setLocation(900, 50);
+		usernameField.setText("Username");
+		
+		startPanel.add(easyButton);
+		easyButton.addActionListener(this);
+		easyButton.setSize(new Dimension(350, 50));
+		easyButton.setLocation(900, 200);
+		
+		startPanel.add(normButton);
+		normButton.addActionListener(this);
+		normButton.setSize(new Dimension(350, 50));
+		normButton.setLocation(900, 275);
+		
+		startPanel.add(hardButton);
+		hardButton.addActionListener(this);
+		hardButton.setSize(new Dimension(350, 50));
+		hardButton.setLocation(900, 350);		
+		
 		startPanel.add(playButton);
 		playButton.addActionListener(this);
 
-
-		
-		
-		
-
 		startPanel.repaint();
-		
-		startScreen();
 		
 		theframe.pack();
 		theframe.setResizable(false);
 		theframe.setVisible(true);
-	}
-	
-	public void startScreen(){
-		panel.add(Title);
-		panel.add(Host);
-		Host.addActionListener(this);
-		panel.add(Guest);
-		Guest.addActionListener(this);
 	}
 	
 	public void mainGame(){
@@ -176,7 +185,6 @@ public class snakeGame implements ActionListener, KeyListener{
 
         return strMap;
     }
-
 	
 	//main program
 	public static void main (String[] args){
