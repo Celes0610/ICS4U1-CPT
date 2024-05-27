@@ -6,7 +6,8 @@ import java.io.*;
 
 public class snakeGame implements ActionListener, KeyListener{
 	//properties
-	JFrame frame = new JFrame("Snake");
+	JFrame theframe = new JFrame("Snake");
+	StartPanel startPanel = new StartPanel();
 	AnimationPanel panel = new AnimationPanel();
 	SuperSocketMaster ssm;
 	
@@ -28,13 +29,18 @@ public class snakeGame implements ActionListener, KeyListener{
 	String strMsgSent;
 	String strUsername1;
 	String strUsername2;
-	String strUsername3;
-	String strUsername4;
 	int intSnake1[][] = new int[100][2];
 	int intSnake2[][] = new int[100][2];
-	int intSnake3[][] = new int[100][2];
-	int intSnake4[][] = new int[100][2];
-	
+	JTextField ipField = new JTextField();
+	JTextField portField = new JTextField();
+	JButton hostButton = new JButton("Create Server");
+	JButton joinButton = new JButton("Join Server");
+	JButton connectButton = new JButton("Connect");
+	JTextField usernameField = new JTextField();
+	JButton mapButton1 = new JButton("Map1");
+	JButton mapButton2 = new JButton("Map2");
+	JButton mapButton3 = new JButton("Map3");
+	JButton playButton = new JButton("Play");
 
 	//methods
 	public void actionPerformed(ActionEvent evt){
@@ -65,16 +71,58 @@ public class snakeGame implements ActionListener, KeyListener{
 	
 	//constructor
 	public snakeGame(){
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		theframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		panel.setPreferredSize(new Dimension(1280, 720));
-		frame.add(panel);
+		theframe.add(panel);
+		theframe.add(startPanel);
+		theframe.setContentPane(startPanel);
+
+		startPanel.setPreferredSize(new Dimension(1280, 720));
+		startPanel.setLayout(null);
+		startPanel.add(ipField);
+		ipField.setSize(new Dimension(200,50));
+		ipField.setLocation(0, 0);
+
+		startPanel.add(portField);
+		portField.setSize(new Dimension(200,50));
+		portField.setLocation(200,0);
+
+		startPanel.add(hostButton);
+		hostButton.setSize(new Dimension(200,50));
+		hostButton.setLocation(0,200);
+		hostButton.addActionListener(this);
+
+		startPanel.add(joinButton);
+		joinButton.setSize(new Dimension(200,50));
+		joinButton.setLocation(200,200);
+
+		startPanel.add(connectButton);
+		connectButton.addActionListener(this);
+
+
+		startPanel.add(usernameField);
+		startPanel.add(mapButton1);
+		mapButton1.addActionListener(this);
+		startPanel.add(mapButton2);
+		mapButton2.addActionListener(this);
+		startPanel.add(mapButton3);
+		mapButton3.addActionListener(this);
+		startPanel.add(playButton);
+		playButton.addActionListener(this);
+
+
+		
+		
+		
+
+		startPanel.repaint();
 		
 		startScreen();
 		
-		frame.pack();
-		frame.setResizable(false);
-		frame.setVisible(true);
+		theframe.pack();
+		theframe.setResizable(false);
+		theframe.setVisible(true);
 	}
 	
 	public void startScreen(){
