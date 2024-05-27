@@ -26,7 +26,7 @@ public class snakeGame implements ActionListener, KeyListener{
 	JButton playButton = new JButton("Play");
 	
 	/*chat*/
-	JTextField chat = new JTextField();
+	JTextArea chat = new JTextArea();
 	
 	/*network message*/
 	String strLine;
@@ -43,6 +43,20 @@ public class snakeGame implements ActionListener, KeyListener{
 
 	//methods
 	public void actionPerformed(ActionEvent evt){
+		//create a server 
+		if (evt.getSource() == hostButton) {
+            int intPort = (int) (Math.random() * 65535);
+            while (intPort < 1024 || intPort > 49151) { // ensure it's a valid and non-privileged port
+                intPort = (int) (Math.random() * 65535);
+            }
+			ssm = new SuperSocketMaster(intPort, this);
+			ssm.connect();
+			portField.setText(String.valueOf(intPort));
+			String ip = ssm.getMyAddress();
+			ipField.setText(ip);
+
+        }
+
 		//network message
 		if(evt.getSource() == ssm){
 			strLine = ssm.readText();
@@ -84,28 +98,29 @@ public class snakeGame implements ActionListener, KeyListener{
 		
 		startPanel.add(ipLabel);
 		ipLabel.setSize(new Dimension(350, 50));
-		ipLabel.setLocation(55, 400);
+		ipLabel.setLocation(55, 500);
 		
 		startPanel.add(ipField);
 		ipField.setSize(new Dimension(350,50));
-		ipField.setLocation(50, 450);
+		ipField.setLocation(50, 550);
 
 		startPanel.add(portLabel);
 		portLabel.setSize(new Dimension(350, 50));
-		portLabel.setLocation(505, 400);
+		portLabel.setLocation(505, 500);
 		
 		startPanel.add(portField);
 		portField.setSize(new Dimension(350,50));
-		portField.setLocation(500,450);
+		portField.setLocation(500,550);
 
 		startPanel.add(hostButton);
 		hostButton.setSize(new Dimension(350,50));
-		hostButton.setLocation(50,550);
+		hostButton.setLocation(50,450);
 		hostButton.addActionListener(this);
 
 		startPanel.add(joinButton);
+		joinButton.addActionListener(this); 
 		joinButton.setSize(new Dimension(350,50));
-		joinButton.setLocation(500,550);
+		joinButton.setLocation(500,450);
 
 		startPanel.add(connectButton);
 		connectButton.addActionListener(this);
@@ -113,23 +128,23 @@ public class snakeGame implements ActionListener, KeyListener{
 		connectButton.setLocation(275, 625);
 		
 		startPanel.add(usernameField);
-		usernameField.setSize(new Dimension(350, 50));
+		usernameField.setSize(new Dimension(330, 50));
 		usernameField.setLocation(900, 50);
 		usernameField.setText("Username");
 		
 		startPanel.add(easyButton);
 		easyButton.addActionListener(this);
-		easyButton.setSize(new Dimension(350, 50));
+		easyButton.setSize(new Dimension(330, 50));
 		easyButton.setLocation(900, 200);
 		
 		startPanel.add(normButton);
 		normButton.addActionListener(this);
-		normButton.setSize(new Dimension(350, 50));
+		normButton.setSize(new Dimension(330, 50));
 		normButton.setLocation(900, 275);
 		
 		startPanel.add(hardButton);
 		hardButton.addActionListener(this);
-		hardButton.setSize(new Dimension(350, 50));
+		hardButton.setSize(new Dimension(330, 50));
 		hardButton.setLocation(900, 350);		
 		
 		startPanel.add(playButton);
