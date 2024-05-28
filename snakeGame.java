@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.event.*;
 import java.io.*;
+import java.util.DuplicateFormatFlagsException;
 
 public class snakeGame implements ActionListener, KeyListener{
 	//properties
@@ -25,6 +26,8 @@ public class snakeGame implements ActionListener, KeyListener{
 	JButton normButton = new JButton("Normal");
 	JButton hardButton = new JButton("Hard");
 	JButton playButton = new JButton("Ready");
+	JButton theme1Button = new JButton("Star Wars");
+	JButton theme2Button = new JButton("Zelda");
 	
 	/*chat*/
 	JTextArea chat = new JTextArea();
@@ -47,6 +50,7 @@ public class snakeGame implements ActionListener, KeyListener{
 	int intReady1 = 0;
 	int intReady2 = 0;
 	int intSelf;
+	int intTheme = 1;
 
 	//methods
 	public void actionPerformed(ActionEvent evt){
@@ -114,18 +118,42 @@ public class snakeGame implements ActionListener, KeyListener{
 						strUsername2 = strMsgUser;
 						intReady1 = 1;
 					}
+					if(!strMsgArg.equals(null)){
+						intTheme = Integer.parseInt(strMsgArg);
+						System.out.println("Theme: " +intTheme);
+					}
+					System.out.println(intReady1 +" "+ intReady2);
+				}else if(strMsgCmd.equals("startGame")){
+					theframe.setContentPane(panel);
+					theframe.repaint();
 				}
 			}
 		}else if(evt.getSource() == playButton){
 			if(intSelf == 1){
 				strUsername1 = usernameField.getText();
-				ssm.sendText("System, " + strUsername1 + ", sentUsername, null");
+				ssm.sendText("System," + strUsername1 + ",sentUsername,"+intTheme);
 				intReady1 = 1;
+				theme1Button.setEnabled(false);
+				theme2Button.setEnabled(false);
+				if(intReady1 == 1 && intReady2 == 1){
+					theframe.setContentPane(panel);
+					theframe.repaint();
+					ssm.sendText("System," + strUsername1 + ",startGame," +intTheme);
+				}
 			}else if(intSelf == 2){
 				strUsername2 = usernameField.getText();
-				ssm.sendText("System, " + strUsername2 + ", sentUsername, null");
+				ssm.sendText("System," + strUsername2 + ",sentUsername,null");
 				intReady1 = 2;
+				if(intReady1 == 1 && intReady2 == 1){
+					theframe.setContentPane(panel);
+					theframe.repaint();
+					ssm.sendText("System," + strUsername2 + ",startGame,null");
+				}
 			}
+		}else if(evt.getSource() == theme1Button){
+			intTheme = 1;
+		}else if(evt.getSource() == theme2Button){
+			intTheme = 2;
 		}
 		
 	}
@@ -212,6 +240,16 @@ public class snakeGame implements ActionListener, KeyListener{
 		playButton.setSize(new Dimension(330, 50));
 		playButton.setLocation(900, 500);
 		playButton.setEnabled(false);
+
+		startPanel.add(theme1Button);
+		theme1Button.addActionListener(this);
+		theme1Button.setSize(new Dimension(140, 50));
+		theme1Button.setLocation(900, 425);
+
+		startPanel.add(theme2Button);
+		theme2Button.addActionListener(this);
+		theme2Button.setSize(new Dimension(140, 50));
+		theme2Button.setLocation(1090, 425);
 
 		startPanel.repaint();
 		
