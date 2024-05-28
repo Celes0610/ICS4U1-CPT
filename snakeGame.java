@@ -18,7 +18,7 @@ public class snakeGame implements ActionListener, KeyListener{
 	JTextField portField = new JTextField();
 	JButton hostButton = new JButton("Create Server");
 	JButton joinButton = new JButton("Join Server");
-	JButton connectButton = new JButton("Connect");
+	JTextArea connectStat = new JTextArea();
 	JTextField usernameField = new JTextField();
 	JButton easyButton = new JButton("Easy");
 	JButton normButton = new JButton("Normal");
@@ -33,6 +33,7 @@ public class snakeGame implements ActionListener, KeyListener{
 	String strSplit[];
 	String strMsgType;
 	String strMsgUser;
+	boolean playerConnected = false;
 	int intMsgX;
 	int intMsgY;
 	String strMsgSent;
@@ -54,8 +55,16 @@ public class snakeGame implements ActionListener, KeyListener{
 			portField.setText(String.valueOf(intPort));
 			String ip = ssm.getMyAddress();
 			ipField.setText(ip);
-
+			connectStat.setText("Waiting for player to connect...");
+			ipField.setEnabled(false);
+			portField.setEnabled(false);
         }
+
+		//join a server
+		if (evt.getSource() == joinButton){
+			ssm = new SuperSocketMaster(ipField.getText(), Integer.parseInt(portField.getText()), this);
+			ssm.connect();
+		}
 
 		//network message
 		if(evt.getSource() == ssm){
@@ -63,6 +72,11 @@ public class snakeGame implements ActionListener, KeyListener{
 			strSplit = strLine.split(",");
 			strMsgType = strSplit[0];
 			strMsgUser = strSplit[1];
+			if (strMsgType.equals("Connect") && !playerConnected) {
+                playerConnected = true;
+                connectStat.setText("Player connected");
+			}
+
 			if(strMsgType.equals("Game")){
 				intMsgX = Integer.parseInt(strSplit[2]);
 				intMsgY = Integer.parseInt(strSplit[3]);
@@ -98,34 +112,36 @@ public class snakeGame implements ActionListener, KeyListener{
 		
 		startPanel.add(ipLabel);
 		ipLabel.setSize(new Dimension(350, 50));
-		ipLabel.setLocation(55, 500);
+		ipLabel.setLocation(55, 450);
 		
 		startPanel.add(ipField);
 		ipField.setSize(new Dimension(350,50));
-		ipField.setLocation(50, 550);
+		ipField.setLocation(50, 500);
 
 		startPanel.add(portLabel);
 		portLabel.setSize(new Dimension(350, 50));
-		portLabel.setLocation(505, 500);
+		portLabel.setLocation(505, 450);
 		
 		startPanel.add(portField);
 		portField.setSize(new Dimension(350,50));
-		portField.setLocation(500,550);
+		portField.setLocation(500,500);
 
 		startPanel.add(hostButton);
 		hostButton.setSize(new Dimension(350,50));
-		hostButton.setLocation(50,450);
+		hostButton.setLocation(50,400);
 		hostButton.addActionListener(this);
 
 		startPanel.add(joinButton);
 		joinButton.addActionListener(this); 
 		joinButton.setSize(new Dimension(350,50));
-		joinButton.setLocation(500,450);
+		joinButton.setLocation(500,400);
 
-		startPanel.add(connectButton);
-		connectButton.addActionListener(this);
-		connectButton.setSize(new Dimension(350, 50));
-		connectButton.setLocation(275, 625);
+		startPanel.add(connectStat);
+		connectStat.setSize(new Dimension(800, 70));
+		connectStat.setLocation(50, 600);
+		connectStat.setEnabled(false);
+
+		startPanel.add(connectStat);
 		
 		startPanel.add(usernameField);
 		usernameField.setSize(new Dimension(330, 50));
