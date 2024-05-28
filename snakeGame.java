@@ -19,6 +19,7 @@ public class snakeGame implements ActionListener, KeyListener{
 	JButton hostButton = new JButton("Create Server");
 	JButton joinButton = new JButton("Join Server");
 	JTextArea connectStat = new JTextArea();
+	JLabel usernameLabel = new JLabel("Username");
 	JTextField usernameField = new JTextField();
 	JButton easyButton = new JButton("Easy");
 	JButton normButton = new JButton("Normal");
@@ -65,6 +66,9 @@ public class snakeGame implements ActionListener, KeyListener{
 			ssm = new SuperSocketMaster(ipField.getText(), Integer.parseInt(portField.getText()), this);
 			ssm.connect();
 			ssm.sendText("Connect, Player connected");
+			easyButton.setEnabled(false);
+			normButton.setEnabled(false);
+			hardButton.setEnabled(false);
 		}
 
 		//network message
@@ -142,12 +146,13 @@ public class snakeGame implements ActionListener, KeyListener{
 		connectStat.setLocation(50, 600);
 		connectStat.setEnabled(false);
 
-		startPanel.add(connectStat);
-		
+		startPanel.add(usernameLabel);
+		usernameLabel.setSize(new Dimension(200, 50));
+		usernameLabel.setLocation(900, 50);
+
 		startPanel.add(usernameField);
 		usernameField.setSize(new Dimension(330, 50));
-		usernameField.setLocation(900, 50);
-		usernameField.setText("Username");
+		usernameField.setLocation(900, 100);
 		
 		startPanel.add(easyButton);
 		easyButton.addActionListener(this);
