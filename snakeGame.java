@@ -118,7 +118,9 @@ public class snakeGame implements ActionListener, KeyListener{
 						strUsername2 = strMsgUser;
 						intReady1 = 1;
 					}
-					if(!strMsgArg.equals(null)){
+					if(strMsgArg.equals(null)){
+						
+					}else{
 						intTheme = Integer.parseInt(strMsgArg);
 						System.out.println("Theme: " +intTheme);
 					}
