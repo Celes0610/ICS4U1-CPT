@@ -64,7 +64,7 @@ public class snakeGame implements ActionListener, KeyListener{
 		if (evt.getSource() == joinButton){
 			ssm = new SuperSocketMaster(ipField.getText(), Integer.parseInt(portField.getText()), this);
 			ssm.connect();
-			ssm.sendText("Connect, Player connected")
+			ssm.sendText("Connect, Player connected");
 		}
 
 		//network message
