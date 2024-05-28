@@ -132,7 +132,7 @@ public class snakeGame implements ActionListener, KeyListener{
 			}
 		}else if(evt.getSource() == playButton){
 			if(usernameField.getText().equals("")){
-				connectStat.append("Please Enter a Username, do not try to break the game :(");
+				connectStat.append("\nPlease Enter a Username, do not try to break the game :(");
 			}else{
 				if(intSelf == 1){
 					strUsername1 = usernameField.getText();
