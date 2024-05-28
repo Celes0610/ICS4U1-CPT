@@ -24,7 +24,7 @@ public class snakeGame implements ActionListener, KeyListener{
 	JButton easyButton = new JButton("Easy");
 	JButton normButton = new JButton("Normal");
 	JButton hardButton = new JButton("Hard");
-	JButton playButton = new JButton("Play");
+	JButton playButton = new JButton("Ready");
 	
 	/*chat*/
 	JTextArea chat = new JTextArea();
@@ -34,6 +34,8 @@ public class snakeGame implements ActionListener, KeyListener{
 	String strSplit[];
 	String strMsgType;
 	String strMsgUser;
+	String strMsgCmd;
+	String strMsgArg;
 	boolean playerConnected = false;
 	int intMsgX;
 	int intMsgY;
@@ -42,6 +44,9 @@ public class snakeGame implements ActionListener, KeyListener{
 	String strUsername2;
 	int intSnake1[][] = new int[100][2];
 	int intSnake2[][] = new int[100][2];
+	int intReady1 = 0;
+	int intReady2 = 0;
+	int intSelf;
 
 	//methods
 	public void actionPerformed(ActionEvent evt){
@@ -52,7 +57,12 @@ public class snakeGame implements ActionListener, KeyListener{
                 intPort = (int) (Math.random() * 65535);
             }
 			ssm = new SuperSocketMaster(intPort, this);
-			ssm.connect();
+			if(ssm.connect() == true){
+				playButton.setEnabled(true);
+				intSelf = 1;
+			}else{
+				ssm.disconnect();
+			}
 			portField.setText(String.valueOf(intPort));
 			String ip = ssm.getMyAddress();
 			ipField.setText(ip);
@@ -64,7 +74,12 @@ public class snakeGame implements ActionListener, KeyListener{
 		//join a server
 		if (evt.getSource() == joinButton){
 			ssm = new SuperSocketMaster(ipField.getText(), Integer.parseInt(portField.getText()), this);
-			ssm.connect();
+			if (ssm.connect() == true){
+				playButton.setEnabled(true);
+				intSelf = 2;
+			}else{
+				ssm.disconnect();
+			}
 			ssm.sendText("Connect, Player connected");
 			easyButton.setEnabled(false);
 			normButton.setEnabled(false);
@@ -74,6 +89,7 @@ public class snakeGame implements ActionListener, KeyListener{
 		//network message
 		if(evt.getSource() == ssm){
 			strLine = ssm.readText();
+			System.out.println(strLine);
 			strSplit = strLine.split(",");
 			strMsgType = strSplit[0];
 			strMsgUser = strSplit[1];
@@ -87,6 +103,28 @@ public class snakeGame implements ActionListener, KeyListener{
 				intMsgY = Integer.parseInt(strSplit[3]);
 			}else if(strMsgType.equals("Message")){
 				strMsgSent = strSplit[2];
+			}else if(strMsgType.equals("System")){
+				strMsgCmd = strSplit[2];
+				strMsgArg = strSplit[3];
+				if(strMsgCmd.equals("sentUsername")){
+					if(intSelf == 1){
+						strUsername2 = strMsgUser;
+						intReady2 = 1;
+					}else if(intSelf == 2){
+						strUsername2 = strMsgUser;
+						intReady1 = 1;
+					}
+				}
+			}
+		}else if(evt.getSource() == playButton){
+			if(intSelf == 1){
+				strUsername1 = usernameField.getText();
+				ssm.sendText("System, " + strUsername1 + ", sentUsername, null");
+				intReady1 = 1;
+			}else if(intSelf == 2){
+				strUsername2 = usernameField.getText();
+				ssm.sendText("System, " + strUsername2 + ", sentUsername, null");
+				intReady1 = 2;
 			}
 		}
 		
@@ -171,6 +209,9 @@ public class snakeGame implements ActionListener, KeyListener{
 		
 		startPanel.add(playButton);
 		playButton.addActionListener(this);
+		playButton.setSize(new Dimension(330, 50));
+		playButton.setLocation(900, 500);
+		playButton.setEnabled(false);
 
 		startPanel.repaint();
 		
