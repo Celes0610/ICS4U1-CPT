@@ -131,25 +131,29 @@ public class snakeGame implements ActionListener, KeyListener{
 				}
 			}
 		}else if(evt.getSource() == playButton){
-			if(intSelf == 1){
-				strUsername1 = usernameField.getText();
-				ssm.sendText("System," + strUsername1 + ",sentUsername,"+intTheme);
-				intReady1 = 1;
-				theme1Button.setEnabled(false);
-				theme2Button.setEnabled(false);
-				if(intReady1 == 1 && intReady2 == 1){
-					theframe.setContentPane(panel);
-					theframe.repaint();
-					ssm.sendText("System," + strUsername1 + ",startGame," +intTheme);
-				}
-			}else if(intSelf == 2){
-				strUsername2 = usernameField.getText();
-				ssm.sendText("System," + strUsername2 + ",sentUsername,null");
-				intReady1 = 2;
-				if(intReady1 == 1 && intReady2 == 1){
-					theframe.setContentPane(panel);
-					theframe.repaint();
-					ssm.sendText("System," + strUsername2 + ",startGame,null");
+			if(usernameField.getText().equals("")){
+				connectStat.append("Please Enter a Username, do not try to break the game :(");
+			}else{
+				if(intSelf == 1){
+					strUsername1 = usernameField.getText();
+					ssm.sendText("System," + strUsername1 + ",sentUsername,"+intTheme);
+					intReady1 = 1;
+					theme1Button.setEnabled(false);
+					theme2Button.setEnabled(false);
+					if(intReady1 == 1 && intReady2 == 1){
+						theframe.setContentPane(panel);
+						theframe.repaint();
+						ssm.sendText("System," + strUsername1 + ",startGame," +intTheme);
+					}
+				}else if(intSelf == 2){
+					strUsername2 = usernameField.getText();
+					ssm.sendText("System," + strUsername2 + ",sentUsername,null");
+					intReady1 = 2;
+					if(intReady1 == 1 && intReady2 == 1){
+						theframe.setContentPane(panel);
+						theframe.repaint();
+						ssm.sendText("System," + strUsername2 + ",startGame,null");
+					}
 				}
 			}
 		}else if(evt.getSource() == theme1Button){
