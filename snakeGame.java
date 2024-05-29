@@ -39,7 +39,6 @@ public class snakeGame implements ActionListener, KeyListener{
 	String strMsgUser;
 	String strMsgCmd;
 	String strMsgArg;
-	String strMsgArg2;
 	boolean playerConnected = false;
 	int intMsgX;
 	int intMsgY;
@@ -122,7 +121,6 @@ public class snakeGame implements ActionListener, KeyListener{
             } else if (strMsgType.equals("System")) {
                 strMsgCmd = strSplit[2];
                 strMsgArg = strSplit[3];
-				strMsgArg2 = strSplit[4];
                 if (strMsgCmd.equals("sentUsername")) {
                     if (intSelf == 1) {
                         strUsername2 = strMsgUser;
@@ -132,9 +130,8 @@ public class snakeGame implements ActionListener, KeyListener{
                         intReady1 = 1;
                     }
                     if (!"null".equals(strMsgArg)) {
-						intDiff = Integer.parseInt(strMsgArg2);
                         intTheme = Integer.parseInt(strMsgArg);
-                        System.out.println("Difficulty: "+intDiff+" Theme: " + intTheme);
+                        System.out.println("Theme: " + intTheme);
                     }
                     System.out.println(intReady1 + " " + intReady2);
                 } else if (strMsgCmd.equals("startGame")) {
@@ -151,28 +148,28 @@ public class snakeGame implements ActionListener, KeyListener{
             } else {
                 if (intSelf == 1) {
                     strUsername1 = usernameField.getText();
-                    ssm.sendText("System," + strUsername1 + ",sentUsername," + intDiff + "," + intTheme);
+                    ssm.sendText("System," + strUsername1 + ",sentUsername," + intTheme + "," + intDiff);
                     intReady1 = 1;
                     theme1Button.setEnabled(false);
                     theme2Button.setEnabled(false);
 					ssm.sendText("draw," + strMapFile);
                     if (intReady1 == 1 && intReady2 == 1) {
                         theframe.setContentPane(panel);
-						panel.loadThemeImages(Integer.parseInt(strMsgArg2));
+						panel.loadThemeImages(intTheme);
                         panel.loadMap(strMapFile);
                         theframe.repaint();
-                        ssm.sendText("System," + strUsername1 + ",startGame," + intDiff + "," + intTheme);
+                        ssm.sendText("System," + strUsername1 + ",startGame," + intTheme + "," + intDiff);
                     }
                 } else if (intSelf == 2) {
                     strUsername2 = usernameField.getText();
                     theme1Button.setEnabled(false);
                     theme2Button.setEnabled(false);
-                    ssm.sendText("System," + strUsername2 + ",sentUsername,null,null");
+                    ssm.sendText("System," + strUsername2 + ",sentUsername,null");
                     intReady2 = 1;
                     if (intReady1 == 1 && intReady2 == 1) {
                         theframe.setContentPane(panel);
 						ssm.readText();
-						panel.loadThemeImages(Integer.parseInt(strMsgArg2));
+						panel.loadThemeImages(intTheme);
                         panel.loadMap(strMapFile);
                         theframe.repaint();
                     }
