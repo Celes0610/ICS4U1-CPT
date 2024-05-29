@@ -73,8 +73,6 @@ public class snakeGame implements ActionListener, KeyListener{
 			String ip = ssm.getMyAddress();
 			ipField.setText(ip);
 			connectStat.setText("Waiting for player to connect...");
-			joinButton.setEnabled(false);
-			hostButton.setEnabled(false);
 			ipField.setEnabled(false);
 			portField.setEnabled(false);
         }
@@ -89,16 +87,9 @@ public class snakeGame implements ActionListener, KeyListener{
 				ssm.disconnect();
 			}
 			ssm.sendText("Connect, Player connected");
-			connectStat.setText("Connected to server");
-			joinButton.setEnabled(false);
-			hostButton.setEnabled(false);
-			ipField.setEnabled(false);
-			portField.setEnabled(false);
 			easyButton.setEnabled(false);
 			normButton.setEnabled(false);
 			hardButton.setEnabled(false);
-			theme1Button.setEnabled(false);
-			theme2Button.setEnabled(false);
 		}
 
 		//network message
