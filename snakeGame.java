@@ -52,7 +52,6 @@ public class snakeGame implements ActionListener, KeyListener{
 	int intSelf;
 	int intTheme = 1;
 	int intDiff = 1;
-	String strMapFile = "Map - Easy.csv";
 
 	//methods
 	public void actionPerformed(ActionEvent evt){
@@ -102,7 +101,7 @@ public class snakeGame implements ActionListener, KeyListener{
 		}
 
 		//network message
-        if (evt.getSource() == ssm) {
+		if (evt.getSource() == ssm) {
             strLine = ssm.readText();
             System.out.println(strLine);
             strSplit = strLine.split(",");
@@ -136,75 +135,62 @@ public class snakeGame implements ActionListener, KeyListener{
                     System.out.println(intReady1 + " " + intReady2);
                 } else if (strMsgCmd.equals("startGame")) {
                     theframe.setContentPane(panel);
-                    panel.loadMap(strMapFile);
+                    panel.loadMap("Map - Easy.csv");
                     theframe.repaint();
                 }
-            } else if (strMsgType.equals("draw")) {
-                strMapFile = strSplit[1];
             }
-        } else if (evt.getSource() == playButton) {
-            if (usernameField.getText().equals("")) {
-                connectStat.append("\nPlease Enter a Username, do not try to break the game :(");
-            } else {
-                if (intSelf == 1) {
-                    strUsername1 = usernameField.getText();
-                    ssm.sendText("System," + strUsername1 + ",sentUsername," + intTheme + "," + intDiff);
-                    intReady1 = 1;
-                    theme1Button.setEnabled(false);
-                    theme2Button.setEnabled(false);
-					ssm.sendText("draw," + strMapFile);
-                    if (intReady1 == 1 && intReady2 == 1) {
-                        theframe.setContentPane(panel);
-						panel.loadThemeImages(intTheme);
-                        panel.loadMap(strMapFile);
-                        theframe.repaint();
-                        ssm.sendText("System," + strUsername1 + ",startGame," + intTheme + "," + intDiff);
-                    }
-                } else if (intSelf == 2) {
-                    strUsername2 = usernameField.getText();
-                    theme1Button.setEnabled(false);
-                    theme2Button.setEnabled(false);
-                    ssm.sendText("System," + strUsername2 + ",sentUsername,null");
-                    intReady2 = 1;
-                    if (intReady1 == 1 && intReady2 == 1) {
-                        theframe.setContentPane(panel);
-						ssm.readText();
-						panel.loadThemeImages(intTheme);
-                        panel.loadMap(strMapFile);
-                        theframe.repaint();
-                    }
-                }
-            }
-        } else if (evt.getSource() == theme1Button) {
-            intTheme = 1;
-        } else if (evt.getSource() == theme2Button) {
-            intTheme = 2;
-        } else if (evt.getSource() == easyButton) {
-            intDiff = 1;
-            strMapFile = "Map - Easy.csv";
-        } else if (evt.getSource() == normButton) {
-            intDiff = 2;
-            strMapFile = "Map - Normal.csv";
-        } else if (evt.getSource() == hardButton) {
-            intDiff = 3;
-            strMapFile = "Map - Hard.csv";
-        }
+		}else if(evt.getSource() == playButton){
+			if(usernameField.getText().equals("")){
+				connectStat.append("\nPlease Enter a Username, do not try to break the game :(");
+			}else{
+				if(intSelf == 1){
+					strUsername1 = usernameField.getText();
+					ssm.sendText("System," + strUsername1 + ",sentUsername,"+intTheme+","+intDiff);
+					intReady1 = 1;
+					theme1Button.setEnabled(false);
+					theme2Button.setEnabled(false);
+					if(intReady1 == 1 && intReady2 == 1){
+						theframe.setContentPane(panel);
+						theframe.repaint();
+						ssm.sendText("System," + strUsername1 + ",startGame," +intTheme+","+intDiff);
+					}
+				}else if(intSelf == 2){
+					strUsername2 = usernameField.getText();
+					theme1Button.setEnabled(false);
+					theme2Button.setEnabled(false);
+					ssm.sendText("System," + strUsername2 + ",sentUsername,null");
+					intReady1 = 2;
+					if(intReady1 == 1 && intReady2 == 1){
+						theframe.setContentPane(panel);
+						theframe.repaint();
+						ssm.sendText("System," + strUsername2 + ",startGame,null");
+					}
+				}
+			}
+		}else if(evt.getSource() == theme1Button){
+			intTheme = 1;
+		}else if(evt.getSource() == theme2Button){
+			intTheme = 2;
+		}else if(evt.getSource() == easyButton){
+			intDiff = 1;
+		}else if(evt.getSource() == normButton){
+			intDiff = 2;
+		}else if(evt.getSource() == hardButton){
+			intDiff = 3;
+		}
+		
+	}
+	public void keyReleased(KeyEvent evt){
 
-    }
+	}
+	public void keyPressed(KeyEvent evt){
+		
+	}
+	public void keyTyped(KeyEvent evt){
+	
+	}
 
-    public void keyReleased(KeyEvent evt) {
-
-    }
-
-    public void keyPressed(KeyEvent evt) {
-
-    }
-
-    public void keyTyped(KeyEvent evt) {
-
-    }
-
-    public static String[][] readFile(int intCol, String strFileName) {
+	public static String[][] readFile(int intCol, String strFileName) {
         int intRow = 0;
         try {
             BufferedReader file = new BufferedReader(new FileReader(strFileName));
