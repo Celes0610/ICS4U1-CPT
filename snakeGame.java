@@ -121,11 +121,13 @@ public class snakeGame implements ActionListener, KeyListener{
                     } else if (intSelf == 2) {
                         strUsername2 = strMsgUser;
                         intReady1 = 1;
+						strMapFile = strMsgArg;
+						intTheme = Integer.parseInt(strMsgArg2);
                     }
                     if (!"null".equals(strMsgArg)) {
 						intDiff = Integer.parseInt(strMsgArg2);
                         intTheme = Integer.parseInt(strMsgArg);
-                        System.out.println("Difficulty: "+intDiff+" Theme: " + intTheme);
+                        System.out.println("Difficulty: "+strMapFile+" Theme: " + intTheme);
                     }
                     System.out.println(intReady1 + " " + intReady2);
                 } else if (strMsgCmd.equals("startGame")) {
@@ -146,7 +148,7 @@ public class snakeGame implements ActionListener, KeyListener{
                     if (intReady1 == 1 && intReady2 == 1) {
                         theframe.setContentPane(panel);
                         theframe.repaint();
-                        ssm.sendText("System," + strUsername1 + ",startGame," + intDiff + "," + intTheme);
+                        ssm.sendText("System," + strUsername1 + ",startGame," + strMapFile + "," + intTheme);
                     }
                 } else if (intSelf == 2) {
                     strUsername2 = usernameField.getText();
