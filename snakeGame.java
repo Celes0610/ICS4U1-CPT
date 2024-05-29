@@ -39,7 +39,6 @@ public class snakeGame implements ActionListener, KeyListener{
 	String strMsgUser;
 	String strMsgCmd;
 	String strMsgArg;
-	String strMsgArg2;
 	boolean playerConnected = false;
 	int intMsgX;
 	int intMsgY;
@@ -52,8 +51,6 @@ public class snakeGame implements ActionListener, KeyListener{
 	int intReady2 = 0;
 	int intSelf;
 	int intTheme = 1;
-	int intDiff = 1;
-	String strMapFile = "Map - Easy.csv";
 
 	//methods
 	public void actionPerformed(ActionEvent evt){
@@ -74,6 +71,8 @@ public class snakeGame implements ActionListener, KeyListener{
 			String ip = ssm.getMyAddress();
 			ipField.setText(ip);
 			connectStat.setText("Waiting for player to connect...");
+			joinButton.setEnabled(false);
+			hostButton.setEnabled(false);
 			ipField.setEnabled(false);
 			portField.setEnabled(false);
         }
@@ -88,146 +87,100 @@ public class snakeGame implements ActionListener, KeyListener{
 				ssm.disconnect();
 			}
 			ssm.sendText("Connect, Player connected");
+			connectStat.setText("Connected to server");
+			joinButton.setEnabled(false);
+			hostButton.setEnabled(false);
+			ipField.setEnabled(false);
+			portField.setEnabled(false);
 			easyButton.setEnabled(false);
 			normButton.setEnabled(false);
 			hardButton.setEnabled(false);
+			theme1Button.setEnabled(false);
+			theme2Button.setEnabled(false);
 		}
 
 		//network message
-        if (evt.getSource() == ssm) {
-            strLine = ssm.readText();
-            System.out.println(strLine);
-            strSplit = strLine.split(",");
-            strMsgType = strSplit[0];
-            strMsgUser = strSplit[1];
-            if (strMsgType.equals("Connect") && !playerConnected) {
+		if(evt.getSource() == ssm){
+			strLine = ssm.readText();
+			System.out.println(strLine);
+			strSplit = strLine.split(",");
+			strMsgType = strSplit[0];
+			strMsgUser = strSplit[1];
+			if (strMsgType.equals("Connect") && !playerConnected) {
                 playerConnected = true;
                 connectStat.setText("Player connected");
-            }
+			}
 
-            if (strMsgType.equals("Game")) {
-                intMsgX = Integer.parseInt(strSplit[2]);
-                intMsgY = Integer.parseInt(strSplit[3]);
-            } else if (strMsgType.equals("Message")) {
-                strMsgSent = strSplit[2];
-            } else if (strMsgType.equals("System")) {
-                strMsgCmd = strSplit[2];
-                strMsgArg = strSplit[3];
-				strMsgArg2 = strSplit[4];
-                if (strMsgCmd.equals("sentUsername")) {
-                    if (intSelf == 1) {
-                        strUsername2 = strMsgUser;
-                        intReady2 = 1;
-                    } else if (intSelf == 2) {
-                        strUsername2 = strMsgUser;
-                        intReady1 = 1;
-                    }
-                    if (!"null".equals(strMsgArg)) {
-						intDiff = Integer.parseInt(strMsgArg2);
-                        intTheme = Integer.parseInt(strMsgArg);
-                        System.out.println("Difficulty: "+intDiff+" Theme: " + intTheme);
-                    }
-                    System.out.println(intReady1 + " " + intReady2);
-                } else if (strMsgCmd.equals("startGame")) {
-                    theframe.setContentPane(panel);
-                    theframe.repaint();
-                }
-            }
-        } else if (evt.getSource() == playButton) {
-            if (usernameField.getText().equals("")) {
-                connectStat.append("\nPlease Enter a Username, do not try to break the game :(");
-            } else {
-                if (intSelf == 1) {
-                    strUsername1 = usernameField.getText();
-                    ssm.sendText("System," + strUsername1 + ",sentUsername," + strMapFile + "," + intTheme);
-                    intReady1 = 1;
-                    theme1Button.setEnabled(false);
-                    theme2Button.setEnabled(false);
-                    if (intReady1 == 1 && intReady2 == 1) {
-                        theframe.setContentPane(panel);
-                        theframe.repaint();
-                        ssm.sendText("System," + strUsername1 + ",startGame," + intDiff + "," + intTheme);
-                    }
-                } else if (intSelf == 2) {
-                    strUsername2 = usernameField.getText();
-                    theme1Button.setEnabled(false);
-                    theme2Button.setEnabled(false);
-                    ssm.sendText("System," + strUsername2 + ",sentUsername,null,null");
-                    intReady2 = 1;
-                    if (intReady1 == 1 && intReady2 == 1) {
-                        theframe.setContentPane(panel);
-						ssm.readText();
+			if(strMsgType.equals("Game")){
+				intMsgX = Integer.parseInt(strSplit[2]);
+				intMsgY = Integer.parseInt(strSplit[3]);
+			}else if(strMsgType.equals("Message")){
+				strMsgSent = strSplit[2];
+			}else if(strMsgType.equals("System")){
+				strMsgCmd = strSplit[2];
+				strMsgArg = strSplit[3];
+				if(strMsgCmd.equals("sentUsername")){
+					if(intSelf == 1){
+						strUsername2 = strMsgUser;
+						intReady2 = 1;
+					}else if(intSelf == 2){
+						strUsername2 = strMsgUser;
+						intReady1 = 1;
+					}
+					if(strMsgArg.equals(null)){
 						
-                    }
-                }
-            }
-        } else if (evt.getSource() == theme1Button) {
-            intTheme = 1;
-        } else if (evt.getSource() == theme2Button) {
-            intTheme = 2;
-        } else if (evt.getSource() == easyButton) {
-            intDiff = 1;
-            strMapFile = "Map - Easy.csv";
-        } else if (evt.getSource() == normButton) {
-            intDiff = 2;
-            strMapFile = "Map - Normal.csv";
-        } else if (evt.getSource() == hardButton) {
-            intDiff = 3;
-            strMapFile = "Map - Hard.csv";
-        }
+					}else{
+						intTheme = Integer.parseInt(strMsgArg);
+						System.out.println("Theme: " +intTheme);
+					}
+					System.out.println(intReady1 +" "+ intReady2);
+				}else if(strMsgCmd.equals("startGame")){
+					theframe.setContentPane(panel);
+					theframe.repaint();
+				}
+			}
+		}else if(evt.getSource() == playButton){
+			if(usernameField.getText().equals("")){
+				connectStat.append("\nPlease Enter a Username, do not try to break the game :(");
+			}else{
+				if(intSelf == 1){
+					strUsername1 = usernameField.getText();
+					ssm.sendText("System," + strUsername1 + ",sentUsername,"+intTheme);
+					intReady1 = 1;
+					theme1Button.setEnabled(false);
+					theme2Button.setEnabled(false);
+					if(intReady1 == 1 && intReady2 == 1){
+						theframe.setContentPane(panel);
+						theframe.repaint();
+						ssm.sendText("System," + strUsername1 + ",startGame," +intTheme);
+					}
+				}else if(intSelf == 2){
+					strUsername2 = usernameField.getText();
+					ssm.sendText("System," + strUsername2 + ",sentUsername,null");
+					intReady1 = 2;
+					if(intReady1 == 1 && intReady2 == 1){
+						theframe.setContentPane(panel);
+						theframe.repaint();
+						ssm.sendText("System," + strUsername2 + ",startGame,null");
+					}
+				}
+			}
+		}else if(evt.getSource() == theme1Button){
+			intTheme = 1;
+		}else if(evt.getSource() == theme2Button){
+			intTheme = 2;
+		}
+		
+	}
+	public void keyReleased(KeyEvent evt){
 
-    }
-
-    public void keyReleased(KeyEvent evt) {
-
-    }
-
-    public void keyPressed(KeyEvent evt) {
-
-    }
-
-    public void keyTyped(KeyEvent evt) {
-
-    }
-
-    public static String[][] readFile(int intCol, String strFileName) {
-        int intRow = 0;
-        try {
-            BufferedReader file = new BufferedReader(new FileReader(strFileName));
-            String strLine;
-
-            while ((strLine = file.readLine()) != null) {
-                intRow++;
-            }
-            file.close();
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-        String[][] strMap = new String[intRow][intCol];
-        try {
-            BufferedReader map = new BufferedReader(new FileReader(strFileName));
-            for (int row = 0; row < intRow; row++) {
-                String strLine = map.readLine();
-                String[] strSplit = strLine.split(",");
-
-                for (int col = 0; col < intCol; col++) {
-                    if (col < strSplit.length) {
-                        strMap[row][col] = strSplit[col];
-                    }
-                }
-            }
-            map.close();
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return strMap;
-    }
+	}
+	public void keyPressed(KeyEvent evt){
+		
+	}
+	public void keyTyped(KeyEvent evt){
+	
+	}
 	
 	//constructor
 	public snakeGame(){
@@ -319,6 +272,50 @@ public class snakeGame implements ActionListener, KeyListener{
 		theframe.setResizable(false);
 		theframe.setVisible(true);
 	}
+	
+	public void mainGame(){
+		
+	}
+	
+	//method to read from csv file and load into array
+	public static String[][] readFile(int intCol, String strFileName) {
+        int intRow = 0;
+        try {
+            BufferedReader file = new BufferedReader(new FileReader(strFileName));
+            String strLine;
+
+            while ((strLine = file.readLine()) != null) {
+                intRow++;
+            }
+            file.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        String[][] strMap = new String[intRow][intCol];
+        try {
+            BufferedReader map = new BufferedReader(new FileReader(strFileName));
+            for (int row = 0; row < intRow; row++) {
+                String strLine = map.readLine();
+                String[] strSplit = strLine.split(",");
+
+                for (int col = 0; col < intCol; col++) {
+                    if (col < strSplit.length) {
+                        strMap[row][col] = strSplit[col];
+                    }
+                }
+            }
+            map.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return strMap;
+    }
 	
 	//main program
 	public static void main (String[] args){
