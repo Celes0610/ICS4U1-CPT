@@ -3,97 +3,103 @@ import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.event.*;
 import java.io.*;
-import java.util.DuplicateFormatFlagsException;
 
-public class snakeGame implements ActionListener, KeyListener{
-	//properties
-	JFrame theframe = new JFrame("Snake");
-	StartPanel startPanel = new StartPanel();
-	AnimationPanel panel = new AnimationPanel();
-	SuperSocketMaster ssm;
-	
-	/*start screen*/
-	JLabel ipLabel = new JLabel("IP");
-	JTextField ipField = new JTextField();
-	JLabel portLabel = new JLabel("Port");
-	JTextField portField = new JTextField();
-	JButton hostButton = new JButton("Create Server");
-	JButton joinButton = new JButton("Join Server");
-	JTextArea connectStat = new JTextArea();
-	JLabel usernameLabel = new JLabel("Username");
-	JTextField usernameField = new JTextField();
-	JButton easyButton = new JButton("Easy");
-	JButton normButton = new JButton("Normal");
-	JButton hardButton = new JButton("Hard");
-	JButton playButton = new JButton("Ready");
-	JButton theme1Button = new JButton("Star Wars");
-	JButton theme2Button = new JButton("Zelda");
-	
-	/*chat*/
-	JTextArea chat = new JTextArea();
-	
-	/*network message*/
-	String strLine;
-	String strSplit[];
-	String strMsgType;
-	String strMsgUser;
-	String strMsgCmd;
-	String strMsgArg;
-	String strMsgArg2;
-	boolean playerConnected = false;
-	int intMsgX;
-	int intMsgY;
-	String strMsgSent;
-	String strUsername1;
-	String strUsername2;
-	int intSnake1[][] = new int[100][2];
-	int intSnake2[][] = new int[100][2];
-	int intReady1 = 0;
-	int intReady2 = 0;
-	int intSelf;
-	int intTheme = 1;
-	int intDiff = 1;
-	String strMapFile = "Map - Easy.csv";
+public class snakeGame implements ActionListener, KeyListener {
+    // properties
+    JFrame theframe = new JFrame("Snake");
+    StartPanel startPanel = new StartPanel();
+    AnimationPanel panel = new AnimationPanel();
+    SuperSocketMaster ssm;
 
-	//methods
-	public void actionPerformed(ActionEvent evt){
-		//create a server 
-		if (evt.getSource() == hostButton) {
+    /* start screen */
+    JLabel ipLabel = new JLabel("IP");
+    JTextField ipField = new JTextField();
+    JLabel portLabel = new JLabel("Port");
+    JTextField portField = new JTextField();
+    JButton hostButton = new JButton("Create Server");
+    JButton joinButton = new JButton("Join Server");
+    JTextArea connectStat = new JTextArea();
+    JLabel usernameLabel = new JLabel("Username");
+    JTextField usernameField = new JTextField();
+    JButton easyButton = new JButton("Easy");
+    JButton normButton = new JButton("Normal");
+    JButton hardButton = new JButton("Hard");
+    JButton playButton = new JButton("Ready");
+    JButton theme1Button = new JButton("Star Wars");
+    JButton theme2Button = new JButton("Zelda");
+
+    /* chat */
+    JTextArea chat = new JTextArea();
+
+    /* network message */
+    String strLine;
+    String strSplit[];
+    String strMsgType;
+    String strMsgUser;
+    String strMsgCmd;
+    String strMsgArg;
+    String strMsgArg2;
+    boolean playerConnected = false;
+    int intMsgX;
+    int intMsgY;
+    String strMsgSent;
+    String strUsername1;
+    String strUsername2;
+    int intReady1 = 0;
+    int intReady2 = 0;
+    int intSelf;
+    int intTheme = 1;
+    String strMapFile = "Map - Easy.csv";
+
+    // methods
+    public void actionPerformed(ActionEvent evt) {
+        // create a server
+        if (evt.getSource() == hostButton) {
             int intPort = (int) (Math.random() * 65535);
             while (intPort < 1024 || intPort > 49151) { // ensure it's a valid and non-privileged port
                 intPort = (int) (Math.random() * 65535);
             }
-			ssm = new SuperSocketMaster(intPort, this);
-			if(ssm.connect() == true){
-				playButton.setEnabled(true);
-				intSelf = 1;
-			}else{
-				ssm.disconnect();
-			}
-			portField.setText(String.valueOf(intPort));
-			String ip = ssm.getMyAddress();
-			ipField.setText(ip);
-			connectStat.setText("Waiting for player to connect...");
-			ipField.setEnabled(false);
-			portField.setEnabled(false);
+            ssm = new SuperSocketMaster(intPort, this);
+            if (ssm.connect() == true) {
+                playButton.setEnabled(true);
+                intSelf = 1;
+            } else {
+                ssm.disconnect();
+            }
+            portField.setText(String.valueOf(intPort));
+            String ip = ssm.getMyAddress();
+            ipField.setText(ip);
+            connectStat.setText("Waiting for player to connect...");
+            joinButton.setEnabled(false);
+            hostButton.setEnabled(false);
+            ipField.setEnabled(false);
+            portField.setEnabled(false);
         }
 
-		//join a server
-		if (evt.getSource() == joinButton){
-			ssm = new SuperSocketMaster(ipField.getText(), Integer.parseInt(portField.getText()), this);
-			if (ssm.connect() == true){
-				playButton.setEnabled(true);
-				intSelf = 2;
-			}else{
-				ssm.disconnect();
-			}
-			ssm.sendText("Connect, Player connected");
-			easyButton.setEnabled(false);
-			normButton.setEnabled(false);
-			hardButton.setEnabled(false);
-		}
+        // join a server
+        if (evt.getSource() == joinButton) {
+            ssm = new SuperSocketMaster(ipField.getText(), Integer.parseInt(portField.getText()), this);
+            if (ssm.connect() == true) {
+                playButton.setEnabled(true);
+                intSelf = 2;
+            } else {
+                ssm.disconnect();
+            }
 
-		//network message
+            ssm.sendText("Connect, Player connected");
+            connectStat.setText("Connected to server");
+            joinButton.setEnabled(false);
+            hostButton.setEnabled(false);
+            ipField.setEnabled(false);
+            portField.setEnabled(false);
+            easyButton.setEnabled(false);
+            normButton.setEnabled(false);
+            hardButton.setEnabled(false);
+            theme1Button.setEnabled(false);
+            theme2Button.setEnabled(false);
+        }
+
+        // network message
         if (evt.getSource() == ssm) {
             strLine = ssm.readText();
             System.out.println(strLine);
@@ -111,9 +117,10 @@ public class snakeGame implements ActionListener, KeyListener{
             } else if (strMsgType.equals("Message")) {
                 strMsgSent = strSplit[2];
             } else if (strMsgType.equals("System")) {
+                System.out.println(strLine);
                 strMsgCmd = strSplit[2];
                 strMsgArg = strSplit[3];
-				strMsgArg2 = strSplit[4];
+                strMsgArg2 = strSplit[4];
                 if (strMsgCmd.equals("sentUsername")) {
                     if (intSelf == 1) {
                         strUsername2 = strMsgUser;
@@ -121,19 +128,20 @@ public class snakeGame implements ActionListener, KeyListener{
                     } else if (intSelf == 2) {
                         strUsername2 = strMsgUser;
                         intReady1 = 1;
-						strMapFile = strMsgArg;
-						intTheme = Integer.parseInt(strMsgArg2);
                     }
-                    if (!"null".equals(strMsgArg)) {
-						intDiff = Integer.parseInt(strMsgArg2);
-                        intTheme = Integer.parseInt(strMsgArg);
-                        System.out.println("Difficulty: "+strMapFile+" Theme: " + intTheme);
-                    }
+
                     System.out.println(intReady1 + " " + intReady2);
-                } else if (strMsgCmd.equals("startGame")) {
+				}else if (strMsgCmd.equals("startGame")) {
+                    panel.loadThemeImages(intTheme);
+                    panel.loadMap(strMapFile);
                     theframe.setContentPane(panel);
+                    theframe.validate();
                     theframe.repaint();
-                }
+                } 
+            } else if (strMsgType.equals("diff")) {
+                strMapFile = strSplit[1];
+            } else if (strMsgType.equals("theme")) {
+                intTheme = Integer.parseInt(strSplit[1]);
             }
         } else if (evt.getSource() == playButton) {
             if (usernameField.getText().equals("")) {
@@ -141,14 +149,18 @@ public class snakeGame implements ActionListener, KeyListener{
             } else {
                 if (intSelf == 1) {
                     strUsername1 = usernameField.getText();
-                    ssm.sendText("System," + strUsername1 + ",sentUsername," + strMapFile + "," + intTheme);
                     intReady1 = 1;
                     theme1Button.setEnabled(false);
                     theme2Button.setEnabled(false);
+					ssm.sendText("diff," + strMapFile+",null,null");
+                    ssm.sendText("theme," + intTheme+",null,null");
                     if (intReady1 == 1 && intReady2 == 1) {
+                        panel.loadThemeImages(intTheme);
+                        panel.loadMap(strMapFile);
                         theframe.setContentPane(panel);
+                        theframe.validate();
                         theframe.repaint();
-                        ssm.sendText("System," + strUsername1 + ",startGame," + strMapFile + "," + intTheme);
+                        ssm.sendText("System," + strUsername1 + ",startGame,null,null");
                     }
                 } else if (intSelf == 2) {
                     strUsername2 = usernameField.getText();
@@ -157,9 +169,11 @@ public class snakeGame implements ActionListener, KeyListener{
                     ssm.sendText("System," + strUsername2 + ",sentUsername,null,null");
                     intReady2 = 1;
                     if (intReady1 == 1 && intReady2 == 1) {
+                        panel.loadThemeImages(intTheme);
+                        panel.loadMap(strMapFile);
                         theframe.setContentPane(panel);
-						ssm.readText();
-						
+                        theframe.validate();
+                        theframe.repaint();
                     }
                 }
             }
@@ -168,13 +182,10 @@ public class snakeGame implements ActionListener, KeyListener{
         } else if (evt.getSource() == theme2Button) {
             intTheme = 2;
         } else if (evt.getSource() == easyButton) {
-            intDiff = 1;
             strMapFile = "Map - Easy.csv";
         } else if (evt.getSource() == normButton) {
-            intDiff = 2;
             strMapFile = "Map - Normal.csv";
         } else if (evt.getSource() == hardButton) {
-            intDiff = 3;
             strMapFile = "Map - Hard.csv";
         }
 
@@ -230,100 +241,99 @@ public class snakeGame implements ActionListener, KeyListener{
 
         return strMap;
     }
-	
-	//constructor
-	public snakeGame(){
-		theframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		panel.setLayout(null);
 
-		panel.setPreferredSize(new Dimension(1280, 720));
-		theframe.add(panel);
-		theframe.add(startPanel);
-		theframe.setContentPane(startPanel);
+    // constructor
+    public snakeGame() {
+        theframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		startPanel.setPreferredSize(new Dimension(1280, 720));
-		startPanel.setLayout(null);
-		
-		startPanel.add(ipLabel);
-		ipLabel.setSize(new Dimension(350, 50));
-		ipLabel.setLocation(55, 450);
-		
-		startPanel.add(ipField);
-		ipField.setSize(new Dimension(350,50));
-		ipField.setLocation(50, 500);
+        panel.setLayout(null);
+        panel.setPreferredSize(new Dimension(1280, 720));
+        theframe.add(panel);
+        theframe.add(startPanel);
+        theframe.setContentPane(startPanel);
 
-		startPanel.add(portLabel);
-		portLabel.setSize(new Dimension(350, 50));
-		portLabel.setLocation(505, 450);
-		
-		startPanel.add(portField);
-		portField.setSize(new Dimension(350,50));
-		portField.setLocation(500,500);
+        startPanel.setPreferredSize(new Dimension(1280, 720));
+        startPanel.setLayout(null);
 
-		startPanel.add(hostButton);
-		hostButton.setSize(new Dimension(350,50));
-		hostButton.setLocation(50,400);
-		hostButton.addActionListener(this);
+        startPanel.add(ipLabel);
+        ipLabel.setSize(new Dimension(350, 50));
+        ipLabel.setLocation(55, 450);
 
-		startPanel.add(joinButton);
-		joinButton.addActionListener(this); 
-		joinButton.setSize(new Dimension(350,50));
-		joinButton.setLocation(500,400);
+        startPanel.add(ipField);
+        ipField.setSize(new Dimension(350, 50));
+        ipField.setLocation(50, 500);
 
-		startPanel.add(connectStat);
-		connectStat.setSize(new Dimension(800, 70));
-		connectStat.setLocation(50, 600);
-		connectStat.setEnabled(false);
+        startPanel.add(portLabel);
+        portLabel.setSize(new Dimension(350, 50));
+        portLabel.setLocation(505, 450);
 
-		startPanel.add(usernameLabel);
-		usernameLabel.setSize(new Dimension(200, 50));
-		usernameLabel.setLocation(900, 50);
+        startPanel.add(portField);
+        portField.setSize(new Dimension(350, 50));
+        portField.setLocation(500, 500);
 
-		startPanel.add(usernameField);
-		usernameField.setSize(new Dimension(330, 50));
-		usernameField.setLocation(900, 100);
-		
-		startPanel.add(easyButton);
-		easyButton.addActionListener(this);
-		easyButton.setSize(new Dimension(330, 50));
-		easyButton.setLocation(900, 200);
-		
-		startPanel.add(normButton);
-		normButton.addActionListener(this);
-		normButton.setSize(new Dimension(330, 50));
-		normButton.setLocation(900, 275);
-		
-		startPanel.add(hardButton);
-		hardButton.addActionListener(this);
-		hardButton.setSize(new Dimension(330, 50));
-		hardButton.setLocation(900, 350);		
-		
-		startPanel.add(playButton);
-		playButton.addActionListener(this);
-		playButton.setSize(new Dimension(330, 50));
-		playButton.setLocation(900, 500);
-		playButton.setEnabled(false);
+        startPanel.add(hostButton);
+        hostButton.setSize(new Dimension(350, 50));
+        hostButton.setLocation(50, 400);
+        hostButton.addActionListener(this);
 
-		startPanel.add(theme1Button);
-		theme1Button.addActionListener(this);
-		theme1Button.setSize(new Dimension(140, 50));
-		theme1Button.setLocation(900, 425);
+        startPanel.add(joinButton);
+        joinButton.addActionListener(this);
+        joinButton.setSize(new Dimension(350, 50));
+        joinButton.setLocation(500, 400);
 
-		startPanel.add(theme2Button);
-		theme2Button.addActionListener(this);
-		theme2Button.setSize(new Dimension(140, 50));
-		theme2Button.setLocation(1090, 425);
+        startPanel.add(connectStat);
+        connectStat.setSize(new Dimension(800, 70));
+        connectStat.setLocation(50, 600);
+        connectStat.setEnabled(false);
 
-		startPanel.repaint();
-		
-		theframe.pack();
-		theframe.setResizable(false);
-		theframe.setVisible(true);
-	}
-	
-	//main program
-	public static void main (String[] args){
-		new snakeGame();
-	}
+        startPanel.add(usernameLabel);
+        usernameLabel.setSize(new Dimension(200, 50));
+        usernameLabel.setLocation(900, 50);
+
+        startPanel.add(usernameField);
+        usernameField.setSize(new Dimension(330, 50));
+        usernameField.setLocation(900, 100);
+
+        startPanel.add(easyButton);
+        easyButton.addActionListener(this);
+        easyButton.setSize(new Dimension(330, 50));
+        easyButton.setLocation(900, 200);
+
+        startPanel.add(normButton);
+        normButton.addActionListener(this);
+        normButton.setSize(new Dimension(330, 50));
+        normButton.setLocation(900, 275);
+
+        startPanel.add(hardButton);
+        hardButton.addActionListener(this);
+        hardButton.setSize(new Dimension(330, 50));
+        hardButton.setLocation(900, 350);
+
+        startPanel.add(playButton);
+        playButton.addActionListener(this);
+        playButton.setSize(new Dimension(330, 50));
+        playButton.setLocation(900, 500);
+        playButton.setEnabled(false);
+
+        startPanel.add(theme1Button);
+        theme1Button.addActionListener(this);
+        theme1Button.setSize(new Dimension(140, 50));
+        theme1Button.setLocation(900, 425);
+
+        startPanel.add(theme2Button);
+        theme2Button.addActionListener(this);
+        theme2Button.setSize(new Dimension(140, 50));
+        theme2Button.setLocation(1090, 425);
+
+        startPanel.repaint();
+
+        theframe.pack();
+        theframe.setResizable(false);
+        theframe.setVisible(true);
+    }
+
+    // main program
+    public static void main(String[] args) {
+        new snakeGame();
+    }
 }
