@@ -117,7 +117,7 @@ public class snakeGame implements ActionListener, KeyListener {
                 intMsgY = Integer.parseInt(strSplit[3]);
             } else if (strMsgType.equals("Message")) {
                 strMsgSent = strSplit[2];
-				chat.append(strMsgUser+": "+strMsgSent);
+				chat.append("\n"+strMsgUser+": "+strMsgSent);
             } else if (strMsgType.equals("System")) {
                 System.out.println(strLine);
                 strMsgCmd = strSplit[2];
@@ -192,27 +192,42 @@ public class snakeGame implements ActionListener, KeyListener {
 		/*theme choosing */
 		if (evt.getSource() == theme1Button) {
             intTheme = 1;
+			theme1Button.setEnabled(false);
+			theme2Button.setEnabled(false);
         } else if (evt.getSource() == theme2Button) {
             intTheme = 2;
+			theme1Button.setEnabled(false);
+			theme2Button.setEnabled(false);
         } 
 		
 		/*difficulty */
 		if (evt.getSource() == easyButton) {
             strMapFile = "Map - Easy.csv";
+			easyButton.setEnabled(false);
+			normButton.setEnabled(false);
+			hardButton.setEnabled(false);
         } else if (evt.getSource() == normButton) {
             strMapFile = "Map - Normal.csv";
+			easyButton.setEnabled(false);
+			normButton.setEnabled(false);
+			hardButton.setEnabled(false);
         } else if (evt.getSource() == hardButton) {
             strMapFile = "Map - Hard.csv";
+			easyButton.setEnabled(false);
+			normButton.setEnabled(false);
+			hardButton.setEnabled(false);
         }
 
 		/*message sending */
 		if (evt.getSource() == message){
 			String strMessage = message.getText();
+			chat.append("\nYou: "+strMessage);
 			if(intSelf == 1){
 				ssm.sendText("Message,"+strUsername1+","+strMessage);
 			}else if(intSelf == 2){
 				ssm.sendText("Message,"+strUsername2+","+strMessage);
 			}
+			message.setText("");
 				
 		}
     }
