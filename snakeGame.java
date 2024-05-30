@@ -31,6 +31,7 @@ public class snakeGame implements ActionListener, KeyListener {
     /* chat */
     JTextArea chat = new JTextArea();
 	JTextField message = new JTextField();
+	JScrollPane chatScroll = new JScrollPane(chat);
 
     /* network message */
     String strLine;
@@ -136,8 +137,6 @@ public class snakeGame implements ActionListener, KeyListener {
 				}else if (strMsgCmd.equals("startGame")) {
                     panel.loadThemeImages(intTheme);
                     panel.loadMap(strMapFile);
-					panel.add(chat);
-					panel.add(message);
                     theframe.setContentPane(panel);
                     theframe.validate();
                     theframe.repaint();
@@ -164,8 +163,6 @@ public class snakeGame implements ActionListener, KeyListener {
                     if (intReady1 == 1 && intReady2 == 1) {
                         panel.loadThemeImages(intTheme);
                         panel.loadMap(strMapFile);
-						panel.add(chat);
-						panel.add(message);
                         theframe.setContentPane(panel);
                         theframe.validate();
                         theframe.repaint();
@@ -180,8 +177,6 @@ public class snakeGame implements ActionListener, KeyListener {
                     if (intReady1 == 1 && intReady2 == 1) {
                         panel.loadThemeImages(intTheme);
                         panel.loadMap(strMapFile);
-						panel.add(chat);
-						panel.add(message);
                         theframe.setContentPane(panel);
                         theframe.validate();
                         theframe.repaint();
@@ -221,16 +216,24 @@ public class snakeGame implements ActionListener, KeyListener {
 		/*message sending */
 		if (evt.getSource() == message){
 			String strMessage = message.getText();
-			chat.append("\nYou: "+strMessage);
-			if(intSelf == 1){
-				ssm.sendText("Message,"+strUsername1+","+strMessage);
-			}else if(intSelf == 2){
-				ssm.sendText("Message,"+strUsername2+","+strMessage);
+			if (!strMessage.equals(null)){
+				chat.append("\nYou: "+strMessage);
+				if(intSelf == 1){
+					ssm.sendText("Message,"+strUsername1+","+strMessage);
+				}else if(intSelf == 2){
+					ssm.sendText("Message,"+strUsername2+","+strMessage);
+				}
+				message.setText("");
+			}else{
+				if(intSelf == 1){
+					ssm.sendText("Message,"+strUsername1+",null");
+				}else if(intSelf == 2){
+					ssm.sendText("Message,"+strUsername2+",null");
+				}
 			}
-			message.setText("");
-				
 		}
     }
+    
 
     public void keyReleased(KeyEvent evt) {
 
@@ -372,12 +375,17 @@ public class snakeGame implements ActionListener, KeyListener {
         theframe.setResizable(false);
         theframe.setVisible(true);
 
-		chat.setSize(new Dimension(460, 570));
-		chat.setLocation(770, 50);
+		chat.setEditable(false);
+		chatScroll.setViewportView(chat);
+		chatScroll.setSize(new Dimension(460, 570));
+		chatScroll.setLocation(770, 50);
 
 		message.setSize(new Dimension(460, 50));
 		message.setLocation(770, 640);
 		message.addActionListener(this);
+
+		panel.add(chatScroll);
+		panel.add(message);
     }
 
     // main program
@@ -385,3 +393,4 @@ public class snakeGame implements ActionListener, KeyListener {
         new snakeGame();
     }
 }
+
