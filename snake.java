@@ -87,7 +87,10 @@ public class snake implements ActionListener{
     
     
     //constructor
-    public snake(int startX, int StartY, char startDirection){
+    public snake(int startX, int startY, int intStartDirection){
         thetimer.addActionListener(this);
+        intSegments[0][0] = startX;
+        intSegments[0][1] = startY;
+        this.intDirection = intStartDirection;
     }
 }
