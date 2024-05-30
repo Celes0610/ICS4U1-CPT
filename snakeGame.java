@@ -30,6 +30,7 @@ public class snakeGame implements ActionListener, KeyListener {
 
     /* chat */
     JTextArea chat = new JTextArea();
+	JTextField message = new JTextField();
 
     /* network message */
     String strLine;
@@ -116,6 +117,7 @@ public class snakeGame implements ActionListener, KeyListener {
                 intMsgY = Integer.parseInt(strSplit[3]);
             } else if (strMsgType.equals("Message")) {
                 strMsgSent = strSplit[2];
+				chat.append(strMsgUser+": "+strMsgSent);
             } else if (strMsgType.equals("System")) {
                 System.out.println(strLine);
                 strMsgCmd = strSplit[2];
@@ -134,6 +136,8 @@ public class snakeGame implements ActionListener, KeyListener {
 				}else if (strMsgCmd.equals("startGame")) {
                     panel.loadThemeImages(intTheme);
                     panel.loadMap(strMapFile);
+					panel.add(chat);
+					panel.add(message);
                     theframe.setContentPane(panel);
                     theframe.validate();
                     theframe.repaint();
@@ -143,7 +147,10 @@ public class snakeGame implements ActionListener, KeyListener {
             } else if (strMsgType.equals("theme")) {
                 intTheme = Integer.parseInt(strSplit[1]);
             }
-        } else if (evt.getSource() == playButton) {
+        }
+		
+		/*players ready*/
+		if (evt.getSource() == playButton) {
             if (usernameField.getText().equals("")) {
                 connectStat.append("\nPlease Enter a Username, do not try to break the game :(");
             } else {
@@ -157,6 +164,8 @@ public class snakeGame implements ActionListener, KeyListener {
                     if (intReady1 == 1 && intReady2 == 1) {
                         panel.loadThemeImages(intTheme);
                         panel.loadMap(strMapFile);
+						panel.add(chat);
+						panel.add(message);
                         theframe.setContentPane(panel);
                         theframe.validate();
                         theframe.repaint();
@@ -171,17 +180,24 @@ public class snakeGame implements ActionListener, KeyListener {
                     if (intReady1 == 1 && intReady2 == 1) {
                         panel.loadThemeImages(intTheme);
                         panel.loadMap(strMapFile);
+						panel.add(chat);
+						panel.add(message);
                         theframe.setContentPane(panel);
                         theframe.validate();
                         theframe.repaint();
                     }
                 }
             }
-        } else if (evt.getSource() == theme1Button) {
+        }
+		/*theme choosing */
+		if (evt.getSource() == theme1Button) {
             intTheme = 1;
         } else if (evt.getSource() == theme2Button) {
             intTheme = 2;
-        } else if (evt.getSource() == easyButton) {
+        } 
+		
+		/*difficulty */
+		if (evt.getSource() == easyButton) {
             strMapFile = "Map - Easy.csv";
         } else if (evt.getSource() == normButton) {
             strMapFile = "Map - Normal.csv";
@@ -189,6 +205,16 @@ public class snakeGame implements ActionListener, KeyListener {
             strMapFile = "Map - Hard.csv";
         }
 
+		/*message sending */
+		if (evt.getSource() == message){
+			String strMessage = message.getText();
+			if(intSelf == 1){
+				ssm.sendText("Message,"+strUsername1+","+strMessage);
+			}else if(intSelf == 2){
+				ssm.sendText("Message,"+strUsername2+","+strMessage);
+			}
+				
+		}
     }
 
     public void keyReleased(KeyEvent evt) {
@@ -330,6 +356,13 @@ public class snakeGame implements ActionListener, KeyListener {
         theframe.pack();
         theframe.setResizable(false);
         theframe.setVisible(true);
+
+		chat.setSize(new Dimension(460, 570));
+		chat.setLocation(770, 50);
+
+		message.setSize(new Dimension(460, 50));
+		message.setLocation(770, 640);
+		message.addActionListener(this);
     }
 
     // main program
