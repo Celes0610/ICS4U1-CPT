@@ -118,7 +118,7 @@ public class snakeGame implements ActionListener, KeyListener {
                 intMsgY = Integer.parseInt(strSplit[3]);
             } else if (strMsgType.equals("Message")) {
                 strMsgSent = strSplit[2];
-				chat.append("\n"+strMsgUser+": "+strMsgSent);
+				chat.append(strMsgUser+": "+strMsgSent+"\n");
             } else if (strMsgType.equals("System")) {
                 System.out.println(strLine);
                 strMsgCmd = strSplit[2];
@@ -217,7 +217,7 @@ public class snakeGame implements ActionListener, KeyListener {
 		if (evt.getSource() == message){
 			String strMessage = message.getText();
 			if (!strMessage.equals(null)){
-				chat.append("\nYou: "+strMessage);
+				chat.append("You: "+strMessage+"\n");
 				if(intSelf == 1){
 					ssm.sendText("Message,"+strUsername1+","+strMessage);
 				}else if(intSelf == 2){
