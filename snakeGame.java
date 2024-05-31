@@ -240,7 +240,17 @@ public class snakeGame implements ActionListener, KeyListener {
     }
 
     public void keyPressed(KeyEvent evt) {
-
+        char keyChar = evt.getKeyChar();
+        System.out.println("Key typed: "+keyChar);
+        if(keyChar == 'w'){
+            snake.setDirection("up");
+        } else if(keyChar == 'a'){
+            snake.setDirection("right");
+        } else if(keyChar == 's'){
+            snake.setDirection("down");
+        } else if(keyChar == 'd'){
+            snake.setDirection("left");
+        }
     }
 
     public void keyTyped(KeyEvent evt) {
@@ -386,6 +396,7 @@ public class snakeGame implements ActionListener, KeyListener {
 
 		panel.add(chatScroll);
 		panel.add(message);
+        panel.addKeyListener(this);
     }
 
     // main program

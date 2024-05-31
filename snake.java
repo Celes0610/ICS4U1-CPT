@@ -13,54 +13,64 @@ public class snake implements ActionListener{
     int length;
     int[] intTemp;
     int intLength;
-    int intDirection;
-    Timer thetimer = new Timer(1000,null);
+    static int intDirection;
+    Timer thetimer = new Timer(100,null);
 
     //methods
     public void actionPerformed(ActionEvent evt){
         if(evt.getSource() == thetimer){
-            if(intDirection == 1){
-                for(int intCount = 0;intCount <= intLength; intCount++){
-                    intTemp[intCount] = intSegments[intCount][1];
-                }
-                intSegments[0][1] = intSegments[0][1] - 1;
-                for(int intCount = 0; intCount <= (intLength - 1); intCount++){
-                    intSegments[intCount + 1][1] = intTemp[intCount];
-                }
-            }else if(intDirection == 2){
-                for(int intCount = 0;intCount <= intLength; intCount++){
-                    intTemp[intCount] = intSegments[intCount][0];
-                }
-                intSegments[0][0] = intSegments[0][0] + 1;
-                for(int intCount = 0; intCount <= (intLength - 1); intCount++){
-                    intSegments[intCount + 1][0] = intTemp[intCount];
-                }
-            }else if(intDirection == 3){
-                for(int intCount = 0;intCount <= intLength; intCount++){
-                    intTemp[intCount] = intSegments[intCount][1];
-                }
-                intSegments[0][1] = intSegments[0][1] + 1;
-                for(int intCount = 0; intCount <= (intLength - 1); intCount++){
-                    intSegments[intCount + 1][1] = intTemp[intCount];
-                }
-            }else if(intDirection == 4){
-                for(int intCount = 0;intCount <= intLength; intCount++){
-                    intTemp[intCount] = intSegments[intCount][0];
-                }
-                intSegments[0][0] = intSegments[0][0] - 1;
-                for(int intCount = 0; intCount <= (intLength - 1); intCount++){
-                    intSegments[intCount + 1][0] = intTemp[intCount];
-                }
+            move();
+        }
+    }
+    public void move() {
+        if (intDirection == 1) { // Up
+            for (int intCount = 0; intCount <= intLength; intCount++) {
+                intTemp[intCount] = intSegments[intCount][1];
+            }
+            intSegments[0][1] = intSegments[0][1] - 1; // Move head up
+            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
+                intSegments[intCount + 1][1] = intTemp[intCount];
+            }
+        } else if (intDirection == 2) { // Right
+            for (int intCount = 0; intCount <= intLength; intCount++) {
+                intTemp[intCount] = intSegments[intCount][0];
+            }
+            intSegments[0][0] = intSegments[0][0] + 1; // Move head right
+            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
+                intSegments[intCount + 1][0] = intTemp[intCount];
+            }
+        } else if (intDirection == 3) { // Down
+            for (int intCount = 0; intCount <= intLength; intCount++) {
+                intTemp[intCount] = intSegments[intCount][1];
+            }
+            intSegments[0][1] = intSegments[0][1] + 1; // Move head down
+            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
+                intSegments[intCount + 1][1] = intTemp[intCount];
+            }
+        } else if (intDirection == 4) { // Left
+            for (int intCount = 0; intCount <= intLength; intCount++) {
+                intTemp[intCount] = intSegments[intCount][0];
+            }
+            intSegments[0][0] = intSegments[0][0] - 1; // Move head left
+            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
+                intSegments[intCount + 1][0] = intTemp[intCount];
             }
         }
     }
-    public void move(){
 
+    public static int setDirection(String newDirection) {
+        if (newDirection.equals("up") && intDirection != 3) { // Prevent moving directly down if currently moving up
+            intDirection = 1;
+        } else if (newDirection.equals("right") && intDirection != 4) { // Prevent moving directly left if currently moving right
+            intDirection = 2;
+        } else if (newDirection.equals("down") && intDirection != 1) { // Prevent moving directly up if currently moving down
+            intDirection = 3;
+        } else if (newDirection.equals("left") && intDirection != 2) { // Prevent moving directly right if currently moving left
+            intDirection = 4;
+        }
+        return intDirection;
     }
-
-    public void setDirection(String newDirection){
-
-    }
+    
 
     public void grow(){
         intLength = intLength + 1;
@@ -91,6 +101,6 @@ public class snake implements ActionListener{
         thetimer.addActionListener(this);
         intSegments[0][0] = startX;
         intSegments[0][1] = startY;
-        this.intDirection = intStartDirection;
+        snake.intDirection = intStartDirection;
     }
 }
