@@ -29,7 +29,7 @@ public class snakeGame implements ActionListener, KeyListener {
     JButton theme2Button = new JButton("Zelda");
     Timer animationTimer = new Timer(1000/60, null);
     JMenuBar menuBar = new JMenuBar();
-    JMenu help = new JMenu();
+    JMenu help = new JMenu("Help");
 
     /*help */
     helpPanel helpScreen = new helpPanel();
@@ -311,9 +311,6 @@ public class snakeGame implements ActionListener, KeyListener {
         theframe.add(startPanel);
         theframe.setContentPane(startPanel);
 
-        theframe.setJMenuBar(menuBar);
-        menuBar.add(help);
-
         startPanel.setPreferredSize(new Dimension(1280, 720));
         startPanel.setLayout(null);
 
@@ -389,6 +386,8 @@ public class snakeGame implements ActionListener, KeyListener {
 
         startPanel.repaint();
 
+        theframe.setJMenuBar(menuBar);
+        menuBar.add(help);
         theframe.pack();
         theframe.setResizable(false);
         theframe.setVisible(true);
