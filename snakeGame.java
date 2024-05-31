@@ -27,16 +27,16 @@ public class snakeGame implements ActionListener, KeyListener {
     JButton playButton = new JButton("Ready");
     JButton theme1Button = new JButton("Star Wars");
     JButton theme2Button = new JButton("Zelda");
+    JButton helpButton = new JButton("?");
     Timer animationTimer = new Timer(1000/60, null);
-    JMenuBar menuBar = new JMenuBar();
-    JMenu help = new JMenu("Help");
-
-    /*help */
-    helpPanel helpScreen = new helpPanel();
 
     /* chat */
     JTextArea chat = new JTextArea();
+    JScrollPane scrollPane = new JScrollPane(chat);
 	JTextField message = new JTextField();
+
+    /*help screen */
+    helpPanel helpScreen = new helpPanel();
 
     /* network message */
     String strLine;
@@ -126,7 +126,7 @@ public class snakeGame implements ActionListener, KeyListener {
                 intMsgY = Integer.parseInt(strSplit[3]);
             } else if (strMsgType.equals("Message")) {
                 strMsgSent = strSplit[2];
-				chat.append("\n"+strMsgUser+": "+strMsgSent);
+				chat.append(strMsgUser+": "+strMsgSent+"\n");
             } else if (strMsgType.equals("System")) {
                 System.out.println(strLine);
                 strMsgCmd = strSplit[2];
@@ -145,7 +145,7 @@ public class snakeGame implements ActionListener, KeyListener {
 				}else if (strMsgCmd.equals("startGame")) {
                     panel.loadThemeImages(intTheme);
                     panel.loadMap(strMapFile);
-					panel.add(chat);
+					panel.add(scrollPane);
 					panel.add(message);
                     theframe.setContentPane(panel);
                     theframe.validate();
@@ -173,7 +173,7 @@ public class snakeGame implements ActionListener, KeyListener {
                     if (intReady1 == 1 && intReady2 == 1) {
                         panel.loadThemeImages(intTheme);
                         panel.loadMap(strMapFile);
-						panel.add(chat);
+						panel.add(scrollPane);
 						panel.add(message);
                         theframe.setContentPane(panel);
                         theframe.validate();
@@ -189,7 +189,7 @@ public class snakeGame implements ActionListener, KeyListener {
                     if (intReady1 == 1 && intReady2 == 1) {
                         panel.loadThemeImages(intTheme);
                         panel.loadMap(strMapFile);
-						panel.add(chat);
+						panel.add(scrollPane);
 						panel.add(message);
                         theframe.setContentPane(panel);
                         theframe.validate();
@@ -230,12 +230,14 @@ public class snakeGame implements ActionListener, KeyListener {
 		/*message sending */
 		if (evt.getSource() == message){
 			String strMessage = message.getText();
-			chat.append("\nYou: "+strMessage);
-			if(intSelf == 1){
-				ssm.sendText("Message,"+strUsername1+","+strMessage);
-			}else if(intSelf == 2){
-				ssm.sendText("Message,"+strUsername2+","+strMessage);
-			}
+			if(!strMessage.equals("")){
+                chat.append("You: "+strMessage+"\n");
+                if(intSelf == 1){
+                    ssm.sendText("Message,"+strUsername1+","+strMessage);
+                }else if(intSelf == 2){
+                    ssm.sendText("Message,"+strUsername2+","+strMessage);
+                }
+            }
 			message.setText("");
 				
 		}
@@ -253,8 +255,10 @@ public class snakeGame implements ActionListener, KeyListener {
             panel.repaint();
         }
 
-        if(evt.getSource() == help){
+        if(evt.getSource() == helpButton){
             theframe.setContentPane(helpScreen);
+            theframe.validate();
+            theframe.repaint();
         }
     }
 
@@ -391,16 +395,19 @@ public class snakeGame implements ActionListener, KeyListener {
         theme2Button.setSize(new Dimension(140, 50));
         theme2Button.setLocation(1090, 425);
 
+        startPanel.add(helpButton);
+        helpButton.addActionListener(this);
+        helpButton.setSize(new Dimension(100, 70));
+        helpButton.setLocation(1130, 600);
+
         startPanel.repaint();
 
-        theframe.setJMenuBar(menuBar);
-        menuBar.add(help);
         theframe.pack();
         theframe.setResizable(false);
         theframe.setVisible(true);
 
-		chat.setSize(new Dimension(460, 570));
-		chat.setLocation(770, 50);
+        scrollPane.setSize(new Dimension(460, 570));
+		scrollPane.setLocation(770, 50);
 
 		message.setSize(new Dimension(460, 50));
 		message.setLocation(770, 640);

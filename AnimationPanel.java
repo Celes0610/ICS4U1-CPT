@@ -22,15 +22,17 @@ public class AnimationPanel extends JPanel {
         if (mapData != null) {
             drawMap(g);
         }
-        for(int intCount = 0; intCount <= intLength; intCount++){
-            g.fillRect(intSnake1[intCount][0]*18, intSnake1[intCount][1]*18, 18, 18);
-            g.fillRect(intSnake2[intCount][0]*18, intSnake2[intCount][1]*18, 18, 18);
+        if (intSnake1 != null && intSnake2 != null) {
+            for (int intCount = 0; intCount < intLength; intCount++) {
+                g.fillRect(intSnake1[intCount][0] * 18, intSnake1[intCount][1] * 18, 18, 18);
+                g.fillRect(intSnake2[intCount][0] * 18, intSnake2[intCount][1] * 18, 18, 18);
+            }
         }
     }
 
     // Method to load map data
     public void loadMap(String filePath) {
-        mapData = snakeGame.readFile(40, filePath); 
+        mapData = snakeGame.readFile(40, filePath);
         repaint();
     }
 
@@ -63,14 +65,24 @@ public class AnimationPanel extends JPanel {
         }
         repaint();
     }
-    //Method to Draw Snake
-    public void paintSnake(int intX, int intY, Graphics g){
+
+    // Method to Draw Snake
+    public void paintSnake(int intX, int intY, Graphics g) {
         g.fillRect(intX, intY, 18, 18);
     }
 
     // Constructor
     public AnimationPanel() {
         super();
+        // Initialize the snakes with a default position
+        intSnake1 = new int[intLength][2];
+        intSnake2 = new int[intLength][2];
+        for (int i = 0; i < intLength; i++) {
+            intSnake1[i][0] = i;
+            intSnake1[i][1] = 0;
+            intSnake2[i][0] = i;
+            intSnake2[i][1] = 1;
+        }
         loadThemeImages(currentTheme); // Load default theme images
     }
 }
