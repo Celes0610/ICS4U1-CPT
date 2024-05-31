@@ -58,11 +58,8 @@ public class snakeGame implements ActionListener, KeyListener {
     int intTheme = 1;
     String strMapFile = "Map - Easy.csv";
     int intLength = 3;
-    int intSnake1[][];
-    int intSnake2[][];
-    int intTemp[][];
-   
-
+    snake player1Snake = new snake(0,0,2,intLength);
+    snake player2Snake = new snake(40,40,4,intLength);
 
     // methods
     public void actionPerformed(ActionEvent evt) {
@@ -243,7 +240,17 @@ public class snakeGame implements ActionListener, KeyListener {
 				
 		}
         if(evt.getSource() == animationTimer){
-            
+            panel.intLength = intLength;
+            for(int intCount = 0; intCount <= intLength; intCount++){
+                if(intSelf == 1){
+                    panel.intSnake1[intCount][0] = player1Snake.intSegments[intCount][0];
+                    panel.intSnake1[intCount][1] = player1Snake.intSegments[intCount][1];
+                }else if(intSelf == 2){
+                    panel.intSnake2[intCount][0] = player2Snake.intSegments[intCount][0];
+                    panel.intSnake2[intCount][1] = player2Snake.intSegments[intCount][1];
+                }
+            }
+            panel.repaint();
         }
 
         if(evt.getSource() == help){

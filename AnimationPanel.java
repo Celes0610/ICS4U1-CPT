@@ -10,6 +10,9 @@ public class AnimationPanel extends JPanel {
     private BufferedImage imgFloor;
     private BufferedImage imgWall;
     private int currentTheme = 1;
+    int intSnake1[][];
+    int intSnake2[][];
+    int intLength = 3;
 
     // Methods
     // Override paintComponent - the way the JPanel is drawn
@@ -18,6 +21,10 @@ public class AnimationPanel extends JPanel {
         super.paintComponent(g);
         if (mapData != null) {
             drawMap(g);
+        }
+        for(int intCount = 0; intCount <= intLength; intCount++){
+            g.fillRect(intSnake1[intCount][0]*18, intSnake1[intCount][1]*18, 18, 18);
+            g.fillRect(intSnake2[intCount][0]*18, intSnake2[intCount][1]*18, 18, 18);
         }
     }
 
