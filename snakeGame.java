@@ -28,6 +28,11 @@ public class snakeGame implements ActionListener, KeyListener {
     JButton theme1Button = new JButton("Star Wars");
     JButton theme2Button = new JButton("Zelda");
     Timer animationTimer = new Timer(1000/60, null);
+    JMenuBar menuBar = new JMenuBar();
+    JMenu help = new JMenu();
+
+    /*help */
+    helpPanel helpScreen = new helpPanel();
 
     /* chat */
     JTextArea chat = new JTextArea();
@@ -254,6 +259,10 @@ public class snakeGame implements ActionListener, KeyListener {
                 panel.paintSnake(intSnake2[intCount][0]*18, intSnake2[intCount][1]*18, null);
             }
         }
+
+        if(evt.getSource() == help){
+            theframe.setContentPane(helpScreen);
+        }
     }
 
     public void keyReleased(KeyEvent evt) {
@@ -315,6 +324,9 @@ public class snakeGame implements ActionListener, KeyListener {
         theframe.add(panel);
         theframe.add(startPanel);
         theframe.setContentPane(startPanel);
+
+        theframe.setJMenuBar(menuBar);
+        menuBar.add(help);
 
         startPanel.setPreferredSize(new Dimension(1280, 720));
         startPanel.setLayout(null);
