@@ -27,6 +27,8 @@ public class snakeGame implements ActionListener, KeyListener {
     JButton playButton = new JButton("Ready");
     JButton theme1Button = new JButton("Star Wars");
     JButton theme2Button = new JButton("Zelda");
+    JMenu help = new JMenu("Help");
+    JMenuBar menuBar = new JMenuBar();
 
     /* chat */
     JTextArea chat = new JTextArea();
@@ -305,6 +307,9 @@ public class snakeGame implements ActionListener, KeyListener {
         theframe.add(panel);
         theframe.add(startPanel);
         theframe.setContentPane(startPanel);
+        
+        theframe.setJMenuBar(menuBar);
+        menuBar.add(help);
 
         startPanel.setPreferredSize(new Dimension(1280, 720));
         startPanel.setLayout(null);
