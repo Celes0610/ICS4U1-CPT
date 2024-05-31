@@ -61,7 +61,7 @@ public class snakeGame implements ActionListener, KeyListener {
     int intSnake1[][];
     int intSnake2[][];
     int intTemp[][];
-    snake player1Snake = new snake(0, 0, 2, intLength);
+   
 
 
     // methods
@@ -243,21 +243,7 @@ public class snakeGame implements ActionListener, KeyListener {
 				
 		}
         if(evt.getSource() == animationTimer){
-            if(intSelf == 1){
-                for(int intCount = 0; intCount <= intLength;intCount++){
-                    intSnake1[intCount][0] = player1Snake.intSegments[intCount][0];
-                    intSnake1[intCount][1] = player1Snake.intSegments[intCount][1];
-                }
-            }else if(intSelf == 2){
-                for(int intCount = 0; intCount <= intLength;intCount++){
-                    intSnake2[intCount][0] = player1Snake.intSegments[intCount][0];
-                    intSnake2[intCount][1] = player1Snake.intSegments[intCount][1];
-                }
-            }
-            for(int intCount = 0; intCount <= intLength; intCount++){
-                panel.paintSnake(intSnake1[intCount][0]*18, intSnake1[intCount][1]*18, null);
-                panel.paintSnake(intSnake2[intCount][0]*18, intSnake2[intCount][1]*18, null);
-            }
+            
         }
 
         if(evt.getSource() == help){
