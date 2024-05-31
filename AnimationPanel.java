@@ -56,6 +56,9 @@ public class AnimationPanel extends JPanel {
         }
         repaint();
     }
+    public void paintSnake(int intX, int intY, Graphics g){
+        g.fillRect(intX, intY, 18, 18);
+    }
 
     // Constructor
     public AnimationPanel() {

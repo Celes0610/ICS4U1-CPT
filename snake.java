@@ -70,7 +70,12 @@ public class snake implements ActionListener{
         }
         return intDirection;
     }
-    
+    public void startGame(){
+        thetimer.start();
+    }
+    public void stopGame(){
+        thetimer.stop();
+    }
 
     public void grow(){
         intLength = intLength + 1;
@@ -97,7 +102,7 @@ public class snake implements ActionListener{
     
     
     //constructor
-    public snake(int startX, int startY, int intStartDirection){
+    public snake(int startX, int startY, int intStartDirection, int intLength){
         thetimer.addActionListener(this);
         intSegments[0][0] = startX;
         intSegments[0][1] = startY;

@@ -27,13 +27,11 @@ public class snakeGame implements ActionListener, KeyListener {
     JButton playButton = new JButton("Ready");
     JButton theme1Button = new JButton("Star Wars");
     JButton theme2Button = new JButton("Zelda");
-    JMenu help = new JMenu("Help");
-    JMenuBar menuBar = new JMenuBar();
+    Timer animationTimer = new Timer(1000/60, null);
 
     /* chat */
     JTextArea chat = new JTextArea();
 	JTextField message = new JTextField();
-	JScrollPane chatScroll = new JScrollPane(chat);
 
     /* network message */
     String strLine;
@@ -54,6 +52,12 @@ public class snakeGame implements ActionListener, KeyListener {
     int intSelf;
     int intTheme = 1;
     String strMapFile = "Map - Easy.csv";
+    int intLength = 3;
+    int intSnake1[][];
+    int intSnake2[][];
+    int intTemp[][];
+    snake player1Snake = new snake(0, 0, 2, intLength);
+
 
     // methods
     public void actionPerformed(ActionEvent evt) {
@@ -120,7 +124,7 @@ public class snakeGame implements ActionListener, KeyListener {
                 intMsgY = Integer.parseInt(strSplit[3]);
             } else if (strMsgType.equals("Message")) {
                 strMsgSent = strSplit[2];
-				chat.append(strMsgUser+": "+strMsgSent+"\n");
+				chat.append("\n"+strMsgUser+": "+strMsgSent);
             } else if (strMsgType.equals("System")) {
                 System.out.println(strLine);
                 strMsgCmd = strSplit[2];
@@ -139,6 +143,8 @@ public class snakeGame implements ActionListener, KeyListener {
 				}else if (strMsgCmd.equals("startGame")) {
                     panel.loadThemeImages(intTheme);
                     panel.loadMap(strMapFile);
+					panel.add(chat);
+					panel.add(message);
                     theframe.setContentPane(panel);
                     theframe.validate();
                     theframe.repaint();
@@ -165,6 +171,8 @@ public class snakeGame implements ActionListener, KeyListener {
                     if (intReady1 == 1 && intReady2 == 1) {
                         panel.loadThemeImages(intTheme);
                         panel.loadMap(strMapFile);
+						panel.add(chat);
+						panel.add(message);
                         theframe.setContentPane(panel);
                         theframe.validate();
                         theframe.repaint();
@@ -179,6 +187,8 @@ public class snakeGame implements ActionListener, KeyListener {
                     if (intReady1 == 1 && intReady2 == 1) {
                         panel.loadThemeImages(intTheme);
                         panel.loadMap(strMapFile);
+						panel.add(chat);
+						panel.add(message);
                         theframe.setContentPane(panel);
                         theframe.validate();
                         theframe.repaint();
@@ -218,41 +228,40 @@ public class snakeGame implements ActionListener, KeyListener {
 		/*message sending */
 		if (evt.getSource() == message){
 			String strMessage = message.getText();
-			if (!strMessage.equals(null)){
-				chat.append("You: "+strMessage+"\n");
-				if(intSelf == 1){
-					ssm.sendText("Message,"+strUsername1+","+strMessage);
-				}else if(intSelf == 2){
-					ssm.sendText("Message,"+strUsername2+","+strMessage);
-				}
-				message.setText("");
-			}else{
-				if(intSelf == 1){
-					ssm.sendText("Message,"+strUsername1+",null");
-				}else if(intSelf == 2){
-					ssm.sendText("Message,"+strUsername2+",null");
-				}
+			chat.append("\nYou: "+strMessage);
+			if(intSelf == 1){
+				ssm.sendText("Message,"+strUsername1+","+strMessage);
+			}else if(intSelf == 2){
+				ssm.sendText("Message,"+strUsername2+","+strMessage);
 			}
+			message.setText("");
+				
 		}
+        if(evt.getSource() == animationTimer){
+            if(intSelf == 1){
+                for(int intCount = 0; intCount <= intLength;intCount++){
+                    intSnake1[intCount][0] = player1Snake.intSegments[intCount][0];
+                    intSnake1[intCount][1] = player1Snake.intSegments[intCount][1];
+                }
+            }else if(intSelf == 2){
+                for(int intCount = 0; intCount <= intLength;intCount++){
+                    intSnake2[intCount][0] = player1Snake.intSegments[intCount][0];
+                    intSnake2[intCount][1] = player1Snake.intSegments[intCount][1];
+                }
+            }
+            for(int intCount = 0; intCount <= intLength; intCount++){
+                panel.paintSnake(intSnake1[intCount][0]*18, intSnake1[intCount][1]*18, null);
+                panel.paintSnake(intSnake2[intCount][0]*18, intSnake2[intCount][1]*18, null);
+            }
+        }
     }
-    
 
     public void keyReleased(KeyEvent evt) {
 
     }
 
     public void keyPressed(KeyEvent evt) {
-        char keyChar = evt.getKeyChar();
-        System.out.println("Key typed: "+keyChar);
-        if(keyChar == 'w'){
-            snake.setDirection("up");
-        } else if(keyChar == 'a'){
-            snake.setDirection("right");
-        } else if(keyChar == 's'){
-            snake.setDirection("down");
-        } else if(keyChar == 'd'){
-            snake.setDirection("left");
-        }
+
     }
 
     public void keyTyped(KeyEvent evt) {
@@ -264,7 +273,6 @@ public class snakeGame implements ActionListener, KeyListener {
         try {
             BufferedReader file = new BufferedReader(new FileReader(strFileName));
             String strLine;
-
             while ((strLine = file.readLine()) != null) {
                 intRow++;
             }
@@ -307,9 +315,6 @@ public class snakeGame implements ActionListener, KeyListener {
         theframe.add(panel);
         theframe.add(startPanel);
         theframe.setContentPane(startPanel);
-        
-        theframe.setJMenuBar(menuBar);
-        menuBar.add(help);
 
         startPanel.setPreferredSize(new Dimension(1280, 720));
         startPanel.setLayout(null);
@@ -390,18 +395,14 @@ public class snakeGame implements ActionListener, KeyListener {
         theframe.setResizable(false);
         theframe.setVisible(true);
 
-		chat.setEditable(false);
-		chatScroll.setViewportView(chat);
-		chatScroll.setSize(new Dimension(460, 570));
-		chatScroll.setLocation(770, 50);
+		chat.setSize(new Dimension(460, 570));
+		chat.setLocation(770, 50);
 
 		message.setSize(new Dimension(460, 50));
 		message.setLocation(770, 640);
 		message.addActionListener(this);
 
-		panel.add(chatScroll);
-		panel.add(message);
-        panel.addKeyListener(this);
+        animationTimer.addActionListener(this);
     }
 
     // main program
@@ -409,4 +410,3 @@ public class snakeGame implements ActionListener, KeyListener {
         new snakeGame();
     }
 }
-
