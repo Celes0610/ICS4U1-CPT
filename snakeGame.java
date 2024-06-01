@@ -36,7 +36,7 @@ public class snakeGame implements ActionListener, KeyListener {
 	JTextField message = new JTextField();
 
     /*help screen */
-    helpPanel helpScreen = new helpPanel();
+    helpPanel helpScreen = new helpPanel(theframe, startPanel);
 
     /* network message */
     String strLine;

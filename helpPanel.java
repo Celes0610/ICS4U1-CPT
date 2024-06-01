@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class helpPanel extends JPanel implements ActionListener {
@@ -13,10 +14,43 @@ public class helpPanel extends JPanel implements ActionListener {
     BufferedImage help1;
     BufferedImage help2;
     BufferedImage currentImage;
-	JButton prevButton = new JButton("<");
+    JButton prevButton = new JButton("<");
     JButton nextButton = new JButton(">");
+    JButton homeButton = new JButton("Home");
+    JFrame parentFrame;
+    JPanel startPanel;
 
-    // Methods
+    // Constructor
+    public helpPanel(JFrame frame, JPanel startPanel) {
+        super();
+        this.parentFrame = frame;
+        this.startPanel = startPanel;
+
+        try {
+            help1 = ImageIO.read(new File("help1.png"));
+            help2 = ImageIO.read(new File("help2.png"));
+            currentImage = help1; // Set the initial image
+        } catch (IOException e) {
+            System.out.println("Unable to load image");
+            System.out.println(e.toString());
+        }
+
+        setLayout(null); // Use null layout for absolute positioning
+
+        // Add the buttons to the panel and set their action listeners
+        prevButton.setBounds(50, 10, 50, 30);
+        add(prevButton);
+        prevButton.addActionListener(this);
+
+        nextButton.setBounds(110, 10, 50, 30);
+        add(nextButton);
+        nextButton.addActionListener(this);
+
+        homeButton.setBounds(1150, 10, 80, 30);
+        add(homeButton);
+        homeButton.addActionListener(this);
+    }
+
     // Override paintComponent - the way the JPanel is drawn
     @Override
     public void paintComponent(Graphics g) {
@@ -28,29 +62,15 @@ public class helpPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource() == nextButton) {
             currentImage = help2;
-            repaint(); // This will call paintComponent and update the image
-        }else if (evt.getSource() == prevButton){
-			currentImage = help1;
-			repaint();
-		}
-    }
-
-    // Constructor
-    public helpPanel() {
-        super();
-        try {
-            help1 = ImageIO.read(new File("help1.png"));
-            help2 = ImageIO.read(new File("help2.png"));
-            currentImage = help1; // Set the initial image
-        } catch (IOException e) {
-            System.out.println("Unable to load image");
-            System.out.println(e.toString());
+            repaint(); 
+        } else if (evt.getSource() == prevButton) {
+            currentImage = help1;
+            repaint();
+        } else if (evt.getSource() == homeButton) {
+            // Switch back to the start screen
+            parentFrame.setContentPane(startPanel);
+            parentFrame.validate();
+            parentFrame.repaint();
         }
-
-        // Add the button to the panel and set its action listener
-        add(prevButton);
-		prevButton.addActionListener(this);
-		add(nextButton);
-        nextButton.addActionListener(this);
     }
 }
