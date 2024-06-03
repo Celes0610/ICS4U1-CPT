@@ -1,8 +1,8 @@
-import java.awt.*;
+//import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import javax.swing.event.*;
-import java.io.*;
+//import javax.swing.event.*;
+//import java.io.*;
 import java.awt.Graphics;
 
 public class snake implements ActionListener{
