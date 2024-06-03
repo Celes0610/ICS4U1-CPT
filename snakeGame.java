@@ -1,7 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import javax.swing.event.*;
+//import javax.swing.event.*;
 import java.io.*;
 
 public class snakeGame implements ActionListener, KeyListener {
@@ -281,7 +281,7 @@ public class snakeGame implements ActionListener, KeyListener {
                 }
             }
             panel.repaint();
-            System.out.println("repainted");
+            //System.out.println("repainted");
         }
 
         if(evt.getSource() == helpButton){

@@ -20,10 +20,12 @@ public class snake implements ActionListener{
     public void actionPerformed(ActionEvent evt){
         if(evt.getSource() == thetimer){
             move();
+            //System.out.println("Move");
         }
     }
     public void move() {
         if (intDirection == 1) { // Up
+            System.out.println("Moved Up");
             for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
                 intTemp[intCount] = intSegments[intCount][1];
             }
@@ -32,6 +34,7 @@ public class snake implements ActionListener{
                 intSegments[intCount + 1][1] = intTemp[intCount];
             }
         } else if (intDirection == 2) { // Right
+            System.out.println("Moved Right");
             for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
                 intTemp[intCount] = intSegments[intCount][0];
             }
@@ -40,6 +43,7 @@ public class snake implements ActionListener{
                 intSegments[intCount + 1][0] = intTemp[intCount];
             }
         } else if (intDirection == 3) { // Down
+            System.out.println("Moved Down");
             for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
                 intTemp[intCount] = intSegments[intCount][1];
             }
@@ -48,6 +52,7 @@ public class snake implements ActionListener{
                 intSegments[intCount + 1][1] = intTemp[intCount];
             }
         } else if (intDirection == 4) { // Left
+            System.out.println("Moved Left");
             for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
                 intTemp[intCount] = intSegments[intCount][0];
             }
