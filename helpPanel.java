@@ -11,9 +11,9 @@ import javax.swing.JPanel;
 
 public class helpPanel extends JPanel implements ActionListener {
     // properties
-    BufferedImage help1;
-    BufferedImage help2;
+    BufferedImage[] help = new BufferedImage[4];
     BufferedImage currentImage;
+    int intCurr = 0;
     JButton prevButton = new JButton("<");
     JButton nextButton = new JButton(">");
     JButton homeButton = new JButton("Home");
@@ -27,9 +27,11 @@ public class helpPanel extends JPanel implements ActionListener {
         this.startPanel = startPanel;
 
         try {
-            help1 = ImageIO.read(new File("help1.png"));
-            help2 = ImageIO.read(new File("help2.png"));
-            currentImage = help1; // Set the initial image
+            help[0] = ImageIO.read(new File("help1.png"));
+            help[1] = ImageIO.read(new File("help2.png"));
+            help[2] = ImageIO.read(new File("help3.png"));
+            help[3] = ImageIO.read(new File("help4.png"));
+            currentImage = help[intCurr]; // Set the initial image
         } catch (IOException e) {
             System.out.println("Unable to load image");
             System.out.println(e.toString());
@@ -61,11 +63,25 @@ public class helpPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource() == nextButton) {
-            currentImage = help2;
-            repaint(); 
+            if (intCurr < help.length - 1) {
+                intCurr++;
+                currentImage = help[intCurr];
+                repaint();
+            }
+            // Enable prev button if it's not the first image
+            prevButton.setEnabled(intCurr > 0);
+            // Disable next button if it's the last image
+            nextButton.setEnabled(intCurr < 3);
         } else if (evt.getSource() == prevButton) {
-            currentImage = help1;
-            repaint();
+            if (intCurr > 0) {
+                intCurr--;
+                currentImage = help[intCurr];
+                repaint();
+            }
+            // Enable next button if it's not the last image
+            nextButton.setEnabled(intCurr < 3);
+            // Disable prev button if it's the first image
+            prevButton.setEnabled(intCurr > 0);
         } else if (evt.getSource() == homeButton) {
             // Switch back to the start screen
             parentFrame.setContentPane(startPanel);
