@@ -24,7 +24,9 @@ public class AnimationPanel extends JPanel {
         }
         if (intSnake1 != null && intSnake2 != null) {
             for (int intCount = 0; intCount < intLength; intCount++) {
+                g.setColor(Color.RED);
                 g.fillRect(intSnake1[intCount][0] * 18, intSnake1[intCount][1] * 18, 18, 18);
+                g.setColor(Color.BLUE);
                 g.fillRect(intSnake2[intCount][0] * 18, intSnake2[intCount][1] * 18, 18, 18);
             }
         }
@@ -77,12 +79,19 @@ public class AnimationPanel extends JPanel {
         // Initialize the snakes with a default position
         intSnake1 = new int[intLength][2];
         intSnake2 = new int[intLength][2];
-        for (int i = 0; i < intLength; i++) {
-            intSnake1[i][0] = i;
-            intSnake1[i][1] = 0;
-            intSnake2[i][0] = i;
-            intSnake2[i][1] = 1;
-        }
+        intSnake1[0][0] = 0;
+        intSnake1[0][1] = 0;
+        intSnake1[1][0] = 0;
+        intSnake1[1][1] = 0;
+        intSnake1[2][1] = 0;
+        intSnake1[2][1] = 0;
+        intSnake2[0][0] = 40;
+        intSnake2[0][1] = 40;
+        intSnake2[1][0] = 40;
+        intSnake2[1][1] = 40;
+        intSnake2[2][1] = 40;
+        intSnake2[2][1] = 40;
+
         loadThemeImages(currentTheme); // Load default theme images
     }
 }

@@ -60,6 +60,7 @@ public class snakeGame implements ActionListener, KeyListener {
     int intLength = 3;
     snake player1Snake = new snake(0,0,2,intLength);
     snake player2Snake = new snake(40,40,4,intLength);
+    int intTemp[][] = new int[160][2];
 
     // methods
     public void actionPerformed(ActionEvent evt) {
@@ -124,6 +125,29 @@ public class snakeGame implements ActionListener, KeyListener {
             if (strMsgType.equals("Game")) {
                 intMsgX = Integer.parseInt(strSplit[2]);
                 intMsgY = Integer.parseInt(strSplit[3]);
+                if(intSelf == 1){
+                    for(int intCount = 0; intCount < intLength; intCount++){
+                        intTemp[intCount][0] = panel.intSnake2[intCount][0];
+                        intTemp[intCount][1] = panel.intSnake2[intCount][1];
+                    }
+                    panel.intSnake2[0][0] = intMsgX;
+                    panel.intSnake2[0][1] = intMsgY;
+                    for(int intCount = 0; intCount < (intLength - 1); intCount++){
+                        panel.intSnake2[intCount + 1][0] = intTemp[intCount][0];
+                        panel.intSnake2[intCount + 1][1] = intTemp[intCount][1];
+                    }
+                }else if(intSelf == 2){
+                    for(int intCount = 0; intCount < intLength; intCount++){
+                        intTemp[intCount][0] = panel.intSnake1[intCount][0];
+                        intTemp[intCount][1] = panel.intSnake1[intCount][1];
+                    }
+                    panel.intSnake1[0][0] = intMsgX;
+                    panel.intSnake1[0][1] = intMsgY;
+                    for(int intCount = 0; intCount < (intLength - 1); intCount++){
+                        panel.intSnake1[intCount + 1][0] = intTemp[intCount][0];
+                        panel.intSnake1[intCount + 1][1] = intTemp[intCount][1];
+                    }
+                }
             } else if (strMsgType.equals("Message")) {
                 strMsgSent = strSplit[2];
 				chat.append(strMsgUser+": "+strMsgSent+"\n");
@@ -179,6 +203,8 @@ public class snakeGame implements ActionListener, KeyListener {
                         theframe.validate();
                         theframe.repaint();
                         ssm.sendText("System," + strUsername1 + ",startGame,null,null");
+                        player1Snake.startGame();
+                        animationTimer.start();
                     }
                 } else if (intSelf == 2) {
                     strUsername2 = usernameField.getText();
@@ -194,6 +220,8 @@ public class snakeGame implements ActionListener, KeyListener {
                         theframe.setContentPane(panel);
                         theframe.validate();
                         theframe.repaint();
+                        player2Snake.startGame();
+                        animationTimer.start();
                     }
                 }
             }
@@ -243,7 +271,7 @@ public class snakeGame implements ActionListener, KeyListener {
 		}
         if(evt.getSource() == animationTimer){
             panel.intLength = intLength;
-            for(int intCount = 0; intCount <= intLength; intCount++){
+            for(int intCount = 0; intCount <= (intLength - 1); intCount++){
                 if(intSelf == 1){
                     panel.intSnake1[intCount][0] = player1Snake.intSegments[intCount][0];
                     panel.intSnake1[intCount][1] = player1Snake.intSegments[intCount][1];
@@ -253,6 +281,7 @@ public class snakeGame implements ActionListener, KeyListener {
                 }
             }
             panel.repaint();
+            System.out.println("repainted");
         }
 
         if(evt.getSource() == helpButton){
@@ -271,7 +300,35 @@ public class snakeGame implements ActionListener, KeyListener {
     }
 
     public void keyTyped(KeyEvent evt) {
-
+        if(evt.getKeyChar() == 'w'){
+            System.out.println("W Pressed");
+            if(intSelf == 1){
+                player1Snake.direction = 1;
+            }else if(intSelf == 2){
+                player2Snake.direction = 1;
+            }
+        }else if(evt.getKeyChar() == 'd'){
+            System.out.println("D Pressed");
+            if(intSelf == 1){
+                player1Snake.direction = 2;
+            }else if(intSelf == 2){
+                player2Snake.direction = 2;
+            }
+        }else if(evt.getKeyChar() == 's'){
+            System.out.println("S Pressed");
+            if(intSelf == 1){
+                player1Snake.direction = 3;
+            }else if(intSelf == 2){
+                player2Snake.direction = 3;
+            }
+        }else if(evt.getKeyChar() == 'a'){
+            System.out.println("A Pressed");
+            if(intSelf == 1){
+                player1Snake.direction = 4;
+            }else if(intSelf == 2){
+                player2Snake.direction = 4;
+            }
+        }
     }
 
     public static String[][] readFile(int intCol, String strFileName) {
@@ -412,6 +469,8 @@ public class snakeGame implements ActionListener, KeyListener {
 		message.setSize(new Dimension(460, 50));
 		message.setLocation(770, 640);
 		message.addActionListener(this);
+
+        chat.setEditable(false);
 
         animationTimer.addActionListener(this);
     }

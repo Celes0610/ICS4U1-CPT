@@ -11,7 +11,7 @@ public class snake implements ActionListener{
     char direction;
     boolean isAlive;
     int length;
-    int[] intTemp;
+    int[] intTemp = new int[160];
     int intLength;
     static int intDirection;
     Timer thetimer = new Timer(100,null);
@@ -24,7 +24,7 @@ public class snake implements ActionListener{
     }
     public void move() {
         if (intDirection == 1) { // Up
-            for (int intCount = 0; intCount <= intLength; intCount++) {
+            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
                 intTemp[intCount] = intSegments[intCount][1];
             }
             intSegments[0][1] = intSegments[0][1] - 1; // Move head up
@@ -32,7 +32,7 @@ public class snake implements ActionListener{
                 intSegments[intCount + 1][1] = intTemp[intCount];
             }
         } else if (intDirection == 2) { // Right
-            for (int intCount = 0; intCount <= intLength; intCount++) {
+            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
                 intTemp[intCount] = intSegments[intCount][0];
             }
             intSegments[0][0] = intSegments[0][0] + 1; // Move head right
@@ -40,7 +40,7 @@ public class snake implements ActionListener{
                 intSegments[intCount + 1][0] = intTemp[intCount];
             }
         } else if (intDirection == 3) { // Down
-            for (int intCount = 0; intCount <= intLength; intCount++) {
+            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
                 intTemp[intCount] = intSegments[intCount][1];
             }
             intSegments[0][1] = intSegments[0][1] + 1; // Move head down
@@ -48,7 +48,7 @@ public class snake implements ActionListener{
                 intSegments[intCount + 1][1] = intTemp[intCount];
             }
         } else if (intDirection == 4) { // Left
-            for (int intCount = 0; intCount <= intLength; intCount++) {
+            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
                 intTemp[intCount] = intSegments[intCount][0];
             }
             intSegments[0][0] = intSegments[0][0] - 1; // Move head left
@@ -113,5 +113,6 @@ public class snake implements ActionListener{
         this.intSegments[2][1] = startY;
         intDirection = intStartDirection;
         System.out.println(intSegments[0][0]+" "+intSegments[0][1]+" "+intDirection);
+        thetimer.addActionListener(this);
     }
 }
