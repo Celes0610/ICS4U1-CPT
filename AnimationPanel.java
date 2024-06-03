@@ -46,6 +46,12 @@ public class AnimationPanel extends JPanel {
                     g.drawImage(imgFloor, j * 18, i * 18, null);
                 } else if ("w".equals(mapData[i][j])) {
                     g.drawImage(imgWall, j * 18, i * 18, null);
+                }else if("s1".equals(mapData[i][j])){
+                    g.setColor(Color.RED);
+                    g.fillRect(j*18, i*18, 18, 18);
+                }else if("s2".equals(mapData[i][j])){
+                    g.setColor(Color.BLUE);
+                    g.fillRect(j*18, i*18, 18, 18);
                 }
             }
         }
@@ -77,8 +83,8 @@ public class AnimationPanel extends JPanel {
     public AnimationPanel() {
         super();
         // Initialize the snakes with a default position
-        intSnake1 = new int[intLength][2];
-        intSnake2 = new int[intLength][2];
+        intSnake1 = new int[160][2];
+        intSnake2 = new int[160][2];
         intSnake1[0][0] = 0;
         intSnake1[0][1] = 0;
         intSnake1[1][0] = 0;
