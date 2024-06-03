@@ -59,7 +59,7 @@ public class snakeGame implements ActionListener, KeyListener {
     String strMapFile = "Map - Easy.csv";
     int intLength = 3;
     snake player1Snake = new snake(0,0,2,intLength);
-    snake player2Snake = new snake(40,40,4,intLength);
+    snake player2Snake = new snake(39,39,4,intLength);
     int intTemp[][] = new int[160][2];
 
     // methods

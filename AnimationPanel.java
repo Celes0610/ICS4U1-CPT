@@ -85,12 +85,12 @@ public class AnimationPanel extends JPanel {
         intSnake1[1][1] = 0;
         intSnake1[2][1] = 0;
         intSnake1[2][1] = 0;
-        intSnake2[0][0] = 40;
-        intSnake2[0][1] = 40;
-        intSnake2[1][0] = 40;
-        intSnake2[1][1] = 40;
-        intSnake2[2][1] = 40;
-        intSnake2[2][1] = 40;
+        intSnake2[0][0] = 39;
+        intSnake2[0][1] = 39;
+        intSnake2[1][0] = 39;
+        intSnake2[1][1] = 39;
+        intSnake2[2][1] = 39;
+        intSnake2[2][1] = 39;
 
         loadThemeImages(currentTheme); // Load default theme images
     }
