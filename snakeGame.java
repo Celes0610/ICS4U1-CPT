@@ -328,8 +328,50 @@ public class snakeGame implements ActionListener, KeyListener {
                         panel.intSnake1[intCount + 1][1] = intTemp[intCount][1];
                     }
                 }
-            }else if(intSelf == 2){
-
+            }
+            if(intSelf == 2){
+                //System.out.println("Snake Paint");
+                if(intDirection == 1 && panel.intSnake2[0][1] > 0){
+                    for(int intCount = 0;intCount < panel.intLength2; intCount++){
+                        intTemp[intCount][0] = panel.intSnake2[intCount][0];
+                        intTemp[intCount][1] = panel.intSnake2[intCount][1];
+                    }
+                    panel.intSnake2[0][1] = panel.intSnake2[0][1] - 1;
+                    for(int intCount = 0;intCount < (panel.intLength2 - 1); intCount++){
+                        panel.intSnake2[intCount + 1][0] = intTemp[intCount][0];
+                        panel.intSnake2[intCount + 1][1] = intTemp[intCount][1];
+                    }
+                }else if(intDirection == 2 && panel.intSnake2[0][0] < 39){
+                    for(int intCount = 0;intCount < panel.intLength2; intCount++){
+                        intTemp[intCount][0] = panel.intSnake2[intCount][0];
+                        intTemp[intCount][1] = panel.intSnake2[intCount][1];
+                    }
+                    panel.intSnake2[0][0] = panel.intSnake2[0][0] + 1;
+                    for(int intCount = 0;intCount < (panel.intLength2 - 1); intCount++){
+                        panel.intSnake2[intCount + 1][0] = intTemp[intCount][0];
+                        panel.intSnake2[intCount + 1][1] = intTemp[intCount][1];
+                    }
+                }else if(intDirection == 3 && panel.intSnake2[0][1] < 39){
+                    for(int intCount = 0;intCount < panel.intLength2; intCount++){
+                        intTemp[intCount][0] = panel.intSnake2[intCount][0];
+                        intTemp[intCount][1] = panel.intSnake2[intCount][1];
+                    }
+                    panel.intSnake2[0][1] = panel.intSnake2[0][1] + 1;
+                    for(int intCount = 0;intCount < (panel.intLength2 - 1); intCount++){
+                        panel.intSnake2[intCount + 1][0] = intTemp[intCount][0];
+                        panel.intSnake2[intCount + 1][1] = intTemp[intCount][1];
+                    }
+                }else if(intDirection == 4 && panel.intSnake2[0][0] > 0){
+                    for(int intCount = 0;intCount < panel.intLength2; intCount++){
+                        intTemp[intCount][0] = panel.intSnake2[intCount][0];
+                        intTemp[intCount][1] = panel.intSnake2[intCount][1];
+                    }
+                    panel.intSnake2[0][0] = panel.intSnake2[0][0] - 1;
+                    for(int intCount = 0;intCount < (panel.intLength2 - 1); intCount++){
+                        panel.intSnake2[intCount + 1][0] = intTemp[intCount][0];
+                        panel.intSnake2[intCount + 1][1] = intTemp[intCount][1];
+                    }
+                }
             }
         }
     }
@@ -343,7 +385,16 @@ public class snakeGame implements ActionListener, KeyListener {
     }
 
     public void keyTyped(KeyEvent evt) {
-        
+        System.out.println("Key Pressed");
+        if(evt.getKeyChar() == 'w' && intDirection != 3){
+            intDirection = 1;
+        }else if(evt.getKeyChar() == 'd' && intDirection != 4){
+            intDirection = 2;
+        }else if(evt.getKeyChar() == 's' && intDirection != 1){
+            intDirection = 3;
+        }else if(evt.getKeyChar() == 'a' && intDirection != 2){
+            intDirection = 4;
+        }
     }
 
 
