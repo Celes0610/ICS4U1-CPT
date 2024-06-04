@@ -58,8 +58,6 @@ public class snakeGame implements ActionListener, KeyListener {
     int intTheme = 1;
     String strMapFile = "Map - Easy.csv";
     int intLength = 3;
-    snake player1Snake = new snake(0,0,2,intLength);
-    snake player2Snake = new snake(39,39,4,intLength);
     int intTemp[][] = new int[160][2];
 
     // methods
@@ -174,6 +172,7 @@ public class snakeGame implements ActionListener, KeyListener {
                     theframe.setContentPane(panel);
                     theframe.validate();
                     theframe.repaint();
+                    animationTimer.start();
                 } 
             } else if (strMsgType.equals("diff")) {
                 strMapFile = strSplit[1];
@@ -203,7 +202,6 @@ public class snakeGame implements ActionListener, KeyListener {
                         theframe.validate();
                         theframe.repaint();
                         ssm.sendText("System," + strUsername1 + ",startGame,null,null");
-                        player1Snake.startGame();
                         animationTimer.start();
                     }
                 } else if (intSelf == 2) {
@@ -220,7 +218,6 @@ public class snakeGame implements ActionListener, KeyListener {
                         theframe.setContentPane(panel);
                         theframe.validate();
                         theframe.repaint();
-                        player2Snake.startGame();
                         animationTimer.start();
                     }
                 }
@@ -270,16 +267,7 @@ public class snakeGame implements ActionListener, KeyListener {
 				
 		}
         if(evt.getSource() == animationTimer){
-            panel.intLength = intLength;
-            for(int intCount = 0; intCount <= (intLength - 1); intCount++){
-                if(intSelf == 1){
-                    panel.intSnake1[intCount][0] = player1Snake.intSegments[intCount][0];
-                    panel.intSnake1[intCount][1] = player1Snake.intSegments[intCount][1];
-                }else if(intSelf == 2){
-                    panel.intSnake2[intCount][0] = player2Snake.intSegments[intCount][0];
-                    panel.intSnake2[intCount][1] = player2Snake.intSegments[intCount][1];
-                }
-            }
+            panel.paintSnake();
             panel.repaint();
             //System.out.println("repainted");
         }
@@ -300,36 +288,10 @@ public class snakeGame implements ActionListener, KeyListener {
     }
 
     public void keyTyped(KeyEvent evt) {
-        if(evt.getKeyChar() == 'w'){
-            System.out.println("W Pressed");
-            if(intSelf == 1){
-                player1Snake.direction = 1;
-            }else if(intSelf == 2){
-                player2Snake.direction = 1;
-            }
-        }else if(evt.getKeyChar() == 'd'){
-            System.out.println("D Pressed");
-            if(intSelf == 1){
-                player1Snake.direction = 2;
-            }else if(intSelf == 2){
-                player2Snake.direction = 2;
-            }
-        }else if(evt.getKeyChar() == 's'){
-            System.out.println("S Pressed");
-            if(intSelf == 1){
-                player1Snake.direction = 3;
-            }else if(intSelf == 2){
-                player2Snake.direction = 3;
-            }
-        }else if(evt.getKeyChar() == 'a'){
-            System.out.println("A Pressed");
-            if(intSelf == 1){
-                player1Snake.direction = 4;
-            }else if(intSelf == 2){
-                player2Snake.direction = 4;
-            }
-        }
+        
     }
+
+
 
     public static String[][] readFile(int intCol, String strFileName) {
         int intRow = 0;

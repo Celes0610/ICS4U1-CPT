@@ -10,9 +10,10 @@ public class AnimationPanel extends JPanel {
     private BufferedImage imgFloor;
     private BufferedImage imgWall;
     private int currentTheme = 1;
-    int intSnake1[][];
-    int intSnake2[][];
-    int intLength = 3;
+    int intSnake1[][] = new int[160][2];
+    int intSnake2[][] = new int[160][2];
+    int intLength1 = 3;
+    int intLength2 = 3;
 
     // Methods
     // Override paintComponent - the way the JPanel is drawn
@@ -21,14 +22,6 @@ public class AnimationPanel extends JPanel {
         super.paintComponent(g);
         if (mapData != null) {
             drawMap(g);
-        }
-        if (intSnake1 != null && intSnake2 != null) {
-            for (int intCount = 0; intCount < intLength; intCount++) {
-                g.setColor(Color.RED);
-                g.fillRect(intSnake1[intCount][0] * 18, intSnake1[intCount][1] * 18, 18, 18);
-                g.setColor(Color.BLUE);
-                g.fillRect(intSnake2[intCount][0] * 18, intSnake2[intCount][1] * 18, 18, 18);
-            }
         }
     }
 
@@ -56,6 +49,17 @@ public class AnimationPanel extends JPanel {
             }
         }
     }
+    public void removeSnake(Graphics g) {
+        for (int i = 0; i < mapData.length; i++) {
+            for (int j = 0; j < mapData[i].length; j++) {
+                if("s1".equals(mapData[i][j])){
+                    mapData[i][j] = "f";
+                }else if("s2".equals(mapData[i][j])){
+                    mapData[i][j] = "f";
+                }
+            }
+        }
+    }
 
     // Method to load images based on theme
     public void loadThemeImages(int theme) {
@@ -75,8 +79,11 @@ public class AnimationPanel extends JPanel {
     }
 
     // Method to Draw Snake
-    public void paintSnake(int intX, int intY, Graphics g) {
-        g.fillRect(intX, intY, 18, 18);
+    public void paintSnake() {
+        for(int intCount = 0; intCount < intLength1; intCount++){
+            mapData[intSnake1[intCount][0]][intSnake1[intCount][1]] = "s1";
+            mapData[intSnake2[intCount][0]][intSnake2[intCount][1]] = "s2";
+        }
     }
 
     // Constructor
@@ -95,7 +102,7 @@ public class AnimationPanel extends JPanel {
         intSnake2[0][1] = 39;
         intSnake2[1][0] = 39;
         intSnake2[1][1] = 39;
-        intSnake2[2][1] = 39;
+        intSnake2[2][0] = 39;
         intSnake2[2][1] = 39;
 
         loadThemeImages(currentTheme); // Load default theme images

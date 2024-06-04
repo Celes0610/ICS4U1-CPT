@@ -24,43 +24,6 @@ public class snake implements ActionListener{
         }
     }
     public void move() {
-        if (intDirection == 1) { // Up
-            System.out.println("Moved Up");
-            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
-                intTemp[intCount] = intSegments[intCount][1];
-            }
-            intSegments[0][1] = intSegments[0][1] - 1; // Move head up
-            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
-                intSegments[intCount + 1][1] = intTemp[intCount];
-            }
-        } else if (intDirection == 2) { // Right
-            System.out.println("Moved Right");
-            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
-                intTemp[intCount] = intSegments[intCount][0];
-            }
-            intSegments[0][0] = intSegments[0][0] + 1; // Move head right
-            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
-                intSegments[intCount + 1][0] = intTemp[intCount];
-            }
-        } else if (intDirection == 3) { // Down
-            System.out.println("Moved Down");
-            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
-                intTemp[intCount] = intSegments[intCount][1];
-            }
-            intSegments[0][1] = intSegments[0][1] + 1; // Move head down
-            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
-                intSegments[intCount + 1][1] = intTemp[intCount];
-            }
-        } else if (intDirection == 4) { // Left
-            System.out.println("Moved Left");
-            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
-                intTemp[intCount] = intSegments[intCount][0];
-            }
-            intSegments[0][0] = intSegments[0][0] - 1; // Move head left
-            for (int intCount = 0; intCount <= (intLength - 1); intCount++) {
-                intSegments[intCount + 1][0] = intTemp[intCount];
-            }
-        }
     }
 
     public static int setDirection(String newDirection) {
