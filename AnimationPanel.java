@@ -49,7 +49,7 @@ public class AnimationPanel extends JPanel {
             }
         }
     }
-    public void removeSnake(Graphics g) {
+    public void removeSnake() {
         for (int i = 0; i < mapData.length; i++) {
             for (int j = 0; j < mapData[i].length; j++) {
                 if("s1".equals(mapData[i][j])){
@@ -81,8 +81,8 @@ public class AnimationPanel extends JPanel {
     // Method to Draw Snake
     public void paintSnake() {
         for(int intCount = 0; intCount < intLength1; intCount++){
-            mapData[intSnake1[intCount][0]][intSnake1[intCount][1]] = "s1";
-            mapData[intSnake2[intCount][0]][intSnake2[intCount][1]] = "s2";
+            mapData[intSnake1[intCount][1]][intSnake1[intCount][0]] = "s1";
+            mapData[intSnake2[intCount][1]][intSnake2[intCount][0]] = "s2";
         }
     }
 
