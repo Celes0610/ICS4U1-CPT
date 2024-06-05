@@ -6,7 +6,7 @@ import java.awt.image.*;
 
 public class AnimationPanel extends JPanel {
     // Properties
-    private String[][] mapData;
+    public String[][] mapData;
     private BufferedImage imgFloor;
     private BufferedImage imgWall;
     private int currentTheme = 1;
@@ -110,11 +110,6 @@ public class AnimationPanel extends JPanel {
             if (intCount < intLength1) {
                 if (!mapData[intSnake1[intCount][1]][intSnake1[intCount][0]].equals("w")){
                     mapData[intSnake1[intCount][1]][intSnake1[intCount][0]] = "s1";
-                }else{
-                    snakeGame.stopGame();
-                }else if (!mapData[intSnake1[intCount][1]][intSnake1[intCount][0]].equals("w") && mapData[intSnake1[intCount][1]][intSnake1[intCount][0]] == "food"){
-                    mapData[intSnake1[intCount][1]][intSnake1[intCount][0]] = "s1";
-                    intLength1 = intLength1 + 1;
                 }else{
                     snakeGame.stopGame();
                 }
