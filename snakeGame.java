@@ -156,9 +156,9 @@ public class snakeGame implements ActionListener, KeyListener {
 				chat.append(strMsgUser+": "+strMsgSent+"\n");
             } else if (strMsgType.equals("System")) {
                 System.out.println(strLine);
-                strMsgCmd = strSplit[1];
-                strMsgArg = strSplit[2];
-                strMsgArg2 = strSplit[3];
+                strMsgCmd = strSplit[2];
+                strMsgArg = strSplit[3];
+                strMsgArg2 = strSplit[4];
                 if (strMsgCmd.equals("sentUsername")) {
                     if (intSelf == 1) {
                         strUsername2 = strMsgUser;
@@ -422,7 +422,7 @@ public class snakeGame implements ActionListener, KeyListener {
         int intRandY = rand.nextInt(39);
         if(panel.mapData[intRandX][intRandY] != "w"){
             panel.mapData[intRandX][intRandY] = "food";
-            ssm.sendText("System,spawnFood,"+intRandX+","+intRandY);
+            ssm.sendText("System,null,spawnFood,"+intRandX+","+intRandY);
         }else{
             spawnFood();
         }
