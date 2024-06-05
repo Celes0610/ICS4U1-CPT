@@ -589,6 +589,10 @@ public class snakeGame implements ActionListener, KeyListener {
         panel.setFocusable(true);
         panel.requestFocusInWindow();
         panel.addKeyListener(this);
+    
+        theframe.addKeyListener(this);
+        theframe.setFocusable(true);
+        theframe.requestFocusInWindow();
     }
 
     // main program
