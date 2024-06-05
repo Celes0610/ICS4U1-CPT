@@ -103,10 +103,16 @@ public class AnimationPanel extends JPanel {
     public void paintSnake() {
         for (int intCount = 0; intCount < Math.max(intLength1, intLength2); intCount++) {
             if (intCount < intLength1) {
-                mapData[intSnake1[intCount][1]][intSnake1[intCount][0]] = "s1";
+                if (!mapData[intSnake1[intCount][1]][intSnake1[intCount][0]].equals("w") ){
+                    mapData[intSnake1[intCount][1]][intSnake1[intCount][0]] = "s1";
+                }else{
+                    
+                }
             }
             if (intCount < intLength2) {
-                mapData[intSnake2[intCount][1]][intSnake2[intCount][0]] = "s2";
+                if (!mapData[intSnake2[intCount][1]][intSnake2[intCount][0]].equals("w")){
+                    mapData[intSnake2[intCount][1]][intSnake2[intCount][0]] = "s2";
+                }
             }
         }
     }

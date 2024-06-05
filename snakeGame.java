@@ -29,7 +29,7 @@ public class snakeGame implements ActionListener, KeyListener {
     JButton theme2Button = new JButton("Zelda");
     JButton helpButton = new JButton("?");
     Timer animationTimer = new Timer(1000/60, null);
-    Timer moveTimer = new Timer(500, null);
+    Timer moveTimer = new Timer(100, null);
 
     /* chat */
     JTextArea chat = new JTextArea();
@@ -381,10 +381,6 @@ public class snakeGame implements ActionListener, KeyListener {
     }
 
     public void keyPressed(KeyEvent evt) {
-
-    }
-
-    public void keyTyped(KeyEvent evt) {
         System.out.println("Key Pressed");
         if(evt.getKeyChar() == 'w' && intDirection != 3){
             intDirection = 1;
@@ -395,6 +391,10 @@ public class snakeGame implements ActionListener, KeyListener {
         }else if(evt.getKeyChar() == 'a' && intDirection != 2){
             intDirection = 4;
         }
+    }
+
+    public void keyTyped(KeyEvent evt) {
+        
     }
 
 
@@ -542,6 +542,10 @@ public class snakeGame implements ActionListener, KeyListener {
 
         animationTimer.addActionListener(this);
         moveTimer.addActionListener(this);
+
+        panel.setFocusable(true);
+        panel.requestFocusInWindow();
+        panel.addKeyListener(this);
     }
 
     // main program
