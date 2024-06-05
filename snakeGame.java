@@ -328,6 +328,7 @@ public class snakeGame implements ActionListener, KeyListener {
                         panel.intSnake1[intCount + 1][1] = intTemp[intCount][1];
                     }
                 }
+                ssm.sendText("Game,"+strUsername1+","+panel.intSnake1[0][0]+","+panel.intSnake1[0][1]);
             }
             if(intSelf == 2){
                 //System.out.println("Snake Paint");
@@ -372,7 +373,8 @@ public class snakeGame implements ActionListener, KeyListener {
                         panel.intSnake2[intCount + 1][1] = intTemp[intCount][1];
                     }
                 }
-            }
+                ssm.sendText("Game,"+strUsername2+","+panel.intSnake2[0][0]+","+panel.intSnake2[0][1]);
+            }   
         }
     }
 
