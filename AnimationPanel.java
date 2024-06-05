@@ -67,7 +67,6 @@ public class AnimationPanel extends JPanel {
                 }
             }
         }
-        mapData[0][10] = "food";
     }
 
     // Method to load images based on theme
