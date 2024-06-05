@@ -17,6 +17,7 @@ public class AnimationPanel extends JPanel {
     Color snake1Color;
     Color snake2Color;
     int[][][] setColor = new int[2][2][3];
+    Color foodColor = new Color(0,0,0);
 
     // Methods
     // Override paintComponent - the way the JPanel is drawn
@@ -48,6 +49,9 @@ public class AnimationPanel extends JPanel {
                 } else if ("s2".equals(mapData[i][j])) {
                     g.setColor(snake2Color);
                     g.fillRect(j * 18, i * 18, 18, 18);
+                } else if ("food".equals(mapData[i][j])) {
+                    g.setColor(foodColor);
+                    g.fillOval(j * 18, i * 18, 18, 18);
                 }
             }
         }
@@ -63,6 +67,7 @@ public class AnimationPanel extends JPanel {
                 }
             }
         }
+        mapData[0][10] = "food";
     }
 
     // Method to load images based on theme
@@ -103,14 +108,20 @@ public class AnimationPanel extends JPanel {
     public void paintSnake() {
         for (int intCount = 0; intCount < Math.max(intLength1, intLength2); intCount++) {
             if (intCount < intLength1) {
-                if (!mapData[intSnake1[intCount][1]][intSnake1[intCount][0]].equals("w") ){
+                if (!mapData[intSnake1[intCount][1]][intSnake1[intCount][0]].equals("w")){
                     mapData[intSnake1[intCount][1]][intSnake1[intCount][0]] = "s1";
+                }else{
+                    snakeGame.stopGame();
+                }else if (!mapData[intSnake1[intCount][1]][intSnake1[intCount][0]].equals("w") && mapData[intSnake1[intCount][1]][intSnake1[intCount][0]] == "food"){
+                    mapData[intSnake1[intCount][1]][intSnake1[intCount][0]] = "s1";
+                    intLength1 = intLength1 + 1;
                 }else{
                     snakeGame.stopGame();
                 }
             }
             if (intCount < intLength2) {
                 if (!mapData[intSnake2[intCount][1]][intSnake2[intCount][0]].equals("w")){
+                    
                     mapData[intSnake2[intCount][1]][intSnake2[intCount][0]] = "s2";
                 }else{
                     snakeGame.stopGame();

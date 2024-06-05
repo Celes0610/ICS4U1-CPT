@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.event.*;
 //import javax.swing.event.*;
 import java.io.*;
+import java.util.Random;
 
 public class snakeGame implements ActionListener, KeyListener {
     // properties
@@ -163,6 +164,7 @@ public class snakeGame implements ActionListener, KeyListener {
                         strUsername2 = strMsgUser;
                         intReady2 = 1;
                         intDirection = 2;
+                        spawnFood();
                     } else if (intSelf == 2) {
                         strUsername2 = strMsgUser;
                         intReady1 = 1;
@@ -180,7 +182,9 @@ public class snakeGame implements ActionListener, KeyListener {
                     theframe.repaint();
                     animationTimer.start();
                     moveTimer.start();
-                } 
+                }else if(strMsgCmd.equals("spawnFood")){
+                    panel.mapData[Integer.parseInt(strMsgArg)][Integer.parseInt(strMsgArg2)] = "food";
+                }
             } else if (strMsgType.equals("diff")) {
                 strMapFile = strSplit[1];
             } else if (strMsgType.equals("theme")) {
@@ -297,7 +301,7 @@ public class snakeGame implements ActionListener, KeyListener {
                 chatEnabled = true;
             }
         }
-
+        
         if(evt.getSource() == moveTimer){
             if(intSelf == 1){
                 if(intDirection == 1 && panel.intSnake1[0][1] > 0){
@@ -410,6 +414,18 @@ public class snakeGame implements ActionListener, KeyListener {
 
     public void keyTyped(KeyEvent evt) {
         
+    }
+
+    public void spawnFood(){
+        Random rand = new Random();
+        int intRandX = rand.nextInt(39);
+        int intRandY = rand.nextInt(39);
+        if(panel.mapData[intRandX][intRandY] != "w"){
+            panel.mapData[intRandX][intRandY] = "food";
+            ssm.sendText("System,spawnFood,"+intRandX+","+intRandY);
+        }else{
+            spawnFood();
+        }
     }
 
 
