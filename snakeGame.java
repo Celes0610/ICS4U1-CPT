@@ -28,8 +28,8 @@ public class snakeGame implements ActionListener, KeyListener {
     JButton theme1Button = new JButton("Star Wars");
     JButton theme2Button = new JButton("Zelda");
     JButton helpButton = new JButton("?");
-    Timer animationTimer = new Timer(1000/60, null);
-    Timer moveTimer = new Timer(100, null);
+    static Timer animationTimer = new Timer(1000/60, null);
+    static Timer moveTimer = new Timer(100, null);
 
     /* chat */
     JTextArea chat = new JTextArea();
@@ -435,6 +435,11 @@ public class snakeGame implements ActionListener, KeyListener {
         }
 
         return strMap;
+    }
+
+    public static void stopGame (){
+        animationTimer.stop();
+        moveTimer.stop();
     }
 
     // constructor

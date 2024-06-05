@@ -106,12 +106,14 @@ public class AnimationPanel extends JPanel {
                 if (!mapData[intSnake1[intCount][1]][intSnake1[intCount][0]].equals("w") ){
                     mapData[intSnake1[intCount][1]][intSnake1[intCount][0]] = "s1";
                 }else{
-                    
+                    snakeGame.stopGame();
                 }
             }
             if (intCount < intLength2) {
                 if (!mapData[intSnake2[intCount][1]][intSnake2[intCount][0]].equals("w")){
                     mapData[intSnake2[intCount][1]][intSnake2[intCount][0]] = "s2";
+                }else{
+                    snakeGame.stopGame();
                 }
             }
         }
