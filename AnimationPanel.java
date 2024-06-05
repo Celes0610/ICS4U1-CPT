@@ -9,6 +9,7 @@ public class AnimationPanel extends JPanel {
     public String[][] mapData;
     private BufferedImage imgFloor;
     private BufferedImage imgWall;
+    private BufferedImage imgFood;
     private int currentTheme = 1;
     int intSnake1[][] = new int[160][2];
     int intSnake2[][] = new int[160][2];
@@ -50,8 +51,7 @@ public class AnimationPanel extends JPanel {
                     g.setColor(snake2Color);
                     g.fillRect(j * 18, i * 18, 18, 18);
                 } else if ("food".equals(mapData[i][j])) {
-                    g.setColor(foodColor);
-                    g.fillOval(j * 18, i * 18, 18, 18);
+                    g.drawImage(imgFood, i*18, j*18, null);
                 }
             }
         }
@@ -90,11 +90,13 @@ public class AnimationPanel extends JPanel {
             if (theme == 1) { // Star Wars theme
                 imgFloor = ImageIO.read(new File("space.png"));
                 imgWall = ImageIO.read(new File("comet.png"));
+                imgFood = ImageIO.read(new File("1_food.png"));
                 snake1Color = new Color(setColor[0][0][0], setColor[0][0][1], setColor[0][0][2]);
                 snake2Color = new Color(setColor[0][1][0], setColor[0][1][1], setColor[0][1][2]);
             } else if (theme == 2) { // Zelda theme
                 imgFloor = ImageIO.read(new File("grass.png"));
                 imgWall = ImageIO.read(new File("wall.png"));
+                imgFood = ImageIO.read(new File("2_food.png"));
                 snake1Color = new Color(setColor[1][0][0], setColor[1][0][1], setColor[1][0][2]);
                 snake2Color = new Color(setColor[1][1][0], setColor[1][1][1], setColor[1][1][2]);
             }

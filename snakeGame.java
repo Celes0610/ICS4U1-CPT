@@ -164,7 +164,7 @@ public class snakeGame implements ActionListener, KeyListener {
                         strUsername2 = strMsgUser;
                         intReady2 = 1;
                         intDirection = 2;
-                        spawnFood();
+                        
                     } else if (intSelf == 2) {
                         strUsername2 = strMsgUser;
                         intReady1 = 1;
@@ -215,6 +215,7 @@ public class snakeGame implements ActionListener, KeyListener {
                         ssm.sendText("System," + strUsername1 + ",startGame,null,null");
                         animationTimer.start();
                         moveTimer.start();
+                        spawnFood();
                     }
                 } else if (intSelf == 2) {
                     strUsername2 = usernameField.getText();
