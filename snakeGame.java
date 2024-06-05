@@ -32,9 +32,11 @@ public class snakeGame implements ActionListener, KeyListener {
     static Timer moveTimer = new Timer(100, null);
 
     /* chat */
+    JButton chatButton = new JButton("Chat");
     JTextArea chat = new JTextArea();
     JScrollPane scrollPane = new JScrollPane(chat);
 	JTextField message = new JTextField();
+    boolean chatEnabled = false;
 
     /*help screen */
     helpPanel helpScreen = new helpPanel(theframe, startPanel);
@@ -285,6 +287,17 @@ public class snakeGame implements ActionListener, KeyListener {
             theframe.validate();
             theframe.repaint();
         }
+
+        if(evt.getSource() == chatButton){
+            if (chatEnabled == false){
+                message.setEnabled(true);
+                chatEnabled = true;
+            }else{
+                message.setEnabled(false);
+                chatEnabled = true;
+            }
+        }
+
         if(evt.getSource() == moveTimer){
             if(intSelf == 1){
                 if(intDirection == 1 && panel.intSnake1[0][1] > 0){
@@ -538,12 +551,18 @@ public class snakeGame implements ActionListener, KeyListener {
         theframe.setResizable(false);
         theframe.setVisible(true);
 
+        panel.add(chatButton);
+        chatButton.setSize(new Dimension(100,25));
+        chatButton.setLocation(770, 10);
+        chatButton.addActionListener(this);
+
         scrollPane.setSize(new Dimension(460, 570));
 		scrollPane.setLocation(770, 50);
 
 		message.setSize(new Dimension(460, 50));
 		message.setLocation(770, 640);
 		message.addActionListener(this);
+        message.setEnabled(false);
 
         chat.setEditable(false);
 
