@@ -156,9 +156,9 @@ public class snakeGame implements ActionListener, KeyListener {
 				chat.append(strMsgUser+": "+strMsgSent+"\n");
             } else if (strMsgType.equals("System")) {
                 System.out.println(strLine);
-                strMsgCmd = strSplit[2];
-                strMsgArg = strSplit[3];
-                strMsgArg2 = strSplit[4];
+                strMsgCmd = strSplit[1];
+                strMsgArg = strSplit[2];
+                strMsgArg2 = strSplit[3];
                 if (strMsgCmd.equals("sentUsername")) {
                     if (intSelf == 1) {
                         strUsername2 = strMsgUser;
