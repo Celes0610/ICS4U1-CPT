@@ -184,6 +184,8 @@ public class snakeGame implements ActionListener, KeyListener {
                     moveTimer.start();
                 }else if(strMsgCmd.equals("spawnFood")){
                     panel.mapData[Integer.parseInt(strMsgArg)][Integer.parseInt(strMsgArg2)] = "food";
+                }else if(strMsgCmd.equals("foodEaten")){
+                    panel.mapData[Integer.parseInt(strMsgArg)][Integer.parseInt(strMsgArg2)] = "f";
                 }
             } else if (strMsgType.equals("diff")) {
                 strMapFile = strSplit[1];
@@ -281,6 +283,16 @@ public class snakeGame implements ActionListener, KeyListener {
 				
 		}
         if(evt.getSource() == animationTimer){
+            if(panel.eatFood() == true){
+                spawnFood();
+                if(intSelf == 1){
+                    ssm.sendText("System,null,"+panel.intSnake1[0][0]+","+panel.intSnake1[0][1]);
+                }else if(intSelf == 2){
+                    ssm.sendText("System,null,"+panel.intSnake2[0][0]+","+panel.intSnake2[0][1]);
+                }
+                System.out.println("Food Eaten");
+                
+            }
             panel.removeSnake();
             panel.paintSnake();
             panel.repaint();

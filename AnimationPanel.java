@@ -49,7 +49,7 @@ public class AnimationPanel extends JPanel {
                 } else if ("s1".equals(mapData[i][j])) {
                     g.setColor(snake1Color);
                     g.fillRect(j * 18, i * 18, 18, 18);
-                    
+
                 } else if ("s2".equals(mapData[i][j])) {
                     g.setColor(snake2Color);
                     g.fillRect(j * 18, i * 18, 18, 18);
@@ -128,7 +128,20 @@ public class AnimationPanel extends JPanel {
             }
         }
     }
-
+    public boolean eatFood(){
+        if(mapData[intSnake1[0][0]][intSnake1[0][1]] == "food"){
+            intLength1 = intLength1 + 1;
+            mapData[intSnake1[0][0]][intSnake1[0][1]] = "f";
+            return true;
+        }else if(mapData[intSnake2[0][0]][intSnake2[0][1]] == "food"){
+            intLength2 = intLength2 + 1;
+            mapData[intSnake2[0][0]][intSnake2[0][1]] = "f";
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
     public void drawEyes() {
         drawSnakeEyes(intSnake1, intLength1, snakeGame.intDirection); // Snake 1
         drawSnakeEyes(intSnake2, intLength2, snakeGame.intDirection); // Snake 2
@@ -160,7 +173,7 @@ public class AnimationPanel extends JPanel {
         // Initialize the snakes with a default position
         intSnake1 = new int[][]{{0, 0}, {1, 0}, {2, 0}};
         intSnake2 = new int[][]{{39, 39}, {38, 39}, {37, 39}};
-
+        
         try {
             horizontalEyes = ImageIO.read(new File("eye_vertical.png"));
             verticalEyes = ImageIO.read(new File("eye_horizontal.png"));
