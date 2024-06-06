@@ -21,6 +21,7 @@ public class AnimationPanel extends JPanel {
     Color snake2Color;
     int[][][] setColor = new int[2][2][3];
     Color foodColor = new Color(0,0,0);
+    int intFood[][] = new int[1][2];
 
     // Methods
     // Override paintComponent - the way the JPanel is drawn
@@ -54,30 +55,10 @@ public class AnimationPanel extends JPanel {
                     g.setColor(snake2Color);
                     g.fillRect(j * 18, i * 18, 18, 18);
                 } else if ("food".equals(mapData[i][j])) {
-                    g.drawImage(imgFood, i*18, j*18, null);
+                    g.drawImage(imgFood, j*18, i*18, null);
                 }
             }
         }
-        /*
-        for (int i = 0; i < mapData.length; i++) {
-            for (int j = 0; j < mapData[i].length; j++) {
-                if ("f".equals(mapData[j][i])) {
-                    g.drawImage(imgFloor, j * 18, i * 18, null);
-                } else if ("w".equals(mapData[j][i])) {
-                    g.drawImage(imgWall, j * 18, i * 18, null);
-                } else if ("s1".equals(mapData[j][i])) {
-                    g.setColor(snake1Color);
-                    g.fillRect(j * 18, i * 18, 18, 18);
-
-                } else if ("s2".equals(mapData[j][i])) {
-                    g.setColor(snake2Color);
-                    g.fillRect(j * 18, i * 18, 18, 18);
-                } else if ("food".equals(mapData[j][i])) {
-                    g.drawImage(imgFood, i*18, j*18, null);
-                }
-            }
-        }
-        */
     }
 
     public void removeSnake() {
@@ -149,17 +130,19 @@ public class AnimationPanel extends JPanel {
         }
     }
     public boolean eatFood(){
-        if(mapData[intSnake1[0][0]][intSnake1[0][1]] == "food"){
+        if(mapData[intSnake1[0][0]][intSnake1[0][1]].equals("food")){
             intLength1 = intLength1 + 1;
             mapData[intSnake1[0][0]][intSnake1[0][1]] = "f";
             intSnake1[intLength1][0] = intSnake1[intLength1 - 1][0];
             intSnake1[intLength1][1] = intSnake1[intLength1 - 1][1];
+            System.out.println("Player 1 ate a food");
             return true;
-        }else if(mapData[intSnake2[0][0]][intSnake2[0][1]] == "food"){
+        }else if(mapData[intSnake2[0][0]][intSnake2[0][1]].equals("food")){
             intLength2 = intLength2 + 1;
             mapData[intSnake2[0][0]][intSnake2[0][1]] = "f";
             intSnake2[intLength2][0] = intSnake2[intLength2 - 1][0];
             intSnake2[intLength2][1] = intSnake2[intLength2 - 1][1];
+            System.out.println("Player 2 ate a food");
             return true;
         }else{
             return false;

@@ -294,6 +294,7 @@ public class snakeGame implements ActionListener, KeyListener {
                 }
                 System.out.println("Food Eaten");
                 spawnFood();
+                forceRepaint();
             }
             panel.removeSnake();
             panel.paintSnake();
@@ -325,6 +326,15 @@ public class snakeGame implements ActionListener, KeyListener {
                         intTemp[intCount][1] = panel.intSnake1[intCount][1];
                     }
                     panel.intSnake1[0][1] = panel.intSnake1[0][1] - 1;
+
+                    if(panel.mapData[panel.intSnake1[0][0]][panel.intSnake1[0][1]].equals("food")){
+                        panel.intLength1 = panel.intLength1 + 1;
+                        panel.mapData[panel.intSnake1[0][0]][panel.intSnake1[0][1]] = "f";
+                        panel.intSnake1[panel.intLength1][0] = panel.intSnake1[panel.intLength1 - 1][0];
+                        panel.intSnake1[panel.intLength1][1] = panel.intSnake1[panel.intLength1 - 1][1];
+                        System.out.println("Player 1 ate a food");
+                    }
+
                     for(int intCount = 0;intCount < (panel.intLength1 - 1); intCount++){
                         panel.intSnake1[intCount + 1][0] = intTemp[intCount][0];
                         panel.intSnake1[intCount + 1][1] = intTemp[intCount][1];
@@ -335,6 +345,15 @@ public class snakeGame implements ActionListener, KeyListener {
                         intTemp[intCount][1] = panel.intSnake1[intCount][1];
                     }
                     panel.intSnake1[0][0] = panel.intSnake1[0][0] + 1;
+
+                    if(panel.mapData[panel.intSnake1[0][0]][panel.intSnake1[0][1]].equals("food")){
+                        panel.intLength1 = panel.intLength1 + 1;
+                        panel.mapData[panel.intSnake1[0][0]][panel.intSnake1[0][1]] = "f";
+                        panel.intSnake1[panel.intLength1][0] = panel.intSnake1[panel.intLength1 - 1][0];
+                        panel.intSnake1[panel.intLength1][1] = panel.intSnake1[panel.intLength1 - 1][1];
+                        System.out.println("Player 1 ate a food");
+                    }
+
                     for(int intCount = 0;intCount < (panel.intLength1 - 1); intCount++){
                         panel.intSnake1[intCount + 1][0] = intTemp[intCount][0];
                         panel.intSnake1[intCount + 1][1] = intTemp[intCount][1];
@@ -345,6 +364,15 @@ public class snakeGame implements ActionListener, KeyListener {
                         intTemp[intCount][1] = panel.intSnake1[intCount][1];
                     }
                     panel.intSnake1[0][1] = panel.intSnake1[0][1] + 1;
+
+                    if(panel.mapData[panel.intSnake1[0][0]][panel.intSnake1[0][1]].equals("food")){
+                        panel.intLength1 = panel.intLength1 + 1;
+                        panel.mapData[panel.intSnake1[0][0]][panel.intSnake1[0][1]] = "f";
+                        panel.intSnake1[panel.intLength1][0] = panel.intSnake1[panel.intLength1 - 1][0];
+                        panel.intSnake1[panel.intLength1][1] = panel.intSnake1[panel.intLength1 - 1][1];
+                        System.out.println("Player 1 ate a food");
+                    }
+
                     for(int intCount = 0;intCount < (panel.intLength1 - 1); intCount++){
                         panel.intSnake1[intCount + 1][0] = intTemp[intCount][0];
                         panel.intSnake1[intCount + 1][1] = intTemp[intCount][1];
@@ -355,6 +383,15 @@ public class snakeGame implements ActionListener, KeyListener {
                         intTemp[intCount][1] = panel.intSnake1[intCount][1];
                     }
                     panel.intSnake1[0][0] = panel.intSnake1[0][0] - 1;
+
+                    if(panel.mapData[panel.intSnake1[0][0]][panel.intSnake1[0][1]].equals("food")){
+                        panel.intLength1 = panel.intLength1 + 1;
+                        panel.mapData[panel.intSnake1[0][0]][panel.intSnake1[0][1]] = "f";
+                        panel.intSnake1[panel.intLength1][0] = panel.intSnake1[panel.intLength1 - 1][0];
+                        panel.intSnake1[panel.intLength1][1] = panel.intSnake1[panel.intLength1 - 1][1];
+                        System.out.println("Player 1 ate a food");
+                    }
+
                     for(int intCount = 0;intCount < (panel.intLength1 - 1); intCount++){
                         panel.intSnake1[intCount + 1][0] = intTemp[intCount][0];
                         panel.intSnake1[intCount + 1][1] = intTemp[intCount][1];
@@ -372,6 +409,15 @@ public class snakeGame implements ActionListener, KeyListener {
                         intTemp[intCount][1] = panel.intSnake2[intCount][1];
                     }
                     panel.intSnake2[0][1] = panel.intSnake2[0][1] - 1;
+
+                    if(panel.mapData[panel.intSnake2[0][0]][panel.intSnake2[0][1]].equals("food")){
+                        panel.intLength2 = panel.intLength2 + 1;
+                        panel.mapData[panel.intSnake2[0][0]][panel.intSnake2[0][1]] = "f";
+                        panel.intSnake2[panel.intLength2][0] = panel.intSnake2[panel.intLength2 - 1][0];
+                        panel.intSnake2[panel.intLength2][1] = panel.intSnake2[panel.intLength2 - 1][1];
+                        System.out.println("Player 2 ate a food");
+                    }
+
                     for(int intCount = 0;intCount < (panel.intLength2 - 1); intCount++){
                         panel.intSnake2[intCount + 1][0] = intTemp[intCount][0];
                         panel.intSnake2[intCount + 1][1] = intTemp[intCount][1];
@@ -382,6 +428,15 @@ public class snakeGame implements ActionListener, KeyListener {
                         intTemp[intCount][1] = panel.intSnake2[intCount][1];
                     }
                     panel.intSnake2[0][0] = panel.intSnake2[0][0] + 1;
+                    
+                    if(panel.mapData[panel.intSnake2[0][0]][panel.intSnake2[0][1]].equals("food")){
+                        panel.intLength2 = panel.intLength2 + 1;
+                        panel.mapData[panel.intSnake2[0][0]][panel.intSnake2[0][1]] = "f";
+                        panel.intSnake2[panel.intLength2][0] = panel.intSnake2[panel.intLength2 - 1][0];
+                        panel.intSnake2[panel.intLength2][1] = panel.intSnake2[panel.intLength2 - 1][1];
+                        System.out.println("Player 2 ate a food");
+                    }
+
                     for(int intCount = 0;intCount < (panel.intLength2 - 1); intCount++){
                         panel.intSnake2[intCount + 1][0] = intTemp[intCount][0];
                         panel.intSnake2[intCount + 1][1] = intTemp[intCount][1];
@@ -392,6 +447,15 @@ public class snakeGame implements ActionListener, KeyListener {
                         intTemp[intCount][1] = panel.intSnake2[intCount][1];
                     }
                     panel.intSnake2[0][1] = panel.intSnake2[0][1] + 1;
+                    
+                    if(panel.mapData[panel.intSnake2[0][0]][panel.intSnake2[0][1]].equals("food")){
+                        panel.intLength2 = panel.intLength2 + 1;
+                        panel.mapData[panel.intSnake2[0][0]][panel.intSnake2[0][1]] = "f";
+                        panel.intSnake2[panel.intLength2][0] = panel.intSnake2[panel.intLength2 - 1][0];
+                        panel.intSnake2[panel.intLength2][1] = panel.intSnake2[panel.intLength2 - 1][1];
+                        System.out.println("Player 2 ate a food");
+                    }
+
                     for(int intCount = 0;intCount < (panel.intLength2 - 1); intCount++){
                         panel.intSnake2[intCount + 1][0] = intTemp[intCount][0];
                         panel.intSnake2[intCount + 1][1] = intTemp[intCount][1];
@@ -402,6 +466,15 @@ public class snakeGame implements ActionListener, KeyListener {
                         intTemp[intCount][1] = panel.intSnake2[intCount][1];
                     }
                     panel.intSnake2[0][0] = panel.intSnake2[0][0] - 1;
+                    
+                    if(panel.mapData[panel.intSnake2[0][0]][panel.intSnake2[0][1]].equals("food")){
+                        panel.intLength2 = panel.intLength2 + 1;
+                        panel.mapData[panel.intSnake2[0][0]][panel.intSnake2[0][1]] = "f";
+                        panel.intSnake2[panel.intLength2][0] = panel.intSnake2[panel.intLength2 - 1][0];
+                        panel.intSnake2[panel.intLength2][1] = panel.intSnake2[panel.intLength2 - 1][1];
+                        System.out.println("Player 2 ate a food");
+                    }
+
                     for(int intCount = 0;intCount < (panel.intLength2 - 1); intCount++){
                         panel.intSnake2[intCount + 1][0] = intTemp[intCount][0];
                         panel.intSnake2[intCount + 1][1] = intTemp[intCount][1];
