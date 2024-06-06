@@ -132,10 +132,14 @@ public class AnimationPanel extends JPanel {
         if(mapData[intSnake1[0][0]][intSnake1[0][1]] == "food"){
             intLength1 = intLength1 + 1;
             mapData[intSnake1[0][0]][intSnake1[0][1]] = "f";
+            intSnake1[intLength1][0] = intSnake1[intLength1 - 1][0];
+            intSnake1[intLength1][1] = intSnake1[intLength1 - 1][1];
             return true;
         }else if(mapData[intSnake2[0][0]][intSnake2[0][1]] == "food"){
             intLength2 = intLength2 + 1;
             mapData[intSnake2[0][0]][intSnake2[0][1]] = "f";
+            intSnake2[intLength2][0] = intSnake2[intLength2 - 1][0];
+            intSnake2[intLength2][1] = intSnake2[intLength2 - 1][1];
             return true;
         }else{
             return false;
