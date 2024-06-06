@@ -58,6 +58,26 @@ public class AnimationPanel extends JPanel {
                 }
             }
         }
+        /*
+        for (int i = 0; i < mapData.length; i++) {
+            for (int j = 0; j < mapData[i].length; j++) {
+                if ("f".equals(mapData[j][i])) {
+                    g.drawImage(imgFloor, j * 18, i * 18, null);
+                } else if ("w".equals(mapData[j][i])) {
+                    g.drawImage(imgWall, j * 18, i * 18, null);
+                } else if ("s1".equals(mapData[j][i])) {
+                    g.setColor(snake1Color);
+                    g.fillRect(j * 18, i * 18, 18, 18);
+
+                } else if ("s2".equals(mapData[j][i])) {
+                    g.setColor(snake2Color);
+                    g.fillRect(j * 18, i * 18, 18, 18);
+                } else if ("food".equals(mapData[j][i])) {
+                    g.drawImage(imgFood, i*18, j*18, null);
+                }
+            }
+        }
+        */
     }
 
     public void removeSnake() {

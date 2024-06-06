@@ -186,6 +186,9 @@ public class snakeGame implements ActionListener, KeyListener {
                     panel.mapData[Integer.parseInt(strMsgArg)][Integer.parseInt(strMsgArg2)] = "food";
                 }else if(strMsgCmd.equals("foodEaten")){
                     panel.mapData[Integer.parseInt(strMsgArg)][Integer.parseInt(strMsgArg2)] = "f";
+                }else if(strMsgCmd.equals("clearMap")){
+                    clearMap();
+                    forceRepaint();
                 }
             } else if (strMsgType.equals("diff")) {
                 strMapFile = strSplit[1];
@@ -284,14 +287,13 @@ public class snakeGame implements ActionListener, KeyListener {
 		}
         if(evt.getSource() == animationTimer){
             if(panel.eatFood() == true){
-                spawnFood();
                 if(intSelf == 1){
                     ssm.sendText("System,null,foodEaten,"+panel.intSnake1[0][0]+","+panel.intSnake1[0][1]);
                 }else if(intSelf == 2){
                     ssm.sendText("System,null,foodEaten,"+panel.intSnake2[0][0]+","+panel.intSnake2[0][1]);
                 }
                 System.out.println("Food Eaten");
-                
+                spawnFood();
             }
             panel.removeSnake();
             panel.paintSnake();
@@ -426,6 +428,17 @@ public class snakeGame implements ActionListener, KeyListener {
             intDirection = 3;
         }else if(evt.getKeyChar() == 'a' && intDirection != 2){
             intDirection = 4;
+        }else if(evt.getKeyChar() == 'p'){
+            clearMap();
+            ssm.sendText("System,null,clearMap,null,null");
+        }
+    }
+
+    public void clearMap(){
+        for(int i = 0; i < 40; i++){
+            for(int j = 0; j < 40; j++){
+                panel.mapData[i][j] = "f";
+            }
         }
     }
 
@@ -433,11 +446,26 @@ public class snakeGame implements ActionListener, KeyListener {
         
     }
 
+    public void forceRepaint(){
+        if(panel.eatFood() == true){
+            if(intSelf == 1){
+                ssm.sendText("System,null,foodEaten,"+panel.intSnake1[0][0]+","+panel.intSnake1[0][1]);
+            }else if(intSelf == 2){
+                ssm.sendText("System,null,foodEaten,"+panel.intSnake2[0][0]+","+panel.intSnake2[0][1]);
+            }
+            System.out.println("Food Eaten");
+            spawnFood();
+        }
+        panel.removeSnake();
+        panel.paintSnake();
+        panel.repaint();
+    }
+
     public void spawnFood(){
         Random rand = new Random();
         int intRandX = rand.nextInt(39);
         int intRandY = rand.nextInt(39);
-        if(panel.mapData[intRandX][intRandY] != "w"){
+        if(panel.mapData[intRandX][intRandY] != "w" && panel.mapData[intRandX][intRandY] != "s1" && panel.mapData[intRandX][intRandY] != "s2"){
             panel.mapData[intRandX][intRandY] = "food";
             ssm.sendText("System,null,spawnFood,"+intRandX+","+intRandY);
         }else{
