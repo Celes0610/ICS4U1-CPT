@@ -63,7 +63,7 @@ public class snakeGame implements ActionListener, KeyListener {
     String strMapFile = "Map - Easy.csv";
     int intLength = 3;
     int intTemp[][] = new int[160][2];
-    int intDirection = 4;
+    static int intDirection = 4;
 
     // methods
     public void actionPerformed(ActionEvent evt) {
@@ -345,6 +345,8 @@ public class snakeGame implements ActionListener, KeyListener {
                         panel.intSnake1[intCount + 1][0] = intTemp[intCount][0];
                         panel.intSnake1[intCount + 1][1] = intTemp[intCount][1];
                     }
+                }else{
+                    stopGame();
                 }
                 ssm.sendText("Game,"+strUsername1+","+panel.intSnake1[0][0]+","+panel.intSnake1[0][1]);
             }
@@ -390,6 +392,8 @@ public class snakeGame implements ActionListener, KeyListener {
                         panel.intSnake2[intCount + 1][0] = intTemp[intCount][0];
                         panel.intSnake2[intCount + 1][1] = intTemp[intCount][1];
                     }
+                }else{
+                    stopGame();
                 }
                 ssm.sendText("Game,"+strUsername2+","+panel.intSnake2[0][0]+","+panel.intSnake2[0][1]);
             }   

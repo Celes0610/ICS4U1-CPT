@@ -10,6 +10,8 @@ public class AnimationPanel extends JPanel {
     private BufferedImage imgFloor;
     private BufferedImage imgWall;
     private BufferedImage imgFood;
+    private BufferedImage verticalEyes;
+    private BufferedImage horizontalEyes;
     private int currentTheme = 1;
     int intSnake1[][] = new int[160][2];
     int intSnake2[][] = new int[160][2];
@@ -47,6 +49,7 @@ public class AnimationPanel extends JPanel {
                 } else if ("s1".equals(mapData[i][j])) {
                     g.setColor(snake1Color);
                     g.fillRect(j * 18, i * 18, 18, 18);
+                    
                 } else if ("s2".equals(mapData[i][j])) {
                     g.setColor(snake2Color);
                     g.fillRect(j * 18, i * 18, 18, 18);
@@ -126,12 +129,45 @@ public class AnimationPanel extends JPanel {
         }
     }
 
+    public void drawEyes() {
+        drawSnakeEyes(intSnake1, intLength1, snakeGame.intDirection); // Snake 1
+        drawSnakeEyes(intSnake2, intLength2, snakeGame.intDirection); // Snake 2
+    }
+
+    private void drawSnakeEyes(int[][] snake, int length, int direction) {
+        if (length > 0) {
+            int headX = snake[0][0];
+            int headY = snake[0][1];
+
+            Graphics g = this.getGraphics();
+
+            switch (direction) {
+                case 1: // Moving Up
+                case 3: // Moving Down
+                    g.drawImage(verticalEyes, headX * 18, headY * 18, null);
+                    break;
+                case 2: // Moving Right
+                case 4: // Moving Left
+                    g.drawImage(horizontalEyes, headX * 18, headY * 18, null);
+                    break;
+            }
+        }
+    }
+
     // Constructor
     public AnimationPanel() {
         super();
         // Initialize the snakes with a default position
         intSnake1 = new int[][]{{0, 0}, {1, 0}, {2, 0}};
         intSnake2 = new int[][]{{39, 39}, {38, 39}, {37, 39}};
+
+        try {
+            horizontalEyes = ImageIO.read(new File("eye_vertical.png"));
+            verticalEyes = ImageIO.read(new File("eye_horizontal.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         loadThemeImages(currentTheme); // Load default theme images
     }
 }
