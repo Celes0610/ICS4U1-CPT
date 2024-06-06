@@ -183,12 +183,12 @@ public class AnimationPanel extends JPanel {
         intSnake1[1][1] = 0;
         intSnake1[2][0] = 0;
         intSnake1[2][1] = 0;
-        intSnake2[0][0] = 0;
-        intSnake2[0][1] = 0;
-        intSnake2[1][0] = 0;
-        intSnake2[1][1] = 0;
-        intSnake2[2][0] = 0;
-        intSnake2[2][1] = 0;
+        intSnake2[0][0] = 39;
+        intSnake2[0][1] = 39;
+        intSnake2[1][0] = 39;
+        intSnake2[1][1] = 39;
+        intSnake2[2][0] = 39;
+        intSnake2[2][1] = 39;
         
         try {
             horizontalEyes = ImageIO.read(new File("eye_vertical.png"));
