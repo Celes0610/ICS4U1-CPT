@@ -175,8 +175,20 @@ public class AnimationPanel extends JPanel {
     public AnimationPanel() {
         super();
         // Initialize the snakes with a default position
-        intSnake1 = new int[][]{{0, 0}, {1, 0}, {2, 0}};
-        intSnake2 = new int[][]{{39, 39}, {38, 39}, {37, 39}};
+        intSnake1 = new int[160][2];
+        intSnake2 = new int[160][2];
+        intSnake1[0][0] = 0;
+        intSnake1[0][1] = 0;
+        intSnake1[1][0] = 0;
+        intSnake1[1][1] = 0;
+        intSnake1[2][0] = 0;
+        intSnake1[2][1] = 0;
+        intSnake2[0][0] = 0;
+        intSnake2[0][1] = 0;
+        intSnake2[1][0] = 0;
+        intSnake2[1][1] = 0;
+        intSnake2[2][0] = 0;
+        intSnake2[2][1] = 0;
         
         try {
             horizontalEyes = ImageIO.read(new File("eye_vertical.png"));
