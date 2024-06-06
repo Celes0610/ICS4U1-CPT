@@ -286,9 +286,9 @@ public class snakeGame implements ActionListener, KeyListener {
             if(panel.eatFood() == true){
                 spawnFood();
                 if(intSelf == 1){
-                    ssm.sendText("System,null,"+panel.intSnake1[0][0]+","+panel.intSnake1[0][1]);
+                    ssm.sendText("System,null,foodEaten,"+panel.intSnake1[0][0]+","+panel.intSnake1[0][1]);
                 }else if(intSelf == 2){
-                    ssm.sendText("System,null,"+panel.intSnake2[0][0]+","+panel.intSnake2[0][1]);
+                    ssm.sendText("System,null,foodEaten,"+panel.intSnake2[0][0]+","+panel.intSnake2[0][1]);
                 }
                 System.out.println("Food Eaten");
                 
