@@ -10,7 +10,7 @@ public class snakeGame implements ActionListener, KeyListener {
     JFrame theframe = new JFrame("Snake");
     StartPanel startPanel = new StartPanel();
     AnimationPanel panel = new AnimationPanel();
-    SuperSocketMaster ssm;
+    static SuperSocketMaster ssm;
 
     /* start screen */
     JLabel ipLabel = new JLabel("IP");
@@ -54,8 +54,8 @@ public class snakeGame implements ActionListener, KeyListener {
     int intMsgX;
     int intMsgY;
     String strMsgSent;
-    String strUsername1;
-    String strUsername2;
+    static String strUsername1;
+    static String strUsername2;
     int intReady1 = 0;
     int intReady2 = 0;
     int intSelf;
@@ -189,6 +189,8 @@ public class snakeGame implements ActionListener, KeyListener {
                 }else if(strMsgCmd.equals("clearMap")){
                     clearMap();
                     forceRepaint();
+                }else if (strMsgCmd.equals("stopGame")){
+                    winGame();
                 }
             } else if (strMsgType.equals("diff")) {
                 strMapFile = strSplit[1];
@@ -362,7 +364,7 @@ public class snakeGame implements ActionListener, KeyListener {
                         panel.intSnake1[intCount + 1][1] = intTemp[intCount][1];
                     }
                 }else{
-                    stopGame();
+                    stopGame(strUsername1);
                 }
                 ssm.sendText("Game,"+strUsername1+","+panel.intSnake1[0][0]+","+panel.intSnake1[0][1]);
             }
@@ -409,7 +411,7 @@ public class snakeGame implements ActionListener, KeyListener {
                         panel.intSnake2[intCount + 1][1] = intTemp[intCount][1];
                     }
                 }else{
-                    stopGame();
+                    stopGame(strUsername2);
                 }
                 ssm.sendText("Game,"+strUsername2+","+panel.intSnake2[0][0]+","+panel.intSnake2[0][1]);
             }   
@@ -509,7 +511,13 @@ public class snakeGame implements ActionListener, KeyListener {
         return strMap;
     }
 
-    public static void stopGame (){
+    public static void stopGame (String strLoser){
+        animationTimer.stop();
+        moveTimer.stop();
+        ssm.sendText("System,"+strLoser+",stopGame,null,null");
+    }
+
+    public static void winGame(){
         animationTimer.stop();
         moveTimer.stop();
     }
