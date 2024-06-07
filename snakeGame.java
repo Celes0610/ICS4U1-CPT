@@ -286,14 +286,16 @@ public class snakeGame implements ActionListener, KeyListener {
 				
 		}
         if(evt.getSource() == animationTimer){
-            if(panel.eatFood() == true){
-                if(intSelf == 1){
+            if(intSelf == 1){
+                if(panel.eatFood1() == true){
                     ssm.sendText("System,null,foodEaten,"+panel.intSnake1[0][0]+","+panel.intSnake1[0][1]);
-                }else if(intSelf == 2){
-                    ssm.sendText("System,null,foodEaten,"+panel.intSnake2[0][0]+","+panel.intSnake2[0][1]);
+                    spawnFood();
                 }
-                System.out.println("Food Eaten");
-                forceRepaint();
+            }else if(intSelf == 2){
+                if(panel.eatFood2() == true){
+                    ssm.sendText("System,null,foodEaten,"+panel.intSnake2[0][0]+","+panel.intSnake2[0][1]);
+                    spawnFood();
+                }
             }
             panel.removeSnake();
             panel.paintSnake();
@@ -447,15 +449,6 @@ public class snakeGame implements ActionListener, KeyListener {
     }
 
     public void forceRepaint(){
-        if(panel.eatFood() == true){
-            if(intSelf == 1){
-                ssm.sendText("System,null,foodEaten,"+panel.intSnake1[0][0]+","+panel.intSnake1[0][1]);
-            }else if(intSelf == 2){
-                ssm.sendText("System,null,foodEaten,"+panel.intSnake2[0][0]+","+panel.intSnake2[0][1]);
-            }
-            System.out.println("Food Eaten");
-            spawnFood();
-        }
         panel.removeSnake();
         panel.paintSnake();
         panel.repaint();
@@ -465,11 +458,12 @@ public class snakeGame implements ActionListener, KeyListener {
         Random rand = new Random();
         int intRandX = rand.nextInt(39);
         int intRandY = rand.nextInt(39);
-        if(panel.mapData[intRandX][intRandY] != "w" && panel.mapData[intRandX][intRandY] != "s1" && panel.mapData[intRandX][intRandY] != "s2"){
+        if(panel.mapData[intRandX][intRandY].equals("f")){
             panel.mapData[intRandX][intRandY] = "food";
-            panel.intFood[0][0] = intRandX;
-            panel.intFood[0][1] = intRandY;
+            panel.intFood[0][0] = intRandY;
+            panel.intFood[0][1] = intRandX;
             ssm.sendText("System,null,spawnFood,"+intRandX+","+intRandY);
+            System.out.println("Food Spawned: "+intRandX+","+intRandY);
         }else{
             spawnFood();
         }

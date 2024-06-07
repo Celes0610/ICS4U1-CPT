@@ -129,7 +129,7 @@ public class AnimationPanel extends JPanel {
             }
         }
     }
-    public boolean eatFood(){
+    public boolean eatFood1(){
         if(intFood[0][0] == intSnake1[0][0] && intFood[0][1] == intSnake1[0][1]){
             intLength1 = intLength1 + 1;
             mapData[intSnake1[0][0]][intSnake1[0][1]] = "f";
@@ -137,7 +137,13 @@ public class AnimationPanel extends JPanel {
             intSnake1[intLength1][1] = intSnake1[intLength1 - 1][1];
             System.out.println("Player 1 ate a food");
             return true;
-        }else if(intFood[0][0] == intSnake2[0][0] && intFood[0][1] == intSnake2[0][1]){
+        }else{
+            return false;
+        }
+    }
+
+    public boolean eatFood2(){
+        if(intFood[0][0] == intSnake2[0][0] && intFood[0][1] == intSnake2[0][1]){
             intLength2 = intLength2 + 1;
             mapData[intSnake2[0][0]][intSnake2[0][1]] = "f";
             intSnake2[intLength2][0] = intSnake2[intLength2 - 1][0];
