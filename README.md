@@ -16,7 +16,7 @@ Commands for Testing and Evaluation
 - Note: These commands are only possible if boolean commandsEnabled is true. Command changes are irreversible and thus are only meant for testing and evaluation purposes. 
 - 'i' to freeze the other snake (ie if you are the server, it will freeze the client snake and vice versa)
 - 'o' to forcibly spawn a food item, overriding previous food items
-- 'p' to remove all walls (this affects both client and server
+- 'p' to remove all walls (this affects both client and server)
 
 Getting Started
 1. Starting the Game:
