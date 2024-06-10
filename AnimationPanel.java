@@ -6,26 +6,58 @@ import java.awt.image.*;
 
 public class AnimationPanel extends JPanel {
     // Properties
+    /**A 2D array containing the data reqired to draw the full map */
     public String[][] mapData;
+
+    /**A private Buffered Image containing data for the Floor texture */
     private BufferedImage imgFloor;
+
+    /**A private Buffered Image containing data for the Wall texture */
     private BufferedImage imgWall;
+    
+    /**A private Buffered Image containing data for the Food texture */
     private BufferedImage imgFood;
+    
+    /**A private integer representing the Theme */
     private int currentTheme = 1;
+    
+    /**A 2D array containing the data of the player 1 snake int as xy positions */
     int intSnake1[][] = new int[160][2];
+    
+    /**A 2D array containing the data of the player 2 snake int as xy positions */
     int intSnake2[][] = new int[160][2];
+    
+    /**An integer representing the length of the player 1 snake*/
     int intLength1 = 3;
+
+    /**An integer representing the length of the player 2 snake*/
     int intLength2 = 3;
+
+    /**A color object that represents the colour of the player 1 snake */
     Color snake1Color;
+
+    /**A color object that represents the colour of the player 2 snake */
     Color snake2Color;
+
+    /**A 3D array to set the colors of the snakes */
     int[][][] setColor = new int[2][2][3];
+
+    /**A color object used to set the colors of the snakes */
     Color foodColor = new Color(0,0,0);
+
+    /**A 2D array containing the data of the food location as xy positions */
     int intFood[][] = new int[1][2];
+
+    /**The direction of the player 1 snake */
     int direction1 = 2; // Default direction for snake 1: right
+
+    /**The direction of the player 2 snake */
     int direction2 = 4; // Default direction for snake 2: left
 
 
     // Methods
     // Override paintComponent - the way the JPanel is drawn
+    /**Overrides the paintComponent to call the drawMap method */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -35,12 +67,14 @@ public class AnimationPanel extends JPanel {
     }
 
     // Method to load map data
+    /**Method to load the mapData from a text file */
     public void loadMap(String filePath) {
         mapData = snakeGame.readFile(40, filePath);
         repaint();
     }
 
     // Method to draw the map
+    /**Method to draw the map from mapData */
     private void drawMap(Graphics g) {
         for (int i = 0; i < mapData.length; i++) {
             for (int j = 0; j < mapData[i].length; j++) {
@@ -62,6 +96,7 @@ public class AnimationPanel extends JPanel {
         }
     }
 
+    /**Method to remove snake data from mapData */
     public void removeSnake() {
         for (int i = 0; i < mapData.length; i++) {
             for (int j = 0; j < mapData[i].length; j++) {
@@ -75,6 +110,7 @@ public class AnimationPanel extends JPanel {
     }
 
     // Method to load images based on theme
+    /**Method to load images based on the theme selected */
     public void loadThemeImages(int theme) {
         currentTheme = theme;
         try {
@@ -111,6 +147,7 @@ public class AnimationPanel extends JPanel {
     }
 
     // Method to Draw Snake
+    /**Method to add snake data to mapData based on intSnake1 and intSnake2 */
     public void paintSnake() {
         for (int intCount = 0; intCount < Math.max(intLength1, intLength2); intCount++) {
             if (intCount < intLength1) {
@@ -130,6 +167,8 @@ public class AnimationPanel extends JPanel {
             }
         }
     }
+
+    /**Method to check if the player 1 snake has eaten a food */
     public boolean eatFood1(){
         if(intFood[0][0] == intSnake1[0][0] && intFood[0][1] == intSnake1[0][1]){
             intLength1 = intLength1 + 1;
@@ -143,6 +182,7 @@ public class AnimationPanel extends JPanel {
         }
     }
 
+    /**Method to check if the player 2 snake has eaten a food */
     public boolean eatFood2(){
         if(intFood[0][0] == intSnake2[0][0] && intFood[0][1] == intSnake2[0][1]){
             intLength2 = intLength2 + 1;
@@ -158,6 +198,7 @@ public class AnimationPanel extends JPanel {
     
 
     // Constructor
+    /**Constructor Method */
     public AnimationPanel() {
         super();
         // Initialize the snakes with a default position
