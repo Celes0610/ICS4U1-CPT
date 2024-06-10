@@ -84,7 +84,7 @@ public class snakeGame implements ActionListener, KeyListener {
             portField.setText(String.valueOf(intPort));
             String ip = ssm.getMyAddress();
             ipField.setText(ip);
-            connectStat.setText("Waiting for player to connect...");
+            connectStat.setText("Waiting for player to connect...\nYou are the snake in the top left corner.");
             joinButton.setEnabled(false);
             hostButton.setEnabled(false);
             ipField.setEnabled(false);
@@ -97,12 +97,13 @@ public class snakeGame implements ActionListener, KeyListener {
             if (ssm.connect() == true) {
                 playButton.setEnabled(true);
                 intSelf = 2;
+            
             } else {
                 ssm.disconnect();
             }
 
             ssm.sendText("Connect, Player connected");
-            connectStat.setText("Connected to server");
+            connectStat.setText("Connected to server\nYou are the snake in the botton right corner. ");
             joinButton.setEnabled(false);
             hostButton.setEnabled(false);
             ipField.setEnabled(false);
@@ -123,7 +124,7 @@ public class snakeGame implements ActionListener, KeyListener {
             strMsgUser = strSplit[1];
             if (strMsgType.equals("Connect") && !playerConnected) {
                 playerConnected = true;
-                connectStat.setText("Player connected");
+                connectStat.append("\nPlayer connected");
             }
 
             if (strMsgType.equals("Game")) {
