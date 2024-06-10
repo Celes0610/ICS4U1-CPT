@@ -65,6 +65,7 @@ public class snakeGame implements ActionListener, KeyListener {
     int intTemp[][] = new int[160][2];
     static int intDirection = 4;
     int intSnakeSelf[][] = new int[160][2];
+    boolean commandsEnabled = true;
 
     // methods
     public void actionPerformed(ActionEvent evt) {
@@ -443,12 +444,12 @@ public class snakeGame implements ActionListener, KeyListener {
             intDirection = 3;
         }else if(evt.getKeyChar() == 'a' && intDirection != 2 && intSnakeSelf[0][0] != (intSnakeSelf[1][0] - 1)){
             intDirection = 4;
-        }else if(evt.getKeyChar() == 'p'){
+        }else if(evt.getKeyChar() == 'p' && commandsEnabled == true){
             clearMap();
             ssm.sendText("System,null,clearMap,null,null");
-        }else if(evt.getKeyChar() == 'o'){
+        }else if(evt.getKeyChar() == 'o' && commandsEnabled == true){
             spawnFood();
-        }else if(evt.getKeyChar() == 'i'){
+        }else if(evt.getKeyChar() == 'i' && commandsEnabled){
             ssm.sendText("System,null,stopTime,null,null");
         }
     }
