@@ -1,7 +1,7 @@
 # ICS4U1-CPT
 # Snake Game
 
- Overview
+Overview
 This is a two-player Snake game implemented in Java using Swing for the GUI and SuperSocketMaster for networking. The game allows one player to host a server while another joins as a client. Host can select difficulty levels, themes, and chat with each other during gameplay.
 
  Features
