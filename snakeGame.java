@@ -131,24 +131,24 @@ public class snakeGame implements ActionListener, KeyListener {
                 intMsgX = Integer.parseInt(strSplit[2]);
                 intMsgY = Integer.parseInt(strSplit[3]);
                 if(intSelf == 1){
-                    for(int intCount = 0; intCount < intLength; intCount++){
+                    for(int intCount = 0; intCount < panel.intLength2; intCount++){
                         intTemp[intCount][0] = panel.intSnake2[intCount][0];
                         intTemp[intCount][1] = panel.intSnake2[intCount][1];
                     }
                     panel.intSnake2[0][0] = intMsgX;
                     panel.intSnake2[0][1] = intMsgY;
-                    for(int intCount = 0; intCount < (intLength - 1); intCount++){
+                    for(int intCount = 0; intCount < (panel.intLength2 - 1); intCount++){
                         panel.intSnake2[intCount + 1][0] = intTemp[intCount][0];
                         panel.intSnake2[intCount + 1][1] = intTemp[intCount][1];
                     }
                 }else if(intSelf == 2){
-                    for(int intCount = 0; intCount < intLength; intCount++){
+                    for(int intCount = 0; intCount < panel.intLength1; intCount++){
                         intTemp[intCount][0] = panel.intSnake1[intCount][0];
                         intTemp[intCount][1] = panel.intSnake1[intCount][1];
                     }
                     panel.intSnake1[0][0] = intMsgX;
                     panel.intSnake1[0][1] = intMsgY;
-                    for(int intCount = 0; intCount < (intLength - 1); intCount++){
+                    for(int intCount = 0; intCount < (panel.intLength1 - 1); intCount++){
                         panel.intSnake1[intCount + 1][0] = intTemp[intCount][0];
                         panel.intSnake1[intCount + 1][1] = intTemp[intCount][1];
                     }
@@ -198,6 +198,8 @@ public class snakeGame implements ActionListener, KeyListener {
                     forceRepaint();
                 }else if (strMsgCmd.equals("stopGame")){
                     winGame();
+                }else if (strMsgCmd.equals("stopTime")){
+                    moveTimer.stop();
                 }
             } else if (strMsgType.equals("diff")) {
                 strMapFile = strSplit[1];
@@ -444,6 +446,10 @@ public class snakeGame implements ActionListener, KeyListener {
         }else if(evt.getKeyChar() == 'p'){
             clearMap();
             ssm.sendText("System,null,clearMap,null,null");
+        }else if(evt.getKeyChar() == 'o'){
+            spawnFood();
+        }else if(evt.getKeyChar() == 'i'){
+            ssm.sendText("System,null,stopTime,null,null");
         }
     }
 
@@ -481,8 +487,6 @@ public class snakeGame implements ActionListener, KeyListener {
             spawnFood();
         }
     }
-
-
 
     public static String[][] readFile(int intCol, String strFileName) {
         int intRow = 0;
