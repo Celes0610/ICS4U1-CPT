@@ -6,28 +6,47 @@ import java.io.*;
 import java.util.Random;
 
 public class snakeGame implements ActionListener, KeyListener {
-    // properties
+    // Properties
+    /** JFrame for the frame */
     JFrame theframe = new JFrame("Snake");
+    /** Constructing the start panel */
     StartPanel startPanel = new StartPanel();
+    /** Constructing the animation panel */
     AnimationPanel panel = new AnimationPanel();
+    /** SuperSocketMaster */
     static SuperSocketMaster ssm;
 
-    /* start screen */
+    /** JLabel for the ip */
     JLabel ipLabel = new JLabel("IP");
+	/** JTextField for the ip field*/
     JTextField ipField = new JTextField();
+    /**  JLabel for the port*/
     JLabel portLabel = new JLabel("Port");
+    /** JTextField for the port field */
     JTextField portField = new JTextField();
+    /** JButton for creating the server as a host */
     JButton hostButton = new JButton("Create Server");
+    /** JButton for joining the server */
     JButton joinButton = new JButton("Join Server");
+    /** JTextArea displaying the connection status */
     JTextArea connectStat = new JTextArea();
+    /** JLabel for the username */
     JLabel usernameLabel = new JLabel("Username");
+    /**  */
     JTextField usernameField = new JTextField();
+    /**  */
     JButton easyButton = new JButton("Easy");
+    /**  */
     JButton normButton = new JButton("Normal");
+    /**  */
     JButton hardButton = new JButton("Hard");
+    /**  */
     JButton playButton = new JButton("Ready");
+    /**  */
     JButton theme1Button = new JButton("Star Wars");
+    /**  */
     JButton theme2Button = new JButton("Zelda");
+    /**  */
     JButton helpButton = new JButton("?");
     static Timer animationTimer = new Timer(1000/60, null);
     static Timer moveTimer = new Timer(100, null);
