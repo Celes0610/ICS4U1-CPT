@@ -113,6 +113,7 @@ public class snakeGame implements ActionListener, KeyListener {
     boolean commandsEnabled = true;
 
     // methods
+	/** Method to look out for actions performed */
     public void actionPerformed(ActionEvent evt) {
         // create a server
         if (evt.getSource() == hostButton) {
@@ -474,11 +475,11 @@ public class snakeGame implements ActionListener, KeyListener {
             }   
         }
     }
-
+	/** Method to look out for keys released */
     public void keyReleased(KeyEvent evt) {
 
     }
-
+	/** Method to look out for keys pressed */
     public void keyPressed(KeyEvent evt) {
         System.out.println("Key Pressed");
         if(evt.getKeyChar() == 'w' && intDirection != 3 && intSnakeSelf[0][1] != (intSnakeSelf[1][1] - 1)){
@@ -498,7 +499,7 @@ public class snakeGame implements ActionListener, KeyListener {
             ssm.sendText("System,null,stopTime,null,null");
         }
     }
-
+	/** Method to clear map */
     public void clearMap(){
         for(int i = 0; i < 40; i++){
             for(int j = 0; j < 40; j++){
@@ -508,17 +509,17 @@ public class snakeGame implements ActionListener, KeyListener {
         spawnFood();
         panel.repaint();
     }
-
+	/** Method to look out for key typed */
     public void keyTyped(KeyEvent evt) {
         
     }
-
+	/** Method to force repaint */
     public void forceRepaint(){
         panel.removeSnake();
         panel.paintSnake();
         panel.repaint();
     }
-
+	/** Method to spawn food */
     public void spawnFood(){
         Random rand = new Random();
         int intRandX = rand.nextInt(39);
@@ -533,7 +534,7 @@ public class snakeGame implements ActionListener, KeyListener {
             spawnFood();
         }
     }
-
+	/** Method to read the map csv file */
     public static String[][] readFile(int intCol, String strFileName) {
         int intRow = 0;
         try {
@@ -571,13 +572,13 @@ public class snakeGame implements ActionListener, KeyListener {
 
         return strMap;
     }
-
+	/** Method to stop game */
     public static void stopGame (String strLoser){
         animationTimer.stop();
         moveTimer.stop();
         ssm.sendText("System,"+strLoser+",stopGame,null,null");
     }
-
+	/** Method to stop the game when someone wins */
     public static void winGame(){
         animationTimer.stop();
         moveTimer.stop();
