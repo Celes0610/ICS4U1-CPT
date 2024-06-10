@@ -64,6 +64,7 @@ public class snakeGame implements ActionListener, KeyListener {
     int intLength = 3;
     int intTemp[][] = new int[160][2];
     static int intDirection = 4;
+    int intSnakeSelf[][] = new int[160][2];
 
     // methods
     public void actionPerformed(ActionEvent evt) {
@@ -292,11 +293,13 @@ public class snakeGame implements ActionListener, KeyListener {
                 if(panel.eatFood1() == true){
                     ssm.sendText("System,null,foodEaten,"+panel.intSnake1[0][0]+","+panel.intSnake1[0][1]);
                     spawnFood();
+                    intSnakeSelf = panel.intSnake1.clone();
                 }
             }else if(intSelf == 2){
                 if(panel.eatFood2() == true){
                     ssm.sendText("System,null,foodEaten,"+panel.intSnake2[0][0]+","+panel.intSnake2[0][1]);
                     spawnFood();
+                    intSnakeSelf = panel.intSnake2.clone();
                 }
             }
             panel.removeSnake();
@@ -424,13 +427,13 @@ public class snakeGame implements ActionListener, KeyListener {
 
     public void keyPressed(KeyEvent evt) {
         System.out.println("Key Pressed");
-        if(evt.getKeyChar() == 'w' && intDirection != 3){
+        if(evt.getKeyChar() == 'w' && intDirection != 3 && intSnakeSelf[0][1] != (intSnakeSelf[1][1] - 1)){
             intDirection = 1;
-        }else if(evt.getKeyChar() == 'd' && intDirection != 4){
+        }else if(evt.getKeyChar() == 'd' && intDirection != 4 && intSnakeSelf[0][0] != (intSnakeSelf[1][0] + 1)){
             intDirection = 2;
-        }else if(evt.getKeyChar() == 's' && intDirection != 1){
+        }else if(evt.getKeyChar() == 's' && intDirection != 1 && intSnakeSelf[0][1] != (intSnakeSelf[1][1] + 1)){
             intDirection = 3;
-        }else if(evt.getKeyChar() == 'a' && intDirection != 2){
+        }else if(evt.getKeyChar() == 'a' && intDirection != 2 && intSnakeSelf[0][0] != (intSnakeSelf[1][0] - 1)){
             intDirection = 4;
         }else if(evt.getKeyChar() == 'p'){
             clearMap();
@@ -444,6 +447,8 @@ public class snakeGame implements ActionListener, KeyListener {
                 panel.mapData[i][j] = "f";
             }
         }
+        spawnFood();
+        panel.repaint();
     }
 
     public void keyTyped(KeyEvent evt) {
