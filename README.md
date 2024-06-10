@@ -37,7 +37,7 @@ Getting Started
 
 5. Chatting:
     - Use the chat feature to communicate with the other player.
-    - Press the Chat button to enable the chat.
+    - Press the 'Chat' button to enable the chat.
     - Enter what you want to say into the text area and send it using Enter.
     - Please note: your snake does NOT pause when chatting, thus it is not recommended to attempt to chat during a game.
 
