@@ -188,6 +188,15 @@ public class snakeGame implements ActionListener, KeyListener {
                     panel.mapData[Integer.parseInt(strMsgArg)][Integer.parseInt(strMsgArg2)] = "food";
                 }else if(strMsgCmd.equals("foodEaten")){
                     panel.mapData[Integer.parseInt(strMsgArg)][Integer.parseInt(strMsgArg2)] = "f";
+                    if(intSelf == 1){
+                        panel.intLength2 = panel.intLength2 + 1;
+                        panel.intSnake2[panel.intLength2][0] = panel.intSnake2[panel.intLength2 - 1][0];
+                        panel.intSnake2[panel.intLength2][1] = panel.intSnake2[panel.intLength2 - 1][1];
+                    }else if(intSelf == 2){
+                        panel.intLength1 = panel.intLength1 + 1;
+                        panel.intSnake1[panel.intLength2][0] = panel.intSnake1[panel.intLength2 - 1][0];
+                        panel.intSnake1[panel.intLength2][1] = panel.intSnake1[panel.intLength2 - 1][1];
+                    }
                 }else if(strMsgCmd.equals("clearMap")){
                     clearMap();
                     forceRepaint();
