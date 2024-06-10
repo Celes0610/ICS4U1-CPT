@@ -13,11 +13,11 @@ public class DeathScreenPanel extends JPanel implements ActionListener {
 
 	// Constructor
 	public DeathScreenPanel() {
-		PlayAgain.setBounds(560,300,60,40);
+		PlayAgain.setBounds(540,340,80,40);
 		add(PlayAgain);
 		PlayAgain.addActionListener(this);
 
-		Exit.setBounds(680,300,60,40);
+		Exit.setBounds(660,340,80,40);
 		add(Exit);
 		Exit.addActionListener(this);
 	}
