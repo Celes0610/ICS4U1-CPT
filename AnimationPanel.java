@@ -128,15 +128,15 @@ public class AnimationPanel extends JPanel {
             colorReader.close();
 
             if (theme == 1) { // Star Wars theme
-                imgFloor = ImageIO.read(getClass().getResourceAsStream("space.png"));
-                imgWall = ImageIO.read(getClass().getResourceAsStream("comet.png"));
-                imgFood = ImageIO.read(getClass().getResourceAsStream("1_food.png"));
+                imgFloor = loadImage("space.png");
+                imgWall = loadImage("comet.png");
+                imgFood = loadImage("1_food.png");
                 snake1Color = new Color(setColor[0][0][0], setColor[0][0][1], setColor[0][0][2]);
                 snake2Color = new Color(setColor[0][1][0], setColor[0][1][1], setColor[0][1][2]);
             } else if (theme == 2) { // Zelda theme
-                imgFloor = ImageIO.read(getClass().getResourceAsStream("grass.png"));
-                imgWall = ImageIO.read(getClass().getResourceAsStream("wall.png"));
-                imgFood = ImageIO.read(getClass().getResourceAsStream("2_food.png"));
+                imgFloor = loadImage("grass.png");
+                imgWall = loadImage("wall.png");
+                imgFood = loadImage("2_food.png");
                 snake1Color = new Color(setColor[1][0][0], setColor[1][0][1], setColor[1][0][2]);
                 snake2Color = new Color(setColor[1][1][0], setColor[1][1][1], setColor[1][1][2]);
             }
@@ -193,6 +193,31 @@ public class AnimationPanel extends JPanel {
             return true;
         }else{
             return false;
+        }
+    }
+    public BufferedImage loadImage(String strFileName){  
+        // Try to read the file from the jar file
+        InputStream imageclass = null;
+        imageclass = this.getClass().getResourceAsStream(strFileName);
+        if(imageclass == null){
+          //System.out.println("Unable to load image file: \""+strFileName+"\"");
+          //return null;
+        }else{
+          try{
+            return ImageIO.read(imageclass);
+          }catch(IOException e){
+            //System.out.println(e.toString());
+            //System.out.println("Unable to load image file: \""+strFileName+"\"");
+            //return null;
+          }
+        }
+        // Then try to read the local file
+        try{
+          BufferedImage theimage = ImageIO.read(new File(strFileName));
+          return theimage;
+        }catch(IOException e){
+          System.out.println("Unable to load local image file: \""+strFileName+"\"");
+          return null;
         }
     }
     
