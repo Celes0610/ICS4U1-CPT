@@ -9,13 +9,14 @@ public class snakeGame implements ActionListener, KeyListener {
     // Properties
     /** JFrame for the frame */
     static JFrame theframe = new JFrame("Snake");
+    /*
     /** Start panel */
-    StartPanel startPanel = new StartPanel();
-    /** Animation panel */
-    AnimationPanel panel = new AnimationPanel();
-    /** SuperSocketMaster */
-    static SuperSocketMaster ssm;
-
+    //StartPanel startPanel = new StartPanel();
+    //** Animation panel */
+    //AnimationPanel panel = new AnimationPanel();
+    //** SuperSocketMaster */
+    //static SuperSocketMaster ssm;
+	
     /** JLabel for the ip */
     JLabel ipLabel = new JLabel("IP");
 	/** JTextField for the ip field*/
@@ -63,8 +64,8 @@ public class snakeGame implements ActionListener, KeyListener {
 	static JTextField message = new JTextField();
 	/** Boolean to determine if the chat is disabled */
     boolean chatEnabled = false;
-    /** Help screen */
-    helpPanel helpScreen = new helpPanel(theframe, startPanel);
+    //** Help screen */
+    //helpPanel helpScreen = new helpPanel(theframe, startPanel);
     /** String to hold the message */
     String strLine;
     /** String to split the message */
