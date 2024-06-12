@@ -12,14 +12,19 @@ public class DeathScreenPanel extends JPanel implements ActionListener {
 	JButton Exit = new JButton("Exit");
 
 	// Constructor
-	public DeathScreenPanel() {
+	public DeathScreenPanel(JFrame frame) {
+		super();
+	
 		PlayAgain.setBounds(540,400,80,40);
-		add(PlayAgain);
 		PlayAgain.addActionListener(this);
 
 		Exit.setBounds(660,400,80,40);
-		add(Exit);
 		Exit.addActionListener(this);
+
+		add(PlayAgain);
+		add(Exit);
+		add(Winner);
+
 	}
 
 	public void Winner(String strUsername) {
@@ -28,9 +33,9 @@ public class DeathScreenPanel extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent evt) {
 		if (evt.getSource() == PlayAgain) {
-
+			new snakeGame();
 		}else if (evt.getSource() == Exit) {
-
+			System.exit(ABORT);
 		}            
 	}
 }

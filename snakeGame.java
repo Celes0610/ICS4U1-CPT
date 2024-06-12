@@ -8,7 +8,7 @@ import java.util.Random;
 public class snakeGame implements ActionListener, KeyListener {
     // Properties
     /** JFrame for the frame */
-    JFrame theframe = new JFrame("Snake");
+    static JFrame theframe = new JFrame("Snake");
     /** Start panel */
     StartPanel startPanel = new StartPanel();
     /** Animation panel */
@@ -111,6 +111,8 @@ public class snakeGame implements ActionListener, KeyListener {
     int intSnakeSelf[][] = new int[160][2];
 	/** Boolean to enable commands */
     boolean commandsEnabled = true;
+    /** Death screen*/
+    static DeathScreenPanel deathScreen = new DeathScreenPanel(theframe);
 
     // methods
 	/** Method to look out for actions performed */
@@ -244,7 +246,11 @@ public class snakeGame implements ActionListener, KeyListener {
                     clearMap();
                     forceRepaint();
                 }else if (strMsgCmd.equals("stopGame")){
-                    winGame();
+                    if (!strMsgUser.equals(strUsername1)){
+                        winGame(strUsername1);
+                    }else{
+                        winGame(strUsername2);
+                    }
                 }else if (strMsgCmd.equals("stopTime")){
                     moveTimer.stop();
                 }
@@ -422,7 +428,7 @@ public class snakeGame implements ActionListener, KeyListener {
                         panel.intSnake1[intCount + 1][1] = intTemp[intCount][1];
                     }
                 }else{
-                    stopGame(strUsername1);
+                    stopGame(strUsername1, strUsername2);
                 }
                 ssm.sendText("Game,"+strUsername1+","+panel.intSnake1[0][0]+","+panel.intSnake1[0][1]);
             }
@@ -469,7 +475,7 @@ public class snakeGame implements ActionListener, KeyListener {
                         panel.intSnake2[intCount + 1][1] = intTemp[intCount][1];
                     }
                 }else{
-                    stopGame(strUsername2);
+                    stopGame(strUsername2, strUsername1);
                 }
                 ssm.sendText("Game,"+strUsername2+","+panel.intSnake2[0][0]+","+panel.intSnake2[0][1]);
             }   
@@ -573,15 +579,23 @@ public class snakeGame implements ActionListener, KeyListener {
         return strMap;
     }
 	/** Method to stop game */
-    public static void stopGame (String strLoser){
+    public static void stopGame (String strLoser, String strWinner){
         animationTimer.stop();
         moveTimer.stop();
         ssm.sendText("System,"+strLoser+",stopGame,null,null");
+        deathScreen.Winner(strWinner);
+        theframe.setContentPane(deathScreen);
+        theframe.repaint();
+        deathScreen.repaint();
     }
 	/** Method to stop the game when someone wins */
-    public static void winGame(){
+    public static void winGame(String strWinner){
         animationTimer.stop();
         moveTimer.stop();
+        deathScreen.Winner(strWinner);
+        theframe.setContentPane(deathScreen);
+        theframe.repaint();
+        deathScreen.repaint();
     }
 
     // constructor
