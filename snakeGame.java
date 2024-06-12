@@ -265,7 +265,7 @@ public class snakeGame implements ActionListener, KeyListener {
             if (usernameField.getText().equals("")) {
                 connectStat.append("\nPlease Enter a Username, do not try to break the game :(");
             } else {
-                if (usernameField.getText() == "admin"){
+                if (usernameField.getText().equals("admin")){
                     commandsEnabled = true;
                 }
                 if (intSelf == 1) {
