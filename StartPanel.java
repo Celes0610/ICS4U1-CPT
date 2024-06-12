@@ -19,11 +19,21 @@ public class StartPanel extends JPanel{
 	// Constructor
 	public StartPanel(){
 		super();
-		try{
-			imgSnake = ImageIO.read(new File("Temp-Title.png"));
-		}catch(IOException e){
-			System.out.println("Unable to load image");
-			System.out.println(e.toString());
-		}
+		InputStream imageclass = null;
+                //Attempts to read from .jar file
+                imageclass = this.getClass().getResourceAsStream("Temp-Title.png");
+                if(imageclass == null){
+                        System.out.println("Image File not found in .jar");
+                        try{
+                                imgSnake = ImageIO.read(new File("Temp-Title.png"));
+                        }catch(IOException e){
+                                System.out.println("Unable to load local image");
+                        }
+                }
+                try{
+                        imgSnake = ImageIO.read(imageclass);
+                }catch(IOException e){
+
+                }
 	}
 }
