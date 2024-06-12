@@ -56,11 +56,11 @@ public class snakeGame implements ActionListener, KeyListener {
     /** JButton for the chat */
     JButton chatButton = new JButton("Chat");
     /** JTextArea for the chat */
-    JTextArea chat = new JTextArea();
+    static JTextArea chat = new JTextArea();
     /** JScrollPane to scroll through chat messages */
     JScrollPane scrollPane = new JScrollPane(chat);
     /** JTextField to enter a message */
-	JTextField message = new JTextField();
+	static JTextField message = new JTextField();
 	/** Boolean to determine if the chat is disabled */
     boolean chatEnabled = false;
     /** Help screen */
@@ -111,8 +111,6 @@ public class snakeGame implements ActionListener, KeyListener {
     int intSnakeSelf[][] = new int[160][2];
 	/** Boolean to enable commands */
     boolean commandsEnabled = true;
-    /** Death screen*/
-    static DeathScreenPanel deathScreen = new DeathScreenPanel(theframe);
 
     // methods
 	/** Method to look out for actions performed */
@@ -583,19 +581,16 @@ public class snakeGame implements ActionListener, KeyListener {
         animationTimer.stop();
         moveTimer.stop();
         ssm.sendText("System,"+strLoser+",stopGame,null,null");
-        deathScreen.Winner(strWinner);
-        theframe.setContentPane(deathScreen);
-        theframe.repaint();
-        deathScreen.repaint();
+        chat.append("\nUH OH YOU HAVE DIED\n");
+        chat.append("YOU'VE LOST\n");
     }
-	/** Method to stop the game when someone wins */
+
+	/** Method to stop the game when someone loses */
     public static void winGame(String strWinner){
         animationTimer.stop();
         moveTimer.stop();
-        deathScreen.Winner(strWinner);
-        theframe.setContentPane(deathScreen);
-        theframe.repaint();
-        deathScreen.repaint();
+        chat.append("\nYour opponent has died");
+        chat.append("YOU ARE THE WINNER");
     }
 
     // constructor
