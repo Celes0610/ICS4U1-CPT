@@ -502,7 +502,7 @@ public class snakeGame implements ActionListener, KeyListener {
             ssm.sendText("System,null,clearMap,null,null");
         }else if(evt.getKeyChar() == 'o' && commandsEnabled == true){
             spawnFood();
-        }else if(evt.getKeyChar() == 'i' && commandsEnabled){
+        }else if(evt.getKeyChar() == 'i' && commandsEnabled == true){
             ssm.sendText("System,null,stopTime,null,null");
         }
     }
