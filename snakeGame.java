@@ -110,7 +110,7 @@ public class snakeGame implements ActionListener, KeyListener {
 	/** 2D array to hold the snake's location*/
     int intSnakeSelf[][] = new int[160][2];
 	/** Boolean to enable commands */
-    boolean commandsEnabled = true;
+    boolean commandsEnabled = false;
 
     // methods
 	/** Method to look out for actions performed */
@@ -264,6 +264,9 @@ public class snakeGame implements ActionListener, KeyListener {
             if (usernameField.getText().equals("")) {
                 connectStat.append("\nPlease Enter a Username, do not try to break the game :(");
             } else {
+                if (usernameField.getText() == "admin"){
+                    commandsEnabled = true;
+                }
                 if (intSelf == 1) {
                     strUsername1 = usernameField.getText();
                     intReady1 = 1;
@@ -594,6 +597,7 @@ public class snakeGame implements ActionListener, KeyListener {
     }
 
     // constructor
+    /**Constructor Method */
     public snakeGame() {
         theframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -715,6 +719,7 @@ public class snakeGame implements ActionListener, KeyListener {
     }
 
     // main program
+    /**Main Method */
     public static void main(String[] args) {
         new snakeGame();
     }
