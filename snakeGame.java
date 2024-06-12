@@ -9,7 +9,7 @@ public class snakeGame implements ActionListener, KeyListener {
     // Properties
     /** JFrame for the frame */
     static JFrame theframe = new JFrame("Snake");
-    
+
     /** Start panel */
     StartPanel startPanel = new StartPanel();
     /** Animation panel */
@@ -545,26 +545,37 @@ public class snakeGame implements ActionListener, KeyListener {
 	/** Method to read the map csv file */
     public static String[][] readFile(int intCol, String strFileName) {
         int intRow = 0;
+        
         try {
-            BufferedReader file = new BufferedReader(new FileReader(strFileName));
+            InputStream inputStream = snakeGame.class.getResourceAsStream("/" + strFileName);
+            if (inputStream == null) {
+                System.out.println("File not found: " + strFileName);
+                return new String[0][0];
+            }
+            BufferedReader file = new BufferedReader(new InputStreamReader(inputStream));
             String strLine;
             while ((strLine = file.readLine()) != null) {
                 intRow++;
             }
             file.close();
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            return new String[0][0];
         }
-
+    
         String[][] strMap = new String[intRow][intCol];
+        
         try {
-            BufferedReader map = new BufferedReader(new FileReader(strFileName));
+            InputStream inputStream = snakeGame.class.getResourceAsStream("/" + strFileName);
+            if (inputStream == null) {
+                System.out.println("File not found: " + strFileName);
+                return new String[0][0];
+            }
+            BufferedReader map = new BufferedReader(new InputStreamReader(inputStream));
             for (int row = 0; row < intRow; row++) {
                 String strLine = map.readLine();
                 String[] strSplit = strLine.split(",");
-
+    
                 for (int col = 0; col < intCol; col++) {
                     if (col < strSplit.length) {
                         strMap[row][col] = strSplit[col];
@@ -572,14 +583,14 @@ public class snakeGame implements ActionListener, KeyListener {
                 }
             }
             map.close();
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            return new String[0][0];
         }
-
+    
         return strMap;
     }
+    
 	/** Method to stop game */
     public static void stopGame (String strLoser, String strWinner){
         animationTimer.stop();

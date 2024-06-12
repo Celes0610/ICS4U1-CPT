@@ -114,7 +114,7 @@ public class AnimationPanel extends JPanel {
     public void loadThemeImages(int theme) {
         currentTheme = theme;
         try {
-            BufferedReader colorReader = new BufferedReader(new FileReader("theme.txt"));
+            BufferedReader colorReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/theme.txt")));
             for (int row = 0; row < 2; row++) {
                 String strLine = colorReader.readLine();
                 String[] strSplit = strLine.split(" ");
@@ -128,15 +128,15 @@ public class AnimationPanel extends JPanel {
             colorReader.close();
 
             if (theme == 1) { // Star Wars theme
-                imgFloor = ImageIO.read(new File("space.png"));
-                imgWall = ImageIO.read(new File("comet.png"));
-                imgFood = ImageIO.read(new File("1_food.png"));
+                imgFloor = ImageIO.read(getClass().getResourceAsStream("space.png"));
+                imgWall = ImageIO.read(getClass().getResourceAsStream("comet.png"));
+                imgFood = ImageIO.read(getClass().getResourceAsStream("1_food.png"));
                 snake1Color = new Color(setColor[0][0][0], setColor[0][0][1], setColor[0][0][2]);
                 snake2Color = new Color(setColor[0][1][0], setColor[0][1][1], setColor[0][1][2]);
             } else if (theme == 2) { // Zelda theme
-                imgFloor = ImageIO.read(new File("grass.png"));
-                imgWall = ImageIO.read(new File("wall.png"));
-                imgFood = ImageIO.read(new File("2_food.png"));
+                imgFloor = ImageIO.read(getClass().getResourceAsStream("grass.png"));
+                imgWall = ImageIO.read(getClass().getResourceAsStream("wall.png"));
+                imgFood = ImageIO.read(getClass().getResourceAsStream("2_food.png"));
                 snake1Color = new Color(setColor[1][0][0], setColor[1][0][1], setColor[1][0][2]);
                 snake2Color = new Color(setColor[1][1][0], setColor[1][1][1], setColor[1][1][2]);
             }

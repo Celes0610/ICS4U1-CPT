@@ -27,11 +27,11 @@ public class helpPanel extends JPanel implements ActionListener {
         this.startPanel = startPanel;
 
         try {
-            help[0] = ImageIO.read(new File("help1.png"));
-            help[1] = ImageIO.read(new File("help2.png"));
-            help[2] = ImageIO.read(new File("help3.png"));
-            help[3] = ImageIO.read(new File("help4.png"));
-            help[4] = ImageIO.read(new File("help5.png"));
+            help[0] = ImageIO.read(getClass().getResourceAsStream("help1.png"));
+            help[1] = ImageIO.read(getClass().getResourceAsStream("help2.png"));
+            help[2] = ImageIO.read(getClass().getResourceAsStream("help3.png"));
+            help[3] = ImageIO.read(getClass().getResourceAsStream("help4.png"));
+            help[4] = ImageIO.read(getClass().getResourceAsStream("help5.png"));
             currentImage = help[intCurr]; // Set the initial image
         } catch (IOException e) {
             System.out.println("Unable to load image");
