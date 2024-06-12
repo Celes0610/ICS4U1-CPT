@@ -589,8 +589,8 @@ public class snakeGame implements ActionListener, KeyListener {
     public static void winGame(String strWinner){
         animationTimer.stop();
         moveTimer.stop();
-        chat.append("\nYour opponent has died");
-        chat.append("YOU ARE THE WINNER");
+        chat.append("\nYour opponent has died\n");
+        chat.append("YOU ARE THE WINNER\n");
     }
 
     // constructor

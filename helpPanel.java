@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 public class helpPanel extends JPanel implements ActionListener {
     // properties
-    BufferedImage[] help = new BufferedImage[4];
+    BufferedImage[] help = new BufferedImage[5];
     BufferedImage currentImage;
     int intCurr = 0;
     JButton prevButton = new JButton("<");
@@ -31,6 +31,7 @@ public class helpPanel extends JPanel implements ActionListener {
             help[1] = ImageIO.read(new File("help2.png"));
             help[2] = ImageIO.read(new File("help3.png"));
             help[3] = ImageIO.read(new File("help4.png"));
+            help[4] = ImageIO.read(new File("help5.png"));
             currentImage = help[intCurr]; // Set the initial image
         } catch (IOException e) {
             System.out.println("Unable to load image");
@@ -71,7 +72,7 @@ public class helpPanel extends JPanel implements ActionListener {
             // Enable prev button if it's not the first image
             prevButton.setEnabled(intCurr > 0);
             // Disable next button if it's the last image
-            nextButton.setEnabled(intCurr < 3);
+            nextButton.setEnabled(intCurr < 4);
         } else if (evt.getSource() == prevButton) {
             if (intCurr > 0) {
                 intCurr--;
