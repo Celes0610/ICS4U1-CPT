@@ -585,7 +585,7 @@ public class snakeGame implements ActionListener, KeyListener {
         animationTimer.stop();
         moveTimer.stop();
         ssm.sendText("System,"+strLoser+",stopGame,null,null");
-        chat.append("\nUH OH YOU HAVE DIED\n");
+        chat.append("UH OH YOU HAVE DIED\n");
         chat.append("YOU'VE LOST\n");
     }
 
@@ -593,7 +593,7 @@ public class snakeGame implements ActionListener, KeyListener {
     public static void winGame(String strWinner){
         animationTimer.stop();
         moveTimer.stop();
-        chat.append("\nYour opponent has died\n");
+        chat.append("Your opponent has died\n");
         chat.append("YOU ARE THE WINNER\n");
     }
 
