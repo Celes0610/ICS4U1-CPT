@@ -2,8 +2,11 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 //import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,23 +23,45 @@ public class helpPanel extends JPanel implements ActionListener {
     JFrame parentFrame;
     JPanel startPanel;
 
+    public BufferedImage loadImage(String strFileName){  
+        // Try to read the file from the jar file
+        InputStream imageclass = null;
+        imageclass = this.getClass().getResourceAsStream(strFileName);
+        if(imageclass == null){
+          //System.out.println("Unable to load image file: \""+strFileName+"\"");
+          //return null;
+        }else{
+          try{
+            return ImageIO.read(imageclass);
+          }catch(IOException e){
+            //System.out.println(e.toString());
+            //System.out.println("Unable to load image file: \""+strFileName+"\"");
+            //return null;
+          }
+        }
+        // Then try to read the local file
+        try{
+          BufferedImage theimage = ImageIO.read(new File(strFileName));
+          return theimage;
+        }catch(IOException e){
+          System.out.println("Unable to load local image file: \""+strFileName+"\"");
+          return null;
+        }
+    }
+
     // Constructor
     public helpPanel(JFrame frame, JPanel startPanel) {
         super();
         this.parentFrame = frame;
         this.startPanel = startPanel;
 
-        try {
-            help[0] = ImageIO.read(getClass().getResourceAsStream("help1.png"));
-            help[1] = ImageIO.read(getClass().getResourceAsStream("help2.png"));
-            help[2] = ImageIO.read(getClass().getResourceAsStream("help3.png"));
-            help[3] = ImageIO.read(getClass().getResourceAsStream("help4.png"));
-            help[4] = ImageIO.read(getClass().getResourceAsStream("help5.png"));
-            currentImage = help[intCurr]; // Set the initial image
-        } catch (IOException e) {
-            System.out.println("Unable to load image");
-            System.out.println(e.toString());
-        }
+        help[0] = loadImage("help1.png");
+        help[1] = loadImage("help2.png");
+        help[2] = loadImage("help3.png");
+        help[3] = loadImage("help4.png");
+        help[4] = loadImage("help5.png");
+        currentImage = help[intCurr]; // Set the initial image
+
 
         setLayout(null); // Use null layout for absolute positioning
 
