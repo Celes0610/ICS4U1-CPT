@@ -535,6 +535,7 @@ public class snakeGame implements ActionListener, KeyListener {
     public void keyReleased(KeyEvent evt) {
 
     }
+    
 	/** Method to look out for keys pressed */
     public void keyPressed(KeyEvent evt) {
         System.out.println("Key Pressed");
@@ -638,7 +639,7 @@ public class snakeGame implements ActionListener, KeyListener {
     
         return strMap;
     }
-    
+
 	/** Method to stop game */
     public static void stopGame (String strLoser, String strWinner){
         animationTimer.stop();
