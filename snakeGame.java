@@ -13,108 +13,155 @@ public class snakeGame implements ActionListener, KeyListener {
 
     /** Start panel */
     StartPanel startPanel = new StartPanel();
+
     /** Animation panel */
     AnimationPanel panel = new AnimationPanel();
+    
     /** SuperSocketMaster */
     static SuperSocketMaster ssm;
 	
     /** JLabel for the ip */
     JLabel ipLabel = new JLabel("IP");
-	/** JTextField for the ip field*/
+	
+    /** JTextField for the ip field*/
     JTextField ipField = new JTextField();
+    
     /**  JLabel for the port*/
     JLabel portLabel = new JLabel("Port");
+    
     /** JTextField for the port field */
     JTextField portField = new JTextField();
+    
     /** JButton for creating the server as a host */
     JButton hostButton = new JButton("Create Server");
+    
     /** JButton for joining the server */
     JButton joinButton = new JButton("Join Server");
+    
     /** JTextArea displaying the connection status */
     JTextArea connectStat = new JTextArea();
+    
     /** JLabel for the username */
     JLabel usernameLabel = new JLabel("Username");
+    
     /** JTextField for entering a username */
     JTextField usernameField = new JTextField();
+    
     /** JButton to select easy difficulty */
     JButton easyButton = new JButton("Easy");
+    
     /** JButton to select normal difficulty */
     JButton normButton = new JButton("Normal");
+    
     /** JButton to select hard difficulty */
     JButton hardButton = new JButton("Hard");
+    
     /** JButton to start playing */
     JButton playButton = new JButton("Ready");
+    
     /** JButton to select the Star Wars theme */
     JButton theme1Button = new JButton("Star Wars");
+    
     /** JButton to select the Zelda theme */
     JButton theme2Button = new JButton("Zelda");
+    
     /** JButton to go to help screen */
     JButton helpButton = new JButton("?");
+    
     /** Timer for the animation */
     static Timer animationTimer = new Timer(1000/60, null);
+    
     /** Timer for the movement of the snake */
     static Timer moveTimer = new Timer(100, null);
 
     /** JButton for the chat */
     JButton chatButton = new JButton("Chat");
+    
     /** JTextArea for the chat */
     static JTextArea chat = new JTextArea();
+    
     /** JScrollPane to scroll through chat messages */
     JScrollPane scrollPane = new JScrollPane(chat);
+    
     /** JTextField to enter a message */
 	static JTextField message = new JTextField();
-	/** Boolean to determine if the chat is disabled */
+	
+    /** Boolean to determine if the chat is disabled */
     boolean chatEnabled = false;
+    
     /** Help screen */
     helpPanel helpScreen = new helpPanel(theframe, startPanel);
+    
     /** String to hold the message */
     String strLine;
+    
     /** String to split the message */
     String strSplit[];
+    
     /** String for the message type */
     String strMsgType;
+    
     /** String for the username who sent the message */
     String strMsgUser;
-	/** String for the message command type */
+	
+    /** String for the message command type */
     String strMsgCmd;
-	/** Argument for the message */
+	
+    /** Argument for the message */
     String strMsgArg;
-	/** Second argument for the message */
+	
+    /** Second argument for the message */
     String strMsgArg2;
-	/** Boolean to determine if a player is connected */
+	
+    /** Boolean to determine if a player is connected */
     boolean playerConnected = false;
-	/** X coordinate for the message */
+	
+    /** X coordinate for the message */
     int intMsgX;
-	/** Y coordinate for the message */
+	
+    /** Y coordinate for the message */
     int intMsgY;
-	/** String for the message being sent */
+	
+    /** String for the message being sent */
     String strMsgSent;
-	/** String for Player 1's username */
+	
+    /** String for Player 1's username */
     static String strUsername1;
-	/** String for Player 2's username */
+	
+    /** String for Player 2's username */
     static String strUsername2;
-	/** Int for if Player 1 is ready */
+	
+    /** Int for if Player 1 is ready */
     int intReady1 = 0;
-	/** Int for if Player 2 is ready */
+	
+    /** Int for if Player 2 is ready */
     int intReady2 = 0;
-	/** Int to determine which player is which */
+	
+    /** Int to determine which player is which */
     int intSelf;
-	/** Int to determine the theme */
+	
+    /** Int to determine the theme */
     int intTheme = 1;
-	/** String to determine map file */
+	
+    /** String to determine map file */
     String strMapFile = "Map - Easy.csv";
-	/** Int to determine starting length of snake */
+	
+    /** Int to determine starting length of snake */
     int intLength = 3;
-	/** Temporary 2D array to hold the snake's location */
+	
+    /** Temporary 2D array to hold the snake's location */
     int intTemp[][] = new int[160][2];
-	/** Int to determine the direction the snake is going */
+	
+    /** Int to determine the direction the snake is going */
     static int intDirection = 4;
-	/** 2D array to hold the snake's location*/
+	
+    /** 2D array to hold the snake's location*/
     int intSnakeSelf[][] = new int[160][2];
-	/** Boolean to enable commands */
+	
+    /** Boolean to enable commands */
     boolean commandsEnabled = false;
 
-    // methods
+    // Methods
 	/** Method to look out for actions performed */
     public void actionPerformed(ActionEvent evt) {
         // create a server

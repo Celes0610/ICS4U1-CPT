@@ -195,20 +195,21 @@ public class AnimationPanel extends JPanel {
             return false;
         }
     }
+
+    /**Loads image based on String path */
     public BufferedImage loadImage(String strFileName){  
         // Try to read the file from the jar file
         InputStream imageclass = null;
         imageclass = this.getClass().getResourceAsStream(strFileName);
         if(imageclass == null){
-          //System.out.println("Unable to load image file: \""+strFileName+"\"");
-          //return null;
+            
         }else{
           try{
             return ImageIO.read(imageclass);
           }catch(IOException e){
-            //System.out.println(e.toString());
-            //System.out.println("Unable to load image file: \""+strFileName+"\"");
-            //return null;
+            System.out.println(e.toString());
+            System.out.println("Unable to load image file: \""+strFileName+"\"");
+            return null;
           }
         }
         // Then try to read the local file
